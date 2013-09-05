@@ -1,0 +1,76 @@
+#!/bin/bash
+
+apt-get update
+apt-get install git imagemagick make g++ -y
+
+wget http://nodejs.org/dist/v0.8.9/node-v0.8.9.tar.gz
+tar xvzf node-v0.8.9.tar.gz
+cd node-v0.8.9
+./configure
+make
+make install
+
+
+cat >> /etc/sysctl.conf << EOD
+kernel.panic = 10
+kernel.pid_max = 65536
+kernel.core_uses_pid = 1
+kernel.shmmax = 1564766208
+kernel.shmall = 424470
+kernel.msgmax = 65536
+kernel.msgmnb = 65536
+fs.file-max = 106118
+vm.min_free_kbytes = 16979
+net.ipv4.tcp_max_tw_buckets = 212235
+net.ipv4.tcp_max_orphans = 2653
+
+# vm.swappiness = 0
+vm.dirty_background_ratio = 5
+vm.dirty_ratio = 15
+
+net.core.netdev_max_backlog = 10000
+net.core.somaxconn = 65000
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.ipv4.tcp_rmem = 4096 87380 16777216
+net.ipv4.tcp_wmem = 4096 87380 16777216
+net.ipv4.tcp_no_metrics_save = 1
+net.ipv4.tcp_moderate_rcvbuf = 1
+net.ipv4.tcp_dsack = 1
+net.ipv4.tcp_fack = 1
+net.ipv4.tcp_sack= 1
+net.ipv4.tcp_timestamps = 1
+net.ipv4.tcp_window_scaling = 1
+net.ipv4.tcp_rfc1337 = 1
+net.ipv4.tcp_syncookies = 0
+net.ipv4.tcp_keepalive_time = 7200
+net.ipv4.tcp_synack_retries = 3
+net.ipv4.tcp_syn_retries = 3
+net.ipv4.ip_local_port_range = 1024 65535
+
+net.ipv4.conf.default.log_martians = 1
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.ip_forward = 0
+net.ipv4.conf.default.rp_filter = 0
+net.ipv4.conf.all.rp_filter = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.secure_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+EOD
+sysctl -p
+
+npm install forever -g
+npm install https://github.com/bobuss/node-imageable/tarball/master -g
+cd /home/ubuntu/
+git clone git://github.com/bobuss/node-imageable-server.git
+cd node-imageable-server
+cp config/config.example.json config/config.json
+npm install .
+ulimit -n 102400
+PORT=80 NODE_ENV=production forever start app.js

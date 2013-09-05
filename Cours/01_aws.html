@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Amazon Web Services</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="Bertrand Tornil">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>Amazon Web Services</h1>
+          <p>
+            <small><a href="http://tornil.me">Bertrand Tornil</a> / <a href="http://twitter.com/bobuss">@bobuss</a></small>
+          </p>
+        </section>
+
+        <section>
+          <h2>Généralités</h2>
+          <p>No 1 du Cloud Computing IAAS</p>
+          <p>Utilisé entre autre par Netflix, Instagram, Pinterest, Reddit, Zynga...</p>
+        </section>
+
+        <section>
+          <h2>L'anecdote historique</h2>
+          <p class="fragment">Fin des Années 90 : pour Amazon, Thanksgiving représentait un pic de charge nécéssitant une grosse infrastructure à ce moment, mais inutile le reste du temps</p>
+          <p class="fragment">D'où l'idée de louer cet excédent d'infrastructure</p>
+          <p class="fragment">2002 : apparition d'Amazon Web Services</p>
+
+        </section>
+
+        <section>
+          <section>
+            <h2>Organisation</h2>
+            <p class="fragment">AWS est divisé en 9 Régions</p>
+            <p class="fragment">Chaque région dispose d'au moins 2 zones de disponibilité (Availability zones)</p>
+          </section>
+
+          <section>
+            <img src="img/aws_availability_zones.jpg">
+          </section>
+
+          <section>
+            <p>L'idée étant de choisir un data-center près de chez soi...</p>
+            <p>ou à côté d'un fournisseur de contenu / client</p>
+            <br>
+            <p>Dans tous les cas, à cette flexibilité géographique, s'ajoute une notion de disponibilité : les zones de disponibilité correspondent en fait à des data-centers physiques différents.</p>
+          </section>
+        </section>
+
+        <section>
+          <h1>Philosophie du Cloud d'Amazon</h1>
+          <h2 class="fragment">IAAS ...</h2>
+          <h2 class="fragment">... et PAAS</h2>
+        </section>
+
+        <section>
+          <h1>Quelques Briques IAAS</h1>
+        </section>
+
+        <section>
+          <section>
+            <h2>Amazon Elastic Compute Cloud (EC2)</h2>
+            <p>L'embarras du choix</p>
+            <p>Mais tout a un prix : de $0,060/h à $4,600/h</p>
+            <p>Possibilité de réservation... après c'est un boulot de commercial...</p>
+          </section>
+
+          <section>
+
+            <h3>Usage général</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom</th><th>vCPU</th><th>ECU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Réseau</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>m1.small</td><td>1</td><td>1</td><td>1,7</td><td>1 x 160</td><td>Faibles</td>
+                </tr>
+                <tr>
+                  <td>m1.medium</td><td>1</td><td>2</td><td>3,75</td><td>1 x 410</td><td>Modérées</td>
+                </tr>
+                <tr>
+                  <td>m1.large</td><td>2</td><td>4</td><td>7,5</td><td>2 x 410</td><td>Modérées</td>
+                </tr>
+                <tr>
+                  <td>m1.xlarge</td><td>4</td><td>8</td><td>15</td><td>4 x 410</td><td>Elevées</td>
+                </tr>
+                <tr>
+                  <td>m3.xlarge</td><td>4</td><td>13</td><td>15</td><td>EBS</td><td>Modérées</td>
+                </tr>
+                <tr>
+                  <td>m3.2xlarge</td><td>8</td><td>26</td><td>30</td><td>EBS</td><td>Elevées</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </section>
+
+          <section>
+            <h3>Calcul optimisé</h3>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom</th><th>vCPU</th><th>ECU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Réseau</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>c1.medium</td><td>2</td><td>5</td><td>1,7</td><td>350</td><td>Modérées</td>
+                </tr>
+                <tr>
+                  <td>c1.xlarge</td><td>8</td><td>20</td><td>7</td><td>4 x 420</td><td>Elevées</td>
+                </tr>
+                <tr>
+                  <td>cc2.8xlarge</td><td>32</td><td>88</td><td>60,5</td><td>4 x 840</td><td>10 Gigabit </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section>
+            <h3>Mémoire optimisée</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom</th><th>vCPU</th><th>ECU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Réseau</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>m2.xlarge</td><td>2</td><td>6,5</td><td>17,1</td><td>1 x 420</td><td>Modérées</td>
+                </tr>
+                <tr>
+                  <td>m2.2xlarge</td><td>4</td><td>13</td><td>34,2</td><td>1 x 850</td><td>Modérées</td>
+                </tr>
+                <tr>
+                  <td>m2.4xlarge</td><td>8</td><td>26</td><td>58,4</td><td>2 x 840</td><td>Elevées</td>
+                </tr>
+                <tr>
+                  <td>cr1.8xlarge</td><td>32</td><td>88</td><td>244</td><td>2 x 120 SSD</td><td>10 Gigabit</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </section>
+
+          <section>
+            <h3>Autres</h3>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Usage</th><th>Nom</th><th>vCPU</th><th>ECU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Réseau</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Stockage optimisé</td><td>hi1.4xlarge</td><td>16</td><td>35</td><td>60,5</td><td>2 x 1 024
+SSD</td><td>10 Gigabit</td>
+                </tr>
+                <tr>
+                  <td>Stockage optimisé</td><td>hs1.8xlarge</td><td>16</td><td>35</td><td>117</td><td>24 x 2 048
+SSD</td><td>10 Gigabit</td>
+                </tr>
+                <tr>
+                  <td>Micro-instances</td><td>t1.micro</td><td>1</td><td>Variable</td><td>0,615</td><td>EBS</td><td>Très faibles</td>
+                </tr>
+                <tr>
+                  <td>Instances GPU</td><td>cg1.4xlarge</td><td>16</td><td>33,5</td><td>22,5</td><td>2 x 840
+SSD</td><td>10 Gigabit</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
+
+        <section>
+          <h2>Amazon Machine Images (AMI)</h2>
+          <p>Une AMI est une image d'un système d'exploitation pré-configuré à destination des EC2</p>
+          <p>Comme elles peuvent être créées à l'envie, l'utilisation des AMIs peut servir de base au déploiement de services</p>
+        </section>
+
+        <section>
+          <h2>Les groupes de sécurité</h2>
+
+        </section>
+
+        <section>
+          <h2>Les volumes Elastic Block Storage (ELB)</h2>
+          <p>Sorte de disque dur réseau</p>
+          <p>Plug / Unplug à chaud d'une instance à une autre</p>
+          <p>Très resistant</p>
+        </section>
+
+        <section>
+          <h1>Quelques briques SAAS</h1>
+        </section>
+
+        <section>
+          <h2>Elastic Load Balancing (ELB)</h2>
+          <p>Le répartiteur de charge des EC2</p>
+          <p>Peut se coupler à l'autoscaling</p>
+          <p>Détecte automatiquement les instances malades derrière lui, et les retire de son pool.</p>
+        </section>
+
+        <section>
+          <h2>Relational Database Service (RDS)</h2>
+          <p>Un MySQL empaqueté, pré-configuré</p>
+          <p>Réplication</p>
+          <p>Fail-over cross-zone</p>
+        </section>
+
+        <section>
+          <h2>Simple Queue Service (SQS)</h2>
+          <p>Service de Queuing</p>
+        </section>
+
+        <section>
+          <h2>Dynamo</h2>
+          <p>Stockage NoSQL</p>
+          <p>Autoscaling</p>
+          <p>Replica</p>
+          <p>...</p>
+          <p>Pour les amateurs, il s'agit de la mise en application des travaux de thèse de Werner Vogels, CTO d'Amazon (sous la direction de Andrew S. Tanenbaum, l'auteur de Minix)
+        </section>
+
+        <section>
+          <h2>Route53</h2>
+          <p>Le Domaine Name Server (DNS)</p>
+        </section>
+
+        <section>
+          <h2>CloudFront</h2>
+          <p>Le Content Delivery Network (CDN)</p>
+        </section>
+
+        <section>
+          <h2>Une architecture WEB, vue par AWS</h2>
+          <img src="img/aws_web.png">
+        </section>
+
+        <section>
+          <h2>Photo de famille en septembre 2013</h2>
+          Amazon Elastic Compute Cloud (EC2)
+          Amazon CloudWatch
+          Amazon Virtual Private Cloud (VPC)
+          Amazon Simple Storage Service (S3)
+          Amazon Elastic Block Store (EBS)
+          Auto Scaling
+          Amazon Simple Queue Service (SQS)
+          Amazon Simple Notification Service (SNS)
+          Elastic Load Balancing
+          AWS Support
+          Amazon DynamoDB
+          Amazon Relational Database Service (RDS)
+          Amazon Simple Workflow Service (SWF)
+          Amazon Elastic MapReduce
+          AWS Direct Connect
+          VM Import/Export
+          AWS CloudFormation
+          AWS Elastic Beanstalk
+          AWS Storage Gateway
+          Amazon SimpleDB
+          Amazon ElastiCache
+          Amazon Elastic Transcoder
+          Amazon CloudSearch
+          AWS Import/Export
+          Amazon Glacier
+          Calcul Haute Performance
+          Amazon Redshift
+          AWS CloudHSM
+          Amazon Simple Email Service (SES)
+          AWS Data Pipeline
+        </section>
+
+        <section>
+          <h2>Pub</h2>
+          <p>Niveau gratuit pendant un an.<br>
+          Soit par mois :
+          <ul>
+            <li>750 heures sur une Micro EC2</li>
+            <li>750 heures d'ELB, 15 Go de traitement</li>
+            <li>30 Go de stockage sur EBS</li>
+            <li>15 Go de bande passante sortante combinée pour tous les services AWS</li>
+            <li>1 Go de transfert de données régional</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h1>THE END</h1>
+          <h3>By Bertrand TORNIL / INSSET - 2013</h3>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'concave', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

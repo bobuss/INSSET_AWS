@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+
+  <!-- Client side setup -->
+  <clients>
+  	<client host="localhost" maxusers="30000" use_controller_vm="true"/>
+	</clients>
+
+  <!-- Server side setup -->
+	<servers>
+  	<server host="imageable" port="5000" type="tcp"/>
+	</servers>
+
+  <!-- to start os monitoring (cpu, network, memory). Use an erlang
+  agent on the remote machine or SNMP. erlang is the default -->
+  <monitoring>
+    <monitor host="imageable" type="snmp">
+    	<snmp version="v2" community="public" port="161"/>
+    </monitor>
+  </monitoring>
+
+  <load>
+	  <arrivalphase phase="1" duration="1" unit="minute">
+	    <users arrivalrate="75" unit="second"/>
+	  </arrivalphase>
+	  <arrivalphase phase="2" duration="1" unit="minute">
+	    <users arrivalrate="150" unit="second"/>
+	  </arrivalphase>
+	  <arrivalphase phase="3" duration="1" unit="minute">
+	    <users arrivalrate="300" unit="second"/>
+	  </arrivalphase>
+	  <arrivalphase phase="4" duration="1" unit="minute">
+	    <users arrivalrate="600" unit="second"/>
+	  </arrivalphase>
+	  <arrivalphase phase="5" duration="1" unit="minute">
+	    <users arrivalrate="1200" unit="second"/>
+	  </arrivalphase>
+	  <arrivalphase phase="6" duration="1" unit="minute">
+	    <users arrivalrate="2400" unit="second"/>
+	  </arrivalphase>
+	  <arrivalphase phase="7" duration="1" unit="minute">
+	    <users arrivalrate="4800" unit="second"/>
+	  </arrivalphase>
+  </load>
+
+
+  <!-- start a session for a http user. the probability is the
+  frequency of this type os session. The sum of all session's
+  probabilities must be 100 -->
+
+ <sessions>
+   <session name='zompopo' probability='100'  type='ts_http'>
+   	<request><http url="http://ec2-107-22-30-59.compute-1.amazonaws.com/resize/magic?url=http%3A%2F%2Fwww.google.com%2Fintl%2Fen_ALL%2Fimages%2Flogo.gif&amp;size=200x200" version="1.1" method="GET"/></request>
+   	<thinktime random="true" value="2"/>
+    <request><http url="http://ec2-107-22-30-59.compute-1.amazonaws.com/resize/magic?url=http%3A%2F%2Fwww.google.com%2Fintl%2Fen_ALL%2Fimages%2Flogo.gif&amp;size=100x100" version="1.1" method="GET"/></request>
+   </session>
+ </sessions>
+
+</tsung>

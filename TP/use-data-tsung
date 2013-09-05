@@ -1,0 +1,9 @@
+apt-get update
+
+apt-get install erlang-nox -y
+
+apt-get install gnuplot-nox libtemplate-perl libfile-spec-perl -y
+
+wget http://tsung.erlang-projects.org/dist/debian/tsung_1.4.2-1_all.deb
+
+dpkg -i tsung_1.4.2-1_all.deb
