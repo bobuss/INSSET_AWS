@@ -20,8 +20,6 @@
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
-    <link rel="stylesheet" href="css/style.css">
-
     <!-- If the query includes 'print-pdf', use the PDF print sheet -->
     <script>
       document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
@@ -36,29 +34,29 @@
   <body>
 
     <div class="reveal">
-
+      <a href="00_plan.html#/2">&uarr;</a>
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
+
 
         <section>
           <h1>Devops</h1>
           <p>
-            <small><a href="http://tornil.me">Bertrand Tornil</a> / <a href="http://twitter.com/bobuss">@bobuss</a></small>
+            <small>INSSET - Master 2 Cloud Computing</small>
+          </p>
+          <p>
+            <small>Septembre 2013 - <a href="http://tornil.me">Bertrand Tornil</a></small>
           </p>
         </section>
 
-        <section>
 
+        <section>
           <h2>Définition</h2>
           <p><span class="fragment roll-in">Dev</span><span class="fragment roll-in">Ops</span></p>
 
-          <div class="fragment">
-
-            <img class="fragment" src="img/devops.jpg">
-            <p>
-          </div>
-
+          <img class="fragment" src="img/devops.jpg">
         </section>
+
 
         <section>
           <h2>Où ? Qui ?</h2>
@@ -78,81 +76,102 @@
         <section>
           <section>
             <h2>Pourquoi ?</h2>
-            <h3>Côté Développeur</h3>
-            <p>C'est le fonctionnel</p>
-            <p>Il a les chefs de projet/produit comme interlocuteur</p>
-
+            <br><br>
+            <p>On a un problème</p>
           </section>
 
           <section>
-            <h3>Côté Ops</h3>
-            <p>C'est l'exploitation</p>
-            <p>Ne parle à personne :)</p>
-            <p>Doit faire fonctionner le bousin</p>
+            <h3>Le développeur</h3>
+            <br>
+            <blockquote>
+              Je dois ajouter / améliorer des fonctionnalités.
+            </blockquote>
+            <br>
+            <p class="fragment">Changements</p>
           </section>
 
           <section>
-            <p class="fragment">"merci de mettre ce code en prod. cf PJ"</p>
+            <h3>L'administrateur système</h3>
+            <br>
+            <blockquote>
+              Je dois faire en sorte que le service soit stable.
+            </blockquote>
+            <br>
+            <p class="fragment">Stabilité</p>
+          </section>
+
+          <section>
+            <h3>Incompréhension</h3>
+            <p class="fragment">"Merci de mettre ce code en prod. Bon WeekEnd !"</p>
             <p class="fragment" style="color:red;text-align:right">"Heu... ?"</p>
 
             <p class="fragment">"J'ai un fix qui marche sur mon laptop"</p>
-            <p class="fragment" style="color:red;text-align:right">"ok, on met ton portable en prod"</p>
+            <p class="fragment" style="color:red;text-align:right">"ok, on met ton portable en prod, alors"</p>
           </section>
+
+          <section>
+            <h3>La release</h3>
+            <h4>La zone de rencontre des deux métiers</h4>
+
+            <p>Bonnes pratiques</p>
+            <ul>
+              <li class="fragment">integration continue (++ améliore le code)</li>
+              <li class="fragment">déploiement continu</li>
+            </ul>
+          </section>
+
         </section>
 
 
         <section>
+          <h2>Le DevOps</h2>
           <p>Pas de dogme</p>
           <p>Pas manifeste</p>
           <p>Des valeurs</p>
         </section>
 
         <section>
-
-
-          <p>Culture</p>
-          <p>Automation</p>
-          <p>Measure</p>
-          <p>Sharing</p>
-
+          <h3>Culture</h3>
+          <h3>Automation</h3>
+          <h3>Measure</h3>
+          <h3>Sharing</h3>
         </section>
 
-
-        <section>
-
-          <p>Outils de déploiement</p>
-
-          <p>Puppet</p>
-          <p>Chef</p>
-          <p>cfEngine</p>
-
-          <p>SaltStack</p>
-
-          <p>Deploiement continu</p>
-
-        </section>
-
-        <section>
-        Dev = ajouter / améliorer des fonctionnalités == changements
-        Ops = assurer la stabilité
-
-        Problème
-
-        zone de rencontre -> la release
-
-        Best practices:
-        - integration continue (++ améliore le code)
-        - déploiement continu
-        - communication
-        </section>
 
         <section>
           <h3>Culture</h3>
+          Relationships
+Engage early, engage often
+Bust Silos TM
+Be open
+Stop finger pointing
+Eradicate “last-mile syndrome”
+
+Communication
+Talk is cheap (get out of your chair)
+Involve each other in core processes and decisions
+Ask Questions
+Don’t say “no”
+Invite everyone to stand-ups and retrospectives
         </section>
 
         <section>
           <h3>Automatisation</h3>
+          Machines are really good at doing the same task over and over
+Consistent and Known State
+Fast and Efficient
+5 mins/day = 2.6 days/year
+
+What can be automated?
+Builds
+Deployments
+Testings
+Monitoring
+Self-healing
+System rollouts
+System configuration
         </section>
+
 
         <section>
           <h3>Metriques</h3>
@@ -166,25 +185,41 @@
             <li>Mean Time To Repair</li>
           </ul>
           </p>
+
+          Capture, learn, improve.
+Assists in:
+Capacity Planning
+Trend Analysis
+Fault Finding
+Simple as saving Tomcat access info
+Plotted on a graph over time
         </section>
 
-        <section>
-          <h3>Partage</h3>
-
-          <p>Vision commune</p>
-          <p>Problèmes communs</p>
-          <p>Glossaire commun</p>
-          <p>Outils communs</p>
-        </section>
 
         <section>
+          <section>
+            <h3>Partage</h3>
 
-          <p>Devopsdays</p>
-          <p>Devops meetups</p>
-          <p>Devops mailing list
-            <a href="https://groups.google.com/forum/#!forum/paris-devops">https://groups.google.com/forum/#!forum/paris-devops</a>
-          </p>
+            Share Ideas
+Share Metrics
+Ops: Give devs shell access
+Devs: See what technology can be leveraged
 
+            <p>Vision commune</p>
+            <p>Problèmes communs</p>
+            <p>Glossaire commun</p>
+            <p>Outils communs</p>
+          </section>
+
+          <section>
+            <h3>Partage</h3>
+
+            <p>Devopsdays</p>
+            <p>Devops meetups</p>
+            <p>Devops mailing list
+              <a href="https://groups.google.com/forum/#!forum/paris-devops">https://groups.google.com/forum/#!forum/paris-devops</a>
+            </p>
+          </section>
         </section>
 
       </div>

@@ -40,14 +40,17 @@
   <body>
 
     <div class="reveal">
-
+      <a href="00_plan.html#/2">&uarr;</a>
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
           <h1>Cloud Computing et Architectures "Scalables"</h1>
           <h3>ou comment utiliser la flexibilité du Cloud pour monter en charge</h3>
           <p>
-            <small><a href="http://tornil.me">Bertrand Tornil</a> / <a href="http://twitter.com/bobuss">@bobuss</a></small>
+            <small>INSSET - Master 2 Cloud Computing</small>
+          </p>
+          <p>
+            <small>Septembre 2013 - <a href="http://tornil.me">Bertrand Tornil</a></small>
           </p>
         </section>
 
@@ -61,7 +64,7 @@
         </section>
 
         <section>
-          <h2>Imaginons Un Service Web</h2>
+          <h2>Rappelons en quoi consiste un Service Web (over HTTP)</h2>
 
             <p>Un client fait une requête HTTP
               <pre><code data-trim contenteditable>
@@ -70,19 +73,19 @@ Host: www.mon_super_service_web.com
               </code></pre>
             </p>
             <br>
-            <p>Le serveur
-              <ol>
-                <li>... reçoit la réquête...</li>
-                <li>... la traite ...</li>
-                <li>... et génère une réponse</li>
-              </ol>
-              <pre><code data-trim contenteditable>
+            <p class="fragment>">Le serveur
+            <ol >
+              <li class="fragment">... reçoit la réquête...</li>
+              <li class="fragment">... la traite ...</li>
+              <li class="fragment">... et génère une réponse
+                <pre><code data-trim contenteditable>
 HTTP/1.1 200 OK
 Content-Type: text/html
 Content-Length: 9
 Hello bob
               </code></pre>
-            </p>
+              </li>
+            </ol></p>
         </section>
 
         <section>
@@ -100,289 +103,519 @@ Hello bob
           <h2>Solution 1</h2>
           <p>Investir dans une machine plus puissante</p>
 
-          <img src="general.jpg">
+          <img src="img/general.jpg">
+
+          <p class="fragment">Forcément limité.</p>
+          <p class="fragment">Et le prix s'envole.</p>
         </section>
 
         <section>
-          <h2>Solution 2</h2>
-          <p>Répartir la charge sur plus de machines</p>
+          <section>
+            <h2>Solution 2</h2>
+            <p>Répartir la charge sur plus de machines</p>
 
-* on achète de nouvelles machines (installation, monitoring, test, déploiement)
-* OU
-* on lance une nouvelle instance sur le Cloud
-
-
-##Souplesse du Cloud \o/
-        </section>
-
-        <section>
-          <h2>Fantastic Ordered List</h2>
-#Séparation Serveur Web / DB
-
-##Un example avec 2 machines :
-
-* Le serveur web
-* La DB
-
-##on améliore les choses, mais ç'est forcément limité
-
-        </section>
-
-        <section data-markdown>
-          <script type="text/template">
-##Stratégie multi-frontal
-
-on "clone" le serveur web x fois
-
-encore une fois le cloud rend les choses aisées
-
-* AWS = 1 commande = 1 nouvelle instance
-* puppet = industrialisation de la configuration
-* capistrano = industrialisation du déploiement
-
-
-et pour répartir les requêtes entre les frontaux
-
-on place un "load balancer" devant
-          </script>
-        </section>
-
-        <section id="transitions">
-          <h2>Transition Styles</h2>
-          <p>
-            You can select from different transitions, like: <br>
-            <a href="?transition=cube#/transitions">Cube</a> -
-            <a href="?transition=page#/transitions">Page</a> -
-            <a href="?transition=concave#/transitions">Concave</a> -
-            <a href="?transition=zoom#/transitions">Zoom</a> -
-            <a href="?transition=linear#/transitions">Linear</a> -
-            <a href="?transition=fade#/transitions">Fade</a> -
-            <a href="?transition=none#/transitions">None</a> -
-            <a href="?#/transitions">Default</a>
-          </p>
-        </section>
-
-        <section id="themes">
-#Stratégie multi-frontal
-
-##on "clone" le serveur web x fois
-
-* encore une fois le cloud rend les choses aisées
-* * AWS = 1 commande = 1 nouvelle instance
-* * puppet = industrialisation de la configuration
-* * capistrano = industrialisation du déploiement
-
-## et Pour répartir les requêtes entre les frontaux
-
-* on place un "load balancer" devant
-        </section>
-
-        <section>
-#Stratégies de "Load balancing"
-
-##round robin
-
-* Chacun son tour
-
-##least connected
-
-* le load-balancer doit pouvoir connaître l'état des connexions des frontaux
-* il adapte le flot selon la charge réseau du frontal
-
-##less loaded
-
-* cette fois c'est l'état de charge général du frontal qui est pris en compte
-
-##chaque stratégie a ses avantages / inconvénient
-
-* ELB chez AWS
-        </section>
-
-        <section>
-#Remarques sur le multi-frontal
-
-## permet de monter pratiquement indéfiniment
-
-* c'est une recette magique, qui a fait ses preuves
-
-## soulève de nouveaux problèmes :
-
-* partage d'information entre frontaux (session)
-* déploiement (capistrano règle pas mal de problème)
-* prix... à mettre en balance
-        </section>
-
-        <section>
-#Bottleneck du stockage
-
-## Arrive un moment, ou l'ajout de serveurs Webs cesse de régler le problème de la montée en charge
-
-* le stockage est notre nouveau point de contension
-
-## Première approche : cacher les données
-
-* memcache devant la DB
-* premier NoSQL réellement utilisé
-* livejournal
-
-## Pour aller plus loin
-
-* cela dépend de nos besoins
-* ceci est une remarque générale... il n'y a pas de solution miracle
-        </section>
-
-        <section data-background="img/night.png" data-background-repeat="repeat" data-background-size="640px">
-          <div class="starwars" style="color: rgb(255, 255, 43);">
-            <p class="fragment">... to step through ...</p>
-            <p class="fragment">... to step through ...</p>
-            <p class="fragment">... to step through ...</p>
-          <!-- <section data-background="#007777">
-            <h2>Slide Backgrounds</h2>
-            <p>
-              Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
+            <p class="fragment">On achète de nouvelles machines (commande, installation, monitoring, test, déploiement)</p>
+            <p class="fragment">OU</p>
+            <p class="fragment">On lance une nouvelle instance sur le Cloud<br>
+              <br>
+              <b class="fragment">Souplesse \o/</b>
             </p>
-            <a href="#" class="image navigate-down">
-              <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-            </a>
           </section>
-          <section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
-            <h2>Image Backgrounds</h2>
-            <pre><code>&lt;section data-background="image.png"&gt;</code></pre>
+
+          <section>
+              <h3>Notion de capacité élastique</h3>
+              <img src="img/capacite.png">
           </section>
-          <section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
-            <h2>Repeated Image Backgrounds</h2>
-            <pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-          </section> -->
+
+          <section>
+              <h3>Notion de capacité élastique</h3>
+              <img src="img/elastic.png">
+          </section>
         </section>
 
         <section>
-#Bottleneck du stockage
+          <h2>Premiers temps</h2>
+          <p>Séparation des principales briques de l'architecture</p>
 
-## Arrive un moment, ou l'ajout de serveurs Webs cesse de régler le problème de la montée en charge
+          <ul>
+            <li>Le serveur web</li>
+            <li>La DB</li>
+          </ul>
 
-* le stockage est notre nouveau point de contension
-
-## Première approche : cacher les données
-
-* memcache devant la DB
-* premier NoSQL réellement utilisé
-* livejournal
-
-## Pour aller plus loin
-
-* cela dépend de nos besoins
-* ceci est une remarque générale... il n'y a pas de solution miracle
+          <br><br>
+          <p class="fragment">C'est la première marche.</p>
         </section>
+
 
         <section>
-#Le Web des CMS
+          <section>
+            <h2>Stratégie multi-frontal</h2>
+            <p>On "clone" le serveur web</p>
+            <br>
+            <ul>
+              <li class="fragment">Sur AWS ou autre IAAS : en 1 commande, nous avons 1 nouvelle instance bootée en 1 minute</li>
+              <li class="fragment">Un outil de gestin de configuration comme puppet, chef ou salt-stack : industrialisation du déploiement de la configuration</li>
+              <li class="fragment">Et un outil capistrano ou fabric : industrialisation du déploiement du code</li>
+            </ul>
+            <br>
+            <br>
+            <p class="fragment">Et pour répartir les requêtes entre les frontaux, on place un "load balancer" devant</p>
+          </section>
 
-## Sites avec beaucoup de lectures
+          <section>
+            <h3>Une image valant souvent mieux qu'un long discours...</h3>
 
-* Solution : Réplication de la DB
-* 1 master pour les écriture
-* plusieurs slaves pour les lectures
-* attention : gestion du retard
+            <img src="img/load_balancing.jpg">
+          </section>
         </section>
+
+
+        <section>
+          <section>
+            <h2>Stratégies de "Load balancing"</h2>
+
+            <div class="fragment">
+              <h3>Round robin</h3>
+
+              <p>Signifie tourniquet.</p>
+              <p>Avec un tel ordonnancement, chaque machine est servie l'une après l'autre, sans notion de priorité</p>
+            </div>
+          </section>
+
+          <section>
+            <h3>Least connected</h3>
+
+            <p>Le load-balancer doit pouvoir connaître l'état des connexions des frontaux</p>
+            <p>Il adapte le flot selon la charge réseau du frontal</p>
+          </section>
+
+          <section>
+            <h3>less loaded</h3>
+
+            <p>Cette fois c'est l'état de charge général du frontal qui est pris en compte</p>
+          </section>
+        </section>
+
+
+        <section>
+          <h2>Remarques sur le multi-frontal</h2>
+
+          <p>Cette stratégie permet de monter pratiquement indéfiniment. C'est une recette magique, qui a fait ses preuves</p>
+
+          <p class="fragment">Chez Facebook, on estime qu'ils ont monté plus de 30000 serveurs web.</p>
+
+          <div class="fragment">
+            <p>Néanmoins, elle soulève de nouveaux problèmes :
+              <ul>
+                <li>Le partage d'information entre frontaux (session utilisateurs)</li>
+                <li>Les déploiements</li>
+                <li>La maintenance</li>
+              </ul>
+            </p>
+          </div>
+        </section>
+
+
+        <section>
+          <h2>Les données</h2>
+
+          <p>Arrive un moment, ou l'ajout de serveurs webs ne peut plus seul, régler le problème de la montée en charge : tous ces seveurs webs "attaquent" la même base de données....</p>
+
+          <div class="fragment">
+            <p>... qui elle aussi arrive à sa limite</p>
+            <p>L'accès aux données est notre nouveau point de contention.</p>
+          </div>
+        </section>
+
+
+        <section>
+          <h2>Et bien nous allons augmenter le nombre de machines pour la DB</h2>
+
+          <h4 class="fragment">Ok, mais comment ?</h4>
+
+          <p class="fragment">On ne peut pas simplement cloner. Les DB seraient rapidement désynchronisées les unes des autres.</p>
+        </section>
+
+
+        <section>
+          <h2>La réplication</h2>
+
+          <p>Pour les services qui se caractérise côté DB par beaucoup de lectures, par rapport aux ecritures</p>
+
+          <div class="fragment">
+            <p>Une machine est "Master" : c'est sur elle qu'on effectue toutes les commande en écriture</p>
+            <p>Une ou plusieurs machines sont des "Slaves" ; sur lesquelles les opérations de lecture sont effectuées</p>
+            <p>Attention : gestion du retard</p>
+        </section>
+
 
         <section>
           <section>
             <h3>Mais au bout d'un moment...</h3>
-            <p>la machine qui héberge la DB arrive à ses limites</p>
+
+            <p>Chaque machine qui héberge une DB peut arriver à sa limite.</p>
+            <p>Dans le schéma master-slaves, le master devient à son tour la faiblesse de l'architecture.</p>
+            <p class="fragment">Surtout sur les services où le nombre d'écritures est du même ordre de grandeur que le nombre de lecture (Réseau sociaux, fils de commentaires, discussions)</p>
           </section>
 
           <section>
             <h3>Solution #1 : Partitionnemnent vertical</h3>
-
+            <p>On dispatch les tables sur plusieurs machines</p>
+            <p class="fragment">On commence à dénormaliser le modèle : certaines tables ne pourront plus être jointes.</p>
           </section>
 
           <section>
             <h3>Solution #2 : Partitionnement horizontal</h3>
-            <p>aka Sharding</p>
+            <p>le Sharding</p>
             <br>
-            <p>Avantage: facile ex nihilo</p>
-            <p>Inconvénient: difficile en production</p>
+            <p class="fragment">Principe : on coupe les tables en plus petites tables que l'on peut mettre sur des bases de données différentes.</p>
             <br>
-            <p>Solution chez Instagram : pré-sharding</p>
+            <div class="fragment">
+              <p>Avantage: assez simple</p>
+              <p>Inconvénient: difficile à faire évoluer en production</p>
+            </div>
+            <br>
+            <p class="fragment">Une réponse peut être de pré-sharder ses tables dès le début.</p>
           </section>
 
           <section>
-            <h3>Penser à d'autre technologies : Le NoSQL</h3>
-            <p>...</p>
+            <h3>Le NoSQL</h3>
+            <p>Avec la dénormalisation du modèle, on se retrouve à s'intéresser à d'autre technologies.</p>
+            <br>
+            <br>
+            <p class="fragment">On y arrive... (teasing ...)</p>
           </section>
-
-          <section>
-            Partie 3 : L'art de la distribution des données
-===============================================
-
----
-#Table de hachage persistante
-
-* les informations sont ici stockées sur un nœud unique.
-* Ce mode de stockage est donc efficace tant que le volume de données stockées et la charge de requêtes n’excèdent pas les capacités de la machine.
-* En outre aucune tolérance aux pannes n’est ici admise puisque les données ne sont pas redondées.
-
----
-#Sharding en distribution modulo
-
-## On distribue les clés selon le modulo (du md5 de la clé par exemple)
-
-![partition](images/partition.png "Partition")
-
-* super simple
-* mais on doit re-distribuer N-1/N data lors de l'ajout d'un N+1-ième noeud
-
----
-#Sharding en hashing consistent
-
-## un hashring est généré
-
-![consistent hashing](images/consistenthashing.png "Consistent Hashing")
-
-* plus complexe
-* on ne doit re-distribuer que 1/N data lors de l'ajout d'un N+1-ième noeud
-
----
-#Réplication sur N instances
-
-## type simple  : 1 partition par instance
-
-## type replica : M partitions par instances
-
-![replication](images/replication.png "replication")
-
-* on retrouve la notion de relachage de la consistence
-* Dynamo (Amazon) et BigTable de google fonctionnent de cette manière
-          </section>
-
         </section>
 
         <section>
           <h2>Le NoSQL</h2>
-          <p>Ou, quand dénormaliser ses données ?</p>
+          <h4 class="fragment">un peu de théorie</h4>
+        </section>
+
+
+        <section>
+          <section>
+            <h3>Le théorème CAP de Brewer (1998 - 2000)</h3>
+
+            <p><small>en très approximatif</small></p>
+
+            <div class="fragment">
+              <h4>C : Consistency</h4>
+              <p>Un service est dit "consistent" s'il opère ses opérations entièrement... ou pas du tout</p>
+              <p>Notions de transactions, propriétés ACID (Atomicité, Cohérence, Isolation, Durabilité)</p>
+              <p>Tous les nœuds du système voient exactement les mêmes données au même moment</p>
+            </div>
+          </section>
+
+          <section>
+            <h4>A : Availability</h4>
+            <p>Un service est "available"... s'il marche...</p>
+            <p>On considère qu'il marche quand chaque client peut utiliser le service en écriture et en lecture</p>
+            <p>Garantie que toutes les requêtes reçoivent une réponse</p>
+          </section>
+
+          <section>
+            <h4>P : Partition Tolerance</h4>
+            <p>Dès lors que les données sont distribuées en plusieurs endroits (machines, lieux), aucune panne moins forte qu'une destruction globale du réseau ne peut justifier un arrêt du service</p>
+          </section>
+
+          <section>
+            <h3>Que dit le théorème CAP ?</h3>
+
+            <blockquote class="fragment">
+            des 3 propriétés CAP... on peut n'en garantir que 2
+            </blockquote>
+            <br><br>
+            <p class="fragment">Et bien, nous voilà bien ...</p>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h3>Quelles conséquences ?</h3>
+
+            <p class="fragment">
+              La conviction générale est que pour des systèmes distribués très étendus, les concepteurs ne peuvent renoncer à P et doivent donc faire le choix difficile entre C et A. </p>
+            <p class="fragment">Dans un certain sens, le mouvement NoSQL consiste à faire des choix qui se concentrent sur la disponibilité en premier lieu, et la cohérence en second; les bases de données qui adhèrent aux propriétés ACID (Atomicité, Cohérence, Isolation, Durabilité) font l'inverse.
+            </p>
+          </section>
+
+          <section>
+            <h4>Garder CP</h4>
+
+            <p>L'applicatif doit supporter la panne de partitions</p>
+            <p>Peut se réaliser entre autre par du découpage fonctionnel : 1 fonctionnalité est down, mais ne gène pas le reste du service</p>
+          </section>
+
+          <section>
+            <h4>Garder le AP</h4>
+
+            <p>concept du "Eventually Consistent" (W.Vogels)</p>
+            <p>notions de replicas(N), de quorum en lecture(R), en écriture(W)</p>
+            <p>les "vector clocks" retracent l'historique des opérations, et permettent à l'applicatif de trancher. Parfois selon une logique métier</p>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>L'art de la distribution des données</h2>
+
+            <p>Nous avons des données, et plusieurs machines sur lesquelles les envoyer</p>
+
+            <p class="fragment">Comment allons-nous nous y prendre ?</p>
+          </section>
+
+          <section>
+            <h3>Table de hachage persistante</h3>
+
+            <p>les informations sont ici stockées sur un nœud unique.</p>
+            <p>Ce mode de stockage est donc efficace tant que le volume de données stockées et la charge de requêtes n’excèdent pas les capacités de la machine.</p>
+            <p>En outre aucune tolérance aux pannes n’est ici admise puisque les données ne sont pas redondées.</p>
+          </section>
+
+          <section>
+            <h4>Sharding en distribution modulo</h4>
+
+            <p>On distribue les clés selon le modulo (du md5 de la clé par exemple)</p>
+            <img src="img/partition.png">
+            <ul class="fragment">
+              <li>C'est très simple simple</li>
+              <li>mais on doit re-distribuer N-1/N data lors de l'ajout d'un N+1-ième noeud</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>Sharding en hashing consistent</h4>
+
+            <p>Un hashring est généré</p>
+            <img src="img/consistenthashing.png">
+
+            <ul class="fragment">
+              <li>C'est plus complexe</li>
+              <li>par contre, on ne doit re-distribuer que 1/N data lors de l'ajout d'un N+1-ième noeud</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>Réplication sur N instances</h4>
+
+            <p>Type simple  : 1 partition par instance</p>
+            <p>Type replica : M partitions par instances</p>
+            <img src="img/replication.png">
+
+            <ul class="fragment">
+              <li>On retrouve la notion de relachage de la consistence</li>
+              <li>Dynamo (Amazon) et BigTable de google fonctionnent de cette manière</li>
+            </ul>
+          </section>
+        </section>
+
+
+        <section>
+          <h2>Le NoSQL</h2>
+        </section>
+
+
+        <section>
+          <h3>Généralités</h3>
+
+          <ul>
+            <li class="fragment">Le NoSQL regroupe de nombreuses bases de données,</li>
+            <li class="fragment">assez récentes pour la plupart,</li>
+            <li class="fragment">avec une logique de représentation de données non relationnelle</li>
+            <li class="fragment">et qui n’offrent donc pas une interface de requêtes en SQL.</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h3>À propos du NoSQL</h3>
+
+          <p>Ce n'est pas une solution miracle pour le stockage de données</p>
+          <p>Par contre, la logique de représentation des données différentes peut apporter une reponse satisfaisante à certains problèmes</p>
+
+          <p class="fragment">Et comme toujours</p>
+          <div class="fragment">
+            <h4>Use The Right Tool !</h4>
+            <img src="img/pizza.jpg">
+          </div>
+        </section>
+
+
+        <section>
+          <h3>Les NoSQL "Clé-Valeur"</h3>
+
+          <img src="img/type_valeur.png">
+          <ul>
+            <li>En général, très rapides</li>
+            <li>Possible de requêter sur la clé, peu sur les valeurs</li>
+            <li>Exemples : Memcache, Riak, Redis, Voldemort</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h3>Les NoSQL "Clé-Colonne"</h3>
+
+          <img src="img/type_colonnes.png">
+          <ul>
+            <li>Colonnes différentes pour chaque ligne</li>
+            <li>Capacité à stocker des listes d'informations</li>
+            <li>Requétage, indexes</li>
+            <li>Capacité d'accéder à des intervalles de colonnes</li>
+            <li>Exemples : HBase, Cassandra</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h3>Les NoSQL "Clé-Document"</h3>
+
+          <img src="img/type_document.png">
+          <ul>
+            <li>Extension du modèle clé-valeur</li>
+            <li>Un document contient des données organisées de manière hiérarchiques (XMl, JSON)</li>
+            <li>Indexes, notions de champs, requêtes</li>
+            <li>Exemples : MongoDB, CouchDB</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h3>Les NoSQL "Graphs"</h3>
+
+          <img src="img/type_graph.png">
+          <ul>
+            <li>stocke des données liées par des relations</li>
+            <li>réseaux sociaux</li>
+            <li>base de données géographiques</li>
+            <li>Exemples : Neo4j, HypergraphDB, FlockDB</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>Ajouter un système de cache devant les données</h2>
+
+            <p>Nous allons utiliser un stockage plus rapide qu'une base de donnée, mais non-relationnel</p>
+
+            <p>Dans les fait, cela revient à mettre en oeuvre des techno comme memcache. Il s'agit d'un cache en mémoire, accessible au travers du réseau. Il a été développé par Livejournal.</p>
+          </section>
+
+          <section>
+
+            <p>Par exemple, nous remplaçons:
+              <pre><code data-trim contenteditable>
+function get_by_id(id):
+    return query('SELECT FROM ma_table WHERE id=%d' % id).fetch_one()
+              </code></pre>
+
+              par
+
+              <pre><code data-trim contenteditable>
+function get_by_id(id):
+    if cache['ma_table'].get(id) is not null:
+        // la valeur est en cache : pas besoin de requêter la DB
+        return cache['ma_table'].get(id)
+    else:
+        // la valeur n'est pas en cache, on requête
+        res = query('SELECT FROM ma_table WHERE id=%d' % id).fetch_one()
+        // et on garde la réponse pour plus tard
+        cache['ma_table'].set(id, res)
+        return res
+              </code></pre>
+            </p>
+          </section>
+
+          <section>
+            <h3>Mais attention... de nouveaux problèmes se présentent :)</h3>
+
+            <blockquote>There are only two hard things in Computer Science: cache invalidation and naming things.
+
+            -- Phil Karlton
+          </blockquote>
+
+            <br>
+            <div class="fragment">
+              <p>Pour aller plus loin :
+                <ul>
+                  <li>cache de listes</li>
+                  <li>cache d'élément de listes</li>
+                  <li>structure complexes, imbriquées</li>
+                  <li>...</li>
+                </ul>
+              </p>
+            </div>
+          </section>
         </section>
 
 
 
-
         <section>
-          <h2>Fallacies of Distributed Computing</h2>
-          <ul>
-            <li>The network is reliable.</li>
-            <li>Latency is zero.</li>
-            <li>Bandwidth is infinite.</li>
-            <li>The network is secure.</li>
-            <li>Topology doesn't change.</li>
-            <li>There is one administrator.</li>
-            <li>Transport cost is zero.</li>
-            <li>The network is homogeneous.</li>
-          </ul>
+
+          <h2>Avec toutes ces machines / instances</h2>
+
+          <div class="fragment">
+            <h4>Fallacies of Distributed Computing</h4>
+            <ul>
+              <li>The network is reliable.</li>
+              <li>Latency is zero.</li>
+              <li>Bandwidth is infinite.</li>
+              <li>The network is secure.</li>
+              <li>Topology doesn't change.</li>
+              <li>There is one administrator.</li>
+              <li>Transport cost is zero.</li>
+              <li>The network is homogeneous.</li>
+            </ul>
+          </div>
 
         </section>
 
 
         <section>
           <h2>Some Case Studies</h2>
+        </section>
+
+        <section>
+          <section>
+            <h2>Case study #0</h2>
+
+            <h3>IsCool Entertainment</h3>
+            <p>La montée en charge du jeu IsCool</p>
+          </section>
+
+          <section>
+            <h3>Les débuts ...</h3>
+            <p>En 7 mois, l'application est passée de 0 à 850 000 utilisateurs uniques / jour.</p>
+            <p>600000 pages vues / jour</p>
+          </section>
+
+          <section>
+            <h3>... puis ...</h3>
+            <p>Choix rapide du cloud, pour multiplier les frontaux webs</p>
+            <p>Mise en cache (memcache)</p>
+            <p>Sharding massif (certaines sur 500 tables, éparpillées sur 20 serveurs mysql)</p>
+          </section>
+
+          <section>
+            <h3>... refactor -> v2 -> v3</h3>
+            <p>symfony 2</p>
+            <p>Redis (depuis la version 1.0)</p>
+            <p>Utilisation d'outils de monitoring exotiques : Pinba</p>
+            <p>Refonte des briques les plus chargées (échange de points, leaderboard)</p>
+          </section>
+
+          <section>
+            <h3>Au final, quelques chiffres</h3>
+            <p>20M pages vues / jour (35M en pic)</p>
+            <p>130 000 sessions php simultanées sur l'ensembre de frontaux</p>
+            <p>1Ma de points échangés / jour (record à 2Ma)</p>
+            <p>Au total, 14M de personnes seront passées sur le jeu</p>
+          </section>
+
         </section>
 
         <section>
@@ -402,7 +635,7 @@ on place un "load balancer" devant
           </section>
 
           <section>
-            <blockquote>"scaling = replacing allcomponents of a car while driving it at 100mph"</blockquote>
+            <blockquote>scaling = replacing all components of a car while driving it at 100mph</blockquote>
           </section>
         </section>
 

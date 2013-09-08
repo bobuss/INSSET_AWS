@@ -4,13 +4,14 @@ Atelier AWS
 La doc en ligne
 ---------------
 
-```
-http://aws.amazon.com/fr/documentation/
-```
+http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
+
 
 
 Installer AWS CLI
 -----------------
+
+Pour info : https://github.com/aws/aws-cli
 
 ```
 ($sudo apt-get install -y python-pip)
@@ -63,18 +64,18 @@ $ aws ec2 describe-regions
 }
 ```
 
-L'autocompletion
-----------------
+Pratique : l'autocompletion
+---------------------------
 
-```
+```bash
 complete -C aws_completer aws
-``
+```
 
 
 On commence Par se créer une paire de clés
 ------------------------------------------
 
-```
+```bash
 $ aws ec2 create-key-pair --key-name MyKeyPair
 
 {
@@ -112,6 +113,15 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
 -----END RSA PRIVATE KEY-----
 ```
 
+Astuce pour afficher clairement la clé... et panipuler plus facilement du json en ligne de commande.
+
+Installer jq
+
+http://stedolan.github.io/jq/
+
+```
+aws ec2 create-key-pair --key-name kp_test | jq '.KeyPair.KeyMaterial' | xargs -0 printf
+```
 
 
 Lancement de notre première instance

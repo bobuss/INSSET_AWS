@@ -1,4 +1,4 @@
-FILENAME=UPicardie\ 2013
+FILENAME=aws
 
 HTML_FILES=\
 	templates/header.html\

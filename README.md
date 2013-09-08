@@ -1,20 +1,16 @@
 Intervention INSSET - Septembre 2013
 ====================================
 
-Contenu des cours
 
+## lundi
 
-Présentation
-------------
+### Présentation générale
 
 - qui suis-je ?
-- qu'ai-je fait ?
-- que fais-je ?
-- que vais-je faire ?
+- mise en place du backlog
 
 
-AWS
----
+### Slides AWS
 
 - pourquoi ?
 - comment ?
@@ -35,6 +31,21 @@ AWS
 	- CloudFront (CDN)
 - architecture web classique
 - architecture web dans AWS
+
+
+
+Atelier AWS
+
+
+(Mardi)
+
+Poursuite de l'atelier AWS
+
+Discussion
+
+
+
+(mercredi)
 
 
 Utilisation du cloud pour la Montée en charge et la Résilience
@@ -107,20 +118,22 @@ Contenu des Ateliers
 
 ### EC2
 
-- Security groups
 - Une première instance
 - Connexion
 - Jouons avec les security groups
 - Start / Stop de l'instance
 - Installation d'un mini service web
-- Le fichier user-data
-- Les EBS
-- ELB
-- une deuxieme instance derrière l'ELB
+- Le fichier user-data ; lancement d'instances
+- Génération d'une AMI ; lancement d'instances
+- Security groups
 
+### EBS
+
+### ELB
 
 ### AutoScaling
 
+### TP : L'art de la distribution de don
 
 
 

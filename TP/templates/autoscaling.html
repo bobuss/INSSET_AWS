@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<title>Pratique de l'Autoscaling sur Amazon EC2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Travaux Pratique des services d'autoscaling sur Amazon Web Service.">
-<meta name="author" content="Bertrand Tornil">
-
-<link href="swiss.css" rel="stylesheet"></link>
-</head>
-<body><h1>Atelier AutoScaling EC2</h1>
+<h1>Atelier AutoScaling EC2</h1>
 <p>Nous allons utiliser l&#39;<a href="http://aws.amazon.com/fr/autoscaling/">AutoScaling AWS</a> pour mettre en place un webservice de manipulation d&#39;images qui puisse s&#39;adapter à la charge entrante tout en minimisant les coûts de possession. Pour cela, nous allons partir d&#39;une AMI, automatiser intégralement son lancement, puis l&#39;injecter dans la configuration de notre groupe d&#39;autoscaling afin de pouvoir faire varier le nombre de machines derrière un Elastic Load Balancer.</p>
 <p><img src="Architecture.png" alt="Autoscaling"></p>
 <p>Pour information, nous allons utiliser une AMI Amazon sur laquelle nous allons installer NodeJS, ImageMagick et <a href="https://github.com/dawanda/node-imageable-server">node-imageable-server</a>, pour fournir un webservice basique (qui tournera en root sur le port 80). Il est également nécessaire d&#39;installer les <a href="http://aws.amazon.com/developertools/351">EC2 API tools</a>, les <a href="http://aws.amazon.com/developertools/2536">ELB tools</a>, les <a href="http://aws.amazon.com/developertools/2534">CloudWatch tools</a> et les <a href="http://aws.amazon.com/developertools/2535">AutoScaling tools</a>.</p>
@@ -406,15 +395,3 @@ killall -HUP 1</p>
 <h2>Pour ceux qui ont vraiment le temps</h2>
 <p>On peut définit un deuxième groupe d&#39;autoscaling : sans ELB, avec une configuration de lancement permettant de lancer des machines Tsung simulant des utilisateurs de notre webservice.</p>
 <p>Les Tsung devraient gagner :)</p>
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-32527212-2']);
-  _gaq.push(['_trackPageview']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
-</body>
-</head>
