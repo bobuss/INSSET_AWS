@@ -106,8 +106,8 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
 <h2>Lancement de notre première instance</h2>
 <h3>choix d&#39;une ami</h3>
 <p>pour ubuntu 12.04 (LTS), c&#39;est <a href="https://cloud-images.ubuntu.com/precise/current/">https://cloud-images.ubuntu.com/precise/current/</a></p>
-<p>Nous allons prendre l&#39;image du système 64 bits, en root store sur EBS. D&#39;où la commande :</p>
-<pre><code>ec2-run-instances ami-7daee114 -t t1.micro --region us-east-1 --key MyKeyPair
+<p>Nous allons prendre l&#39;image du système 64 bits, en root store sur EBS - ami : ami-7daee114. D&#39;où la commande :</p>
+<pre><code>aws ec2 run-instances --image-id ami-7daee114 -t t1.micro --region us-east-1 --key MyKeyPair
 {
     &quot;OwnerId&quot;: &quot;511122800347&quot;,
     &quot;ReservationId&quot;: &quot;r-f6edcf94&quot;,
@@ -350,7 +350,11 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
 <h2>Excercice</h2>
 <p>Installer un site web quelconque sur 3 instances, rattachées à un ELB. Lancer un test de charge naif (ou pas) afin d&#39;observer les logs sur chaque machine.</p>
 <h2>La même chose en console WEB (ouf!)</h2>
-<p><a href="https://180843797005.signin.aws.amazon.com/console/">https://180843797005.signin.aws.amazon.com/console/</a></p>
+<p>Amazon est un des pioniers du Web. Il aurait été étonnant de ne pas avoir une façon plus visuelle d&#39;utiliser les services d&#39;AWS.</p>
+<p>C&#39;est possible à l&#39;addresse : <a href="https://180843797005.signin.aws.amazon.com/console/">https://180843797005.signin.aws.amazon.com/console/</a></p>
+<p>Mais vous allez devoir vous créer votre login</p>
+<p><code>`
+aws iam create-login-profile help</code></p>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-32527212-2']);

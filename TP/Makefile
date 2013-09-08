@@ -1,4 +1,4 @@
-FILENAME=aws
+FILENAME=01_aws_correction
 
 HTML_FILES=\
 	templates/header.html\

@@ -51,7 +51,7 @@ $ aws ec2 describe-regions
         }
     ]
 }</code></pre>
-<h2>Pratique : l&#39;autocompletion</h2>
+<h3>Pratique : l&#39;autocompletion</h3>
 <pre><code class="lang-bash">complete -C aws_completer aws</code></pre>
 <h2>On commence Par se créer une paire de clés</h2>
 <pre><code class="lang-bash">$ aws ec2 create-key-pair --key-name MyKeyPair
@@ -90,13 +90,11 @@ l4oB72CO6PCJXLLtTj85brYLP6mZyecOvD4a7Zr97NcmA4aUZtv7ERHoHSRhyOm1ePHaV2i7JFfo
 Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
 -----END RSA PRIVATE KEY-----</code></pre>
 <p>Astuce pour afficher clairement la clé... et panipuler plus facilement du json en ligne de commande.</p>
-<p>Installer jq</p>
-<p><a href="http://stedolan.github.io/jq/">http://stedolan.github.io/jq/</a></p>
+<p>Installer jq : <a href="http://stedolan.github.io/jq/">http://stedolan.github.io/jq/</a></p>
 <pre><code>aws ec2 create-key-pair --key-name kp_test | jq &#39;.KeyPair.KeyMaterial&#39; | xargs -0 printf</code></pre>
 <h2>Lancement de notre première instance</h2>
 <h3>choix d&#39;une ami</h3>
-<p>pour ubuntu 12.04 (LTS)</p>
-<pre><code>https://cloud-images.ubuntu.com/precise/current/</code></pre>
+<p>pour ubuntu 12.04 (LTS), c&#39;est <a href="https://cloud-images.ubuntu.com/precise/current/">https://cloud-images.ubuntu.com/precise/current/</a></p>
 <p>Nous allons prendre l&#39;image du système 64 bits, en root store sur EBS. D&#39;où la commande :</p>
 <pre><code>ec2-run-instances ami-7daee114 -t t1.micro --region us-east-1 --key MyKeyPair
 {
@@ -156,6 +154,7 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
     ]
 }</code></pre>
 <p>On note le <code>&quot;PublicDnsName&quot;: null</code>, ce qui signifie que l&#39;instance n&#39;a pour le moment pas d&#39;entrée DNS, puisqu&#39;elle est en train de se lance (statut <code>pending</code>).</p>
+<h2>se connecter à l&#39;instance</h2>
 <p>Quelques instants plus tard, nous allons redemander :</p>
 <pre><code>aws ec2 describe-instances
 {
@@ -226,14 +225,15 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
         }
     ]
 }</code></pre>
-<p>Et Bam ! la machine est prête (statut &quot;running&quot;). Notons le DNS public (pour nous c&#39;est ec2-107-22-76-96.compute-1.amazonaws.com)</p>
+<p>Et Bam ! la machine est prête (statut &quot;running&quot;). Notons le DNS public (pour nous c&#39;est <code>ec2-107-22-76-96.compute-1.amazonaws.com</code>).</p>
+<p>Attention aux machines des petits camarades. Vous les verrez :)</p>
 <p>Normalement, nous avons maintenant tout ce qu&#39;il faut pour nous connecter à notre toute première instance en SSH. Chaque système a ses petites habitudes. Sous ubuntu, c&#39;est l&#39;user ubuntu qui doit se connecter.</p>
 <pre><code>ssh ubuntu@ec2-107-22-76-96.compute-1.amazonaws.com -i my-key-pair.pem -v
 ...
 ...
 [ubuntu@ip-10-202-59-53 ~]$</code></pre>
-<p>On peut en lancer une deuxième, une troisième ... La commande describe-instances nous fournira les informations de ses instances.</p>
-<p>Stopper une instance</p>
+<p>On peut en lancer une deuxième, une troisième ... La commande describe-instances nous fournira les informations de ces instances.</p>
+<h2>Stopper une instance</h2>
 <pre><code>aws ec2 stop-instance --instance-id i-cb3d58a6
 {
     &quot;Reservations&quot;: [
@@ -303,8 +303,9 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
         }
     ]
 }</code></pre>
-<p>aws ec2 terminate-instances --instance-id i-cb3d58a6</p>
-<h3>Mumuse avec les EBS (Elasctic Block Storage)</h3>
+<h2>terminer une instance</h2>
+<pre><code>aws ec2 terminate-instances --instance-id i-cb3d58a6</code></pre>
+<h2>Mumuse avec les EBS (Elasctic Block Storage)</h2>
 <p>Dans la description de notre instance, nous notons</p>
 <pre><code>&quot;BlockDeviceMappings&quot;: [
                         {
@@ -318,19 +319,19 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
                         }
                     ],</code></pre>
 <p>Nous pouvons le détacher</p>
-<p>Au préalable, on le démonde sur notre instance</p>
+<p>Au préalable, on le démonte.</p>
 <pre><code># umount -d /dev/sda</code></pre>
 <p>Et depuis la ligne de commande :</p>
 <pre><code>aws ec2 detach-volume --instance-id i-3a0ba252 --volume-id vol-21726d61</code></pre>
-<h3>Elastic Load Balancer</h3>
+<h2>Elastic Load Balancer</h2>
 <p>On déclare un ELB nommé upicardie-asdemo1 sur la zone us-east-1d, qui écoute sur le port 80 et qui répartit les requêtes sur le port 80 des instances :</p>
 <pre><code>aws elb create-load-balancer \
   --load-balancer-name upicardie-asdemo1 \
   --availability-zones us-east-1d \
-  --listeners &quot;LoadBalancerPort=80,InstancePort=80,Protocol=http&quot;</code></pre>
-<p>{
+  --listeners &quot;LoadBalancerPort=80,InstancePort=80,Protocol=http&quot;
+{
     &quot;DNSName&quot;: &quot;upicardie-asdemo1-2087259529.us-east-1.elb.amazonaws.com&quot;
-}</p>
+}</code></pre>
 <p>Penser à ajouter les availability zones accéssibles à notre ELB</p>
 <pre><code>aws elb enable-availability-zones-for-load-balancer --load-balancer-name upicardie-asdemo --availability-zones us-east-1a</code></pre>
 <p>Attachons-lui les 2 instances que nous avons créées.</p>
@@ -338,5 +339,4 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
 <h2>Excercice</h2>
 <p>Installer un site web quelconque sur 3 instances, rattachées à un ELB. Lancer un test de charge naif (ou pas) afin d&#39;observer les logs sur chaque machine.</p>
 <h2>La même chose en console WEB (ouf!)</h2>
-<p><code>`
-https://180843797005.signin.aws.amazon.com/console/</code></p>
+<p><a href="https://180843797005.signin.aws.amazon.com/console/">https://180843797005.signin.aws.amazon.com/console/</a></p>

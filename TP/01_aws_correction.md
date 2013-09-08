@@ -64,8 +64,7 @@ $ aws ec2 describe-regions
 }
 ```
 
-Pratique : l'autocompletion
----------------------------
+### Pratique : l'autocompletion
 
 ```bash
 complete -C aws_completer aws
@@ -115,9 +114,7 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
 
 Astuce pour afficher clairement la clé... et panipuler plus facilement du json en ligne de commande.
 
-Installer jq
-
-http://stedolan.github.io/jq/
+Installer jq : http://stedolan.github.io/jq/
 
 ```
 aws ec2 create-key-pair --key-name kp_test | jq '.KeyPair.KeyMaterial' | xargs -0 printf
@@ -129,18 +126,13 @@ Lancement de notre première instance
 
 ### choix d'une ami
 
-pour ubuntu 12.04 (LTS)
+pour ubuntu 12.04 (LTS), c'est https://cloud-images.ubuntu.com/precise/current/
 
-```
-https://cloud-images.ubuntu.com/precise/current/
-```
-
-Nous allons prendre l'image du système 64 bits, en root store sur EBS. D'où la commande :
-
+Nous allons prendre l'image du système 64 bits, en root store sur EBS - ami : ami-7daee114. D'où la commande :
 
 
 ```
-ec2-run-instances ami-7daee114 -t t1.micro --region us-east-1 --key MyKeyPair
+aws ec2 run-instances --image-id ami-7daee114 -t t1.micro --region us-east-1 --key MyKeyPair
 {
     "OwnerId": "511122800347",
     "ReservationId": "r-f6edcf94",
@@ -201,6 +193,8 @@ ec2-run-instances ami-7daee114 -t t1.micro --region us-east-1 --key MyKeyPair
 
 On note le `"PublicDnsName": null`, ce qui signifie que l'instance n'a pour le moment pas d'entrée DNS, puisqu'elle est en train de se lance (statut `pending`).
 
+
+## se connecter à l'instance
 
 Quelques instants plus tard, nous allons redemander :
 
@@ -276,7 +270,9 @@ aws ec2 describe-instances
 }
 ```
 
-Et Bam ! la machine est prête (statut "running"). Notons le DNS public (pour nous c'est ec2-107-22-76-96.compute-1.amazonaws.com)
+Et Bam ! la machine est prête (statut "running"). Notons le DNS public (pour nous c'est `ec2-107-22-76-96.compute-1.amazonaws.com`).
+
+Attention aux machines des petits camarades. Vous les verrez :)
 
 Normalement, nous avons maintenant tout ce qu'il faut pour nous connecter à notre toute première instance en SSH. Chaque système a ses petites habitudes. Sous ubuntu, c'est l'user ubuntu qui doit se connecter.
 
@@ -287,12 +283,12 @@ ssh ubuntu@ec2-107-22-76-96.compute-1.amazonaws.com -i my-key-pair.pem -v
 [ubuntu@ip-10-202-59-53 ~]$
 ```
 
-On peut en lancer une deuxième, une troisième ... La commande describe-instances nous fournira les informations de ses instances.
+On peut en lancer une deuxième, une troisième ... La commande describe-instances nous fournira les informations de ces instances.
 
 
 
+## Stopper une instance
 
-Stopper une instance
 ```
 aws ec2 stop-instance --instance-id i-cb3d58a6
 {
@@ -365,11 +361,13 @@ aws ec2 stop-instance --instance-id i-cb3d58a6
 }
 ```
 
+## terminer une instance
 
+```
 aws ec2 terminate-instances --instance-id i-cb3d58a6
+```
 
-
-### Mumuse avec les EBS (Elasctic Block Storage)
+## Mumuse avec les EBS (Elasctic Block Storage)
 
 Dans la description de notre instance, nous notons
 
@@ -389,7 +387,7 @@ Dans la description de notre instance, nous notons
 
 Nous pouvons le détacher
 
-Au préalable, on le démonde sur notre instance
+Au préalable, on le démonte.
 
 ```
 # umount -d /dev/sda
@@ -402,10 +400,7 @@ aws ec2 detach-volume --instance-id i-3a0ba252 --volume-id vol-21726d61
 ```
 
 
-
-
-
-### Elastic Load Balancer
+## Elastic Load Balancer
 
 On déclare un ELB nommé upicardie-asdemo1 sur la zone us-east-1d, qui écoute sur le port 80 et qui répartit les requêtes sur le port 80 des instances :
 
@@ -414,12 +409,10 @@ aws elb create-load-balancer \
   --load-balancer-name upicardie-asdemo1 \
   --availability-zones us-east-1d \
   --listeners "LoadBalancerPort=80,InstancePort=80,Protocol=http"
-```
-
 {
     "DNSName": "upicardie-asdemo1-2087259529.us-east-1.elb.amazonaws.com"
 }
-
+```
 
 
 Penser à ajouter les availability zones accéssibles à notre ELB
@@ -444,6 +437,12 @@ Installer un site web quelconque sur 3 instances, rattachées à un ELB. Lancer 
 La même chose en console WEB (ouf!)
 -----------------------------------
 
+Amazon est un des pioniers du Web. Il aurait été étonnant de ne pas avoir une façon plus visuelle d'utiliser les services d'AWS.
+
+C'est possible à l'addresse : https://180843797005.signin.aws.amazon.com/console/
+
+Mais vous allez devoir vous créer votre login
+
 ```
-https://180843797005.signin.aws.amazon.com/console/
+aws iam create-login-profile help
 ``
