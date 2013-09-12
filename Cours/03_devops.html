@@ -34,10 +34,8 @@
   <body>
 
     <div class="reveal">
-      <a href="00_plan.html#/2">&uarr;</a>
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
-
 
         <section>
           <h1>Devops</h1>
@@ -72,6 +70,7 @@
           <p>37 Signals</p>
           <p>...</p>
         </section>
+
 
         <section>
           <section>
@@ -109,26 +108,16 @@
             <p class="fragment" style="color:red;text-align:right">"ok, on met ton portable en prod, alors"</p>
           </section>
 
-          <section>
-            <h3>La release</h3>
-            <h4>La zone de rencontre des deux métiers</h4>
-
-            <p>Bonnes pratiques</p>
-            <ul>
-              <li class="fragment">integration continue (++ améliore le code)</li>
-              <li class="fragment">déploiement continu</li>
-            </ul>
-          </section>
-
         </section>
 
 
         <section>
-          <h2>Le DevOps</h2>
+          <h2>DevOps</h2>
           <p>Pas de dogme</p>
           <p>Pas manifeste</p>
           <p>Des valeurs</p>
         </section>
+
 
         <section>
           <h3>Culture</h3>
@@ -139,72 +128,130 @@
 
 
         <section>
-          <h3>Culture</h3>
-          Relationships
-Engage early, engage often
-Bust Silos TM
-Be open
-Stop finger pointing
-Eradicate “last-mile syndrome”
+          <section>
+            <h2>Culture</h2>
+            <h4>Communication</h4>
+            <h4>Bonnes pratiques</h4>
+          </section>
 
-Communication
-Talk is cheap (get out of your chair)
-Involve each other in core processes and decisions
-Ask Questions
-Don’t say “no”
-Invite everyone to stand-ups and retrospectives
-        </section>
+          <section>
+            <h3>Communication</h3>
+            <p>À bas les silos !</p>
+            <p>Parler est gratuit</p>
+          </section>
 
-        <section>
-          <h3>Automatisation</h3>
-          Machines are really good at doing the same task over and over
-Consistent and Known State
-Fast and Efficient
-5 mins/day = 2.6 days/year
+          <section>
+            <h3>Bonnes pratiques</h3>
+            <p>Versionning du code</p>
+            <p>Intégration continue</p>
+            <p>...</p>
+            <p>Découragement</p>
+            <p>...</p>
+            <p>imagination</p>
+            <p>...</p>
+            <p>Release continue</p>
+          </section>
 
-What can be automated?
-Builds
-Deployments
-Testings
-Monitoring
-Self-healing
-System rollouts
-System configuration
-        </section>
+          <section>
+            <h3>Case Study</h3>
 
+            <blockquote>By automating deploys, a brand-new GitHubber can (...) deploy changes on their first day without needing to read up on how our deploy script delivers code updates to 60+ servers.</blockquote>
+            <p><small>Zach Holman - GitHub</small>
 
-        <section>
-          <h3>Metriques</h3>
+          </section>
 
-          <p>Techniques</p>
-          <p>Functionnels</p>
-          <p>Autres ...
-          <ul>
-            <li>Mean Time Beween Failure</li>
-            <li>Mean Time To Diagnose</li>
-            <li>Mean Time To Repair</li>
-          </ul>
-          </p>
+          <section>
+            <h3>Examples</h3>
+            <p><b>IMVU :</b>50 déploiements par jour, 9 minutes par build sur 40 serveurs de builds</p>
+            <p><b>Flickr :</b>10 déploiements par jour</p>
+            <p><b>Etsy :</b>25 / jours, 7000 tests sur 10 jenkins en parallèle</p>
+            <p><b>Wordpress.com : </b>16 par jour, 30 secondes pour déployer sur 400 serveurs</p>
+            <p><b>Facebook : </b>1 à 2 push par jour, 1 large par semaine. Le binaire à déployer pèse + 1Go à déployer sur 30000 machines... en moins d'une heure</p>
+            <br><br>
+            <p><small>Chez Etsy et Github, les nouveaux DOIVENT pousser en prod dès leur premier jour</small></p>
 
-          Capture, learn, improve.
-Assists in:
-Capacity Planning
-Trend Analysis
-Fault Finding
-Simple as saving Tomcat access info
-Plotted on a graph over time
+          </section>
+
         </section>
 
 
         <section>
           <section>
-            <h3>Partage</h3>
+            <h2>Automation</h2>
+            <p>Les machines sont vraiment douées pour faire la même tâche</p>
+            <p class="fragment">encore et encore</p>
+            <br>
+            <p class="fragment">Pensez à ça :</p>
+            <p class="fragment">5 minutes par jour</p>
+            <p class="fragment">=</p>
+            <p class="fragment">2.6 jours par an !</p>
+          </section>
 
-            Share Ideas
-Share Metrics
-Ops: Give devs shell access
-Devs: See what technology can be leveraged
+          <section>
+            <h3>Que peut-on automatiser ?</h3>
+            <p>Builds</p>
+            <p>Déploiements</p>
+            <p>Tests</p>
+            <p>Monitoring</p>
+            <p>Gestion de configuration</p>
+            <p>...</p>
+          </section>
+        </section>
 
+
+        <section>
+          <section>
+            <h2>Metriques</h2>
+            <h4>Récolter</h4>
+            <h4>Apprendre</h4>
+            <h4>Améliorer</h4>
+          </section>
+
+          <section>
+            <h3>Exemple de métriques peu communes</h3>
+            <ul>
+              <li>Mean Time Beween Failure</li>
+              <li>Mean Time To Diagnose</li>
+              <li>Mean Time To Repair</li>
+              <li>Changes per Week</li>
+              <li>Change sucess rate</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Et métriques qui ne devraient pas être à mesurer</h3>
+            <ul>
+              <li>Surcharge due aux changementx d'avis du management</li>
+              <li>Nombre de personnes pour provisionner une machine /instance</li>
+              <li>Nombre de personnes pour déployer en production</li>
+              <li>Nombre de personnes ayant accès aux logs de prod</li>
+              <li>Nombre d'étapes manuelles pour provisionner une machine /instance</li>
+              <li>Nombre d'étapes manuelles pour accéder aux logs de prod</li>
+              <li>Combien de temps pour faire chacune de ces précédentes tâches</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Case Study</h3>
+
+            <p>Measure Anything, Measure Everything</p>
+            <p><small>Ian Malpass - Etsy</small></p>
+            <br>
+            <p>Publication de code : Statd, Logster, Deployinator</p>
+          </section>
+
+        </section>
+
+
+        <section>
+          <section>
+            <h2>Partage</h2>
+            <h4>Partager les idées</h4>
+            <h4>Partager les outils</h4>
+            <h4>Partager les métriques</h4>
+          </section>
+
+          <section>
             <p>Vision commune</p>
             <p>Problèmes communs</p>
             <p>Glossaire commun</p>
@@ -213,17 +260,20 @@ Devs: See what technology can be leveraged
 
           <section>
             <h3>Partage</h3>
-
             <p>Devopsdays</p>
             <p>Devops meetups</p>
-            <p>Devops mailing list
-              <a href="https://groups.google.com/forum/#!forum/paris-devops">https://groups.google.com/forum/#!forum/paris-devops</a>
-            </p>
+            <p>Devops mailing list</p>
+            <a href="https://groups.google.com/forum/#!forum/paris-devops">https://groups.google.com/forum/#!forum/paris-devops</a>
           </section>
         </section>
 
-      </div>
+        <section>
+          <h1>THE END</h1>
+          <h3>INSSET - 2013</h3>
+          <p><a href="mailto:bertrand.tornil@gmail.com">bertrand.tornil@gmail.com</a></p>
+        </section>
 
+      </div>
     </div>
 
     <script src="lib/js/head.min.js"></script>

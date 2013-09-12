@@ -36,7 +36,6 @@
   <body>
 
     <div class="reveal">
-      <a href="00_plan.html#/2">&uarr;</a>
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
@@ -50,14 +49,17 @@
         </section>
 
         <section>
-          <h2>Généralités</h2>
+          <h2>AWS : Généralités</h2>
           <p>No 1 du Cloud Computing IAAS</p>
           <p>Utilisé entre autre par Netflix, Instagram, Pinterest, Reddit, Zynga...</p>
+          <br><br>
+          <p>IAAS et PAAS</p>
         </section>
 
         <section>
           <h2>L'anecdote historique</h2>
-          <p class="fragment">Fin des Années 90 : pour Amazon, Thanksgiving représentait un pic de charge nécéssitant une grosse infrastructure à ce moment, mais inutile le reste du temps</p>
+          <p class="fragment">Fin des Années 90 : pour Amazon, Thanksgiving représentait un pic de charge nécéssitant ponctuellement une grosse infrastructure </p>
+          <p class="fragment">mais inutile le reste du temps</p>
           <p class="fragment">D'où l'idée de louer cet excédent d'infrastructure</p>
           <p class="fragment">2002 : apparition d'Amazon Web Services</p>
 
@@ -66,7 +68,7 @@
         <section>
           <section>
             <h2>Organisation</h2>
-            <p class="fragment">AWS est divisé en 9 Régions</p>
+            <p class="fragment">AWS est disponible dans 9 Régions</p>
             <p class="fragment">Chaque région dispose d'au moins 2 zones de disponibilité (Availability zones)</p>
           </section>
 
@@ -219,15 +221,17 @@ SSD</td><td>10 Gigabit</td>
         </section>
 
         <section>
-          <h2>Les groupes de sécurité</h2>
-
-        </section>
-
-        <section>
           <h2>Les volumes Elastic Block Storage (ELB)</h2>
           <p>Sorte de disque dur réseau</p>
           <p>Plug / Unplug à chaud d'une instance à une autre</p>
           <p>Très resistant</p>
+        </section>
+
+        <section>
+          <h2>Simple Storage Service (S3)</h2>
+          <p>Stockage d'objets dans le cloud</p>
+          <p>Pas de notion de file-system</p>
+          <p>C'est un stockage clé -> valeur</p>
         </section>
 
         <section>
@@ -259,7 +263,8 @@ SSD</td><td>10 Gigabit</td>
           <p>Autoscaling</p>
           <p>Replica</p>
           <p>...</p>
-          <p>Pour les amateurs, il s'agit de la mise en application des travaux de thèse de Werner Vogels, CTO d'Amazon (sous la direction de Andrew S. Tanenbaum, l'auteur de Minix)
+          <p>Pour les amateurs, il s'agit de la mise en application des travaux de thèse de Werner Vogels, CTO d'Amazon</p>
+          <span class="fragment">(sous la direction de Andrew S. Tanenbaum, l'auteur de Minix)</span>
         </section>
 
         <section>
@@ -279,55 +284,58 @@ SSD</td><td>10 Gigabit</td>
 
         <section>
           <h2>Photo de famille en septembre 2013</h2>
-          Amazon Elastic Compute Cloud (EC2)
-          Amazon CloudWatch
-          Amazon Virtual Private Cloud (VPC)
-          Amazon Simple Storage Service (S3)
-          Amazon Elastic Block Store (EBS)
-          Auto Scaling
-          Amazon Simple Queue Service (SQS)
-          Amazon Simple Notification Service (SNS)
-          Elastic Load Balancing
-          AWS Support
-          Amazon DynamoDB
-          Amazon Relational Database Service (RDS)
-          Amazon Simple Workflow Service (SWF)
-          Amazon Elastic MapReduce
-          AWS Direct Connect
-          VM Import/Export
-          AWS CloudFormation
-          AWS Elastic Beanstalk
-          AWS Storage Gateway
-          Amazon SimpleDB
-          Amazon ElastiCache
-          Amazon Elastic Transcoder
-          Amazon CloudSearch
-          AWS Import/Export
-          Amazon Glacier
-          Calcul Haute Performance
-          Amazon Redshift
-          AWS CloudHSM
-          Amazon Simple Email Service (SES)
-          AWS Data Pipeline
+          <small>Amazon Elastic Compute Cloud (EC2) -
+          Amazon CloudWatch -
+          Amazon Virtual Private Cloud (VPC) -
+          Amazon Simple Storage Service (S3) -
+          Amazon Elastic Block Store (EBS) -
+          Auto Scaling -
+          Amazon Simple Queue Service (SQS) -
+          Amazon Simple Notification Service (SNS) -
+          Elastic Load Balancing -
+          AWS Support -
+          Amazon DynamoDB -
+          Amazon Relational Database Service (RDS) -
+          Amazon Simple Workflow Service (SWF) -
+          Amazon Elastic MapReduce -
+          AWS Direct Connect -
+          VM Import/Export -
+          AWS CloudFormation -
+          AWS Elastic Beanstalk -
+          AWS Storage Gateway -
+          Amazon SimpleDB -
+          Amazon ElastiCache -
+          Amazon Elastic Transcoder -
+          Amazon CloudSearch -
+          AWS Import/Export -
+          Amazon Glacier -
+          Amazon Redshift -
+          AWS CloudHSM -
+          Amazon Simple Email Service (SES) -
+          AWS Data Pipeline</small>
         </section>
 
         <section>
-          <h2>Pub</h2>
-          <p>Niveau gratuit pendant un an.<br>
-          Soit par mois :
-          <ul>
-            <li>750 heures sur une Micro EC2</li>
-            <li>750 heures d'ELB, 15 Go de traitement</li>
-            <li>30 Go de stockage sur EBS</li>
-            <li>15 Go de bande passante sortante combinée pour tous les services AWS</li>
-            <li>1 Go de transfert de données régional</li>
-          </ul>
+          <h2>Publicité</h2>
+          <p>Je n'ai pas d'action chez Amazon, mais</p>
+          <div class="fragment">
+            <p>Niveau gratuit pendant un an.<br>
+            Soit par mois :
+            <ul>
+              <li>750 heures sur une Micro EC2</li>
+              <li>750 heures d'ELB, 15 Go de traitement</li>
+              <li>30 Go de stockage sur EBS</li>
+              <li>15 Go de bande passante sortante combinée pour tous les services AWS</li>
+              <li>1 Go de transfert de données régional</li>
+            </ul>
+          </p>
         </section>
 
 
         <section>
           <h1>THE END</h1>
-          <h3>By Bertrand TORNIL / INSSET - 2013</h3>
+          <h3>INSSET - 2013</h3>
+          <p><a href="mailto:bertrand.tornil@gmail.com">bertrand.tornil@gmail.com</a></p>
         </section>
 
       </div>

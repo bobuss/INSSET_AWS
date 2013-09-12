@@ -40,7 +40,6 @@
   <body>
 
     <div class="reveal">
-      <a href="00_plan.html#/2">&uarr;</a>
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
@@ -155,7 +154,7 @@ Hello bob
             <ul>
               <li class="fragment">Sur AWS ou autre IAAS : en 1 commande, nous avons 1 nouvelle instance bootée en 1 minute</li>
               <li class="fragment">Un outil de gestin de configuration comme puppet, chef ou salt-stack : industrialisation du déploiement de la configuration</li>
-              <li class="fragment">Et un outil capistrano ou fabric : industrialisation du déploiement du code</li>
+              <li class="fragment">Et un outil comme capistrano ou fabric : industrialisation du déploiement du code</li>
             </ul>
             <br>
             <br>
@@ -581,69 +580,202 @@ function get_by_id(id):
 
         <section>
           <section>
-            <h2>Case study #0</h2>
+            <h2>Case study #1</h2>
 
             <h3>IsCool Entertainment</h3>
             <p>La montée en charge du jeu IsCool</p>
           </section>
 
           <section>
-            <h3>Les débuts ...</h3>
-            <p>En 7 mois, l'application est passée de 0 à 850 000 utilisateurs uniques / jour.</p>
-            <p>600000 pages vues / jour</p>
+            <h3>Les prémisses</h3>
+            <p>Premiers développements Facebook</p>
+            <p>Application virale d’échange de points entre amis : IsCool</p>
+            <p>LAMP / FBML sur Ubuntu</p>
+
+            <p class="fragment">
+              Octobre 2008 : Ouverture de l’application au public
+            </p>
+
+            <p class="fragment">
+              Novembre 2008 : Les premiers problèmes
+            </p>
+
+            <p class="fragment">
+              16 novembre 2008 : "Patron, passe-moi la carte de la boite, on passe sur AWS"
+            </p>
           </section>
 
           <section>
-            <h3>... puis ...</h3>
-            <p>Choix rapide du cloud, pour multiplier les frontaux webs</p>
-            <p>Mise en cache (memcache)</p>
+            <h3>2009</h3>
+            <p>En 7 mois, de 0 à 846.000 visiteurs uniques par jour</p>
+
             <p>Sharding massif (certaines sur 500 tables, éparpillées sur 20 serveurs mysql)</p>
+            <p>Memcached</p>
+            <p>Multiplication des frontaux</p>
           </section>
 
           <section>
-            <h3>... refactor -> v2 -> v3</h3>
-            <p>symfony 2</p>
+            <h3>fin 2009</h3>
+            <p>Si IsCool avait été un site web</p>
+            <ul>
+              <li>2ème site de jeu en france</li>
+              <li>25ème site français (pages-vues / mois)</li>
+            </ul>
+
+          </section>
+
+          <section>
+            <h3>2010 refactor -> v2 -> v3</h3>
+            <p><small>Sans interruption de service à partir de février 2010</small></p>
+
+            <p>Passage à git</p>
+            <p>Transistion progressive à symfony 2</p>
             <p>Redis (depuis la version 1.0)</p>
-            <p>Utilisation d'outils de monitoring exotiques : Pinba</p>
+            <p>Utilisation d'un outils de monitoring exotique : Pinba</p>
             <p>Refonte des briques les plus chargées (échange de points, leaderboard)</p>
+            <p>DevOps, DevOps, DevOps</p>
           </section>
 
           <section>
-            <h3>Au final, quelques chiffres</h3>
+            <h3>En 2011, à son plus haut : quelques chiffres</h3>
             <p>20M pages vues / jour (35M en pic)</p>
-            <p>130 000 sessions php simultanées sur l'ensembre de frontaux</p>
-            <p>1Ma de points échangés / jour (record à 2Ma)</p>
+            <p>130 000 sessions php simultanées sur l'ensembre des frontaux (en soirée sur certaines opérations)</p>
+            <p>Record à 1.4Ma de points échangés / jour</p>
             <p>Au total, 14M de personnes seront passées sur le jeu</p>
           </section>
 
-        </section>
-
-        <section>
           <section>
-            <h2>Case study #1</h2>
-
-            <h3>Instagram</h3>
+            <h3>Aujourd'hui</h3>
+            <p>Le jeu est en MVC javascript + appels serveur en JSON-RPC 2.0</p>
+            <p>Encore 6M appels / jours</p>
+            <p>Toujours 200000 joueurs par jour</p>
+            <p>Utilisation de RabbitMQ</p>
           </section>
 
-          <section>
-            <h3>30+ million users in less than 2 years</h3>
-          </section>
-
-          <section>
-             <h3>25k signups in the ﬁrst day</h3>
-            <p>everything is on ﬁre!</p>
-          </section>
-
-          <section>
-            <blockquote>scaling = replacing all components of a car while driving it at 100mph</blockquote>
-          </section>
         </section>
 
         <section>
           <section>
             <h2>Case study #2</h2>
 
+            <h3>Instagram</h3>
+            <p><small>AirBnB Talk - Berlin - 2012</small></p>
+          </section>
+
+          <section>
+            <h3>30+ Millions Utilisateurs en moins de 2 ans</h3>
+          </section>
+
+          <section>
+             <h3>25000 créations de comptes le 1er jour !</h3>
+             <br><br>
+            <p class="fragment">Au feu !!!</p>
+          </section>
+
+          <section>
+            <blockquote>scaling = replacing all components of a car while driving it at 100mph</blockquote>
+          </section>
+
+          <section>
+            <h3>C'est bête, mais</h3>
+            <p>404 sur le favicon...</p>
+            <br>
+            <br>
+            <p>Ne pas oublier le favicon !!</p>
+          </section>
+
+          <section>
+            <h3>La Stack</h3>
+            <p>Nginx</p>
+            <p>Django</p>
+            <p>Postgresql</p>
+            <p>Redis</p>
+          </section>
+
+          <section>
+            <h3>La stack... 2ème étage</h3>
+            <p>Nginx</p>
+            <p>HAProxy</p>
+            <p>Django</p>
+            <p>Postgresql</p>
+            <p>Redis</p>
+            <p>Memcached</p>
+            <p>Gearman</p>
+          </section>
+
+          <section>
+            <h3>DB Instagram</h3>
+            <p>La plus grosse instance sur EC2 : 68GB de RAM</p>
+            <p>-> vertical partitionning</p>
+            <ul>
+              <li>user_db</li>
+              <li>photos_db</li>
+              <li>....</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Next stage</h3>
+            <p>photos_db > 60GB</p>
+            <p>-> horizontal partitionning (sharding)</p>
+            <br>
+            <br>
+            <p class="fragment">Technique made in Instagram : pre-sharding</p>
+            <p class="fragment">Utilisation des schemas postgresql</p>
+          </section>
+
+          <section>
+            <h3>Par exemple</h3>
+            <pre>
+machineA:
+  shard0
+    photos_by_user
+  shard1
+    photos_by_user
+  shard2
+    photos_by_user
+  shard3
+    photos_by_user
+            </pre>
+          </section>
+
+          <section>
+            <h3>Par exemple (2)</h3>
+            <pre>
+machineA:               machineA’:
+  shard0                  shard0
+    photos_by_user          photos_by_user
+  shard1                  shard1
+    photos_by_user          photos_by_user
+  shard2                  shard2
+    photos_by_user          photos_by_user
+  shard3                  shard3
+    photos_by_user          photos_by_user
+            </pre>
+          </section>
+
+          <section>
+            <h3>Par exemple (3)</h3>
+            <pre>
+machineA:               machineA’:
+  shard0
+    photos_by_user
+  shard1
+    photos_by_user
+                          shard2
+                            photos_by_user
+                          shard3
+                            photos_by_user
+            </pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Case study #3</h2>
+
             <h3>Pinterest</h3>
+            <p><small>Mysql Conference - 2012</small></p>
           </section>
 
           <section>
@@ -653,81 +785,170 @@ function get_by_id(id):
               <li>1 web</li>
               <li>1 DB</li>
             </ul>
-
           </section>
 
           <section>
             <h3>Deuxième étage (Janvier 2011)</h3>
             <ul>
               <li>AWS EC2 + S3 + Cloudfront</li>
-              <li>1 nginx + 4 web engine</li>
+              <li>1 nginx + 4 web engines</li>
               <li>1 mysql master + 1 slave</li>
               <li>1 task queue + 2 task processor</li>
               <li>1 mongodb</li>
             </ul>
-
-
           </section>
 
           <section>
-            <h3>Troisième étage (Octobre 2012)</h3>
+            <h3>Troisième étage (Octobre 2011) : 11 MAU</h3>
             <ul>
-              <li>rackspace</li>
-              <li>1 web</li>
-              <li>1 DB</li>
+              <li>AWS EC2 + S3 + Cloudfront</li>
+              <li>2 nginx + 16 web engines + 2 API engines</li>
+              <li>5 mysql master + 9 slave</li>
+              <li>4 noeuds cassandra</li>
+              <li>15 membase</li>
+              <li>8 memcache</li>
+              <li>10 Redis</li>
+              <li>3 task queue + 4 task processor</li>
+              <li>4 noeuds elastic search</li>
+              <li>3 mongodb</li>
             </ul>
 
+            <p class="fragment">C'est sûr que ca va planter...</p>
+          </section>
+
+          <section>
+            <h3>Keep it simple (Avril 2012) : 20 MAU</h3>
+            <ul>
+              <li>AWS EC2 + S3 + ELB - Akamai</li>
+              <li>90 web engines + 50 API engines</li>
+              <li>66 mysql master + 1 slave chacun</li>
+              <li>51 memcache</li>
+              <li>56 Redis</li>
+              <li>1 Redis task queue + 25 task processor</li>
+              <li>Solr</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Pourquoi AWS ?</h3>
+            <p>Disponibilité, support</p>
+            <p>Services intéressants</p>
+            <p>Instances prêtes en 1 minute</p>
+          </section>
+
+          <section>
+            <h3>"Great tools"</h3>
+            <p>Mysql</p>
+            <p>Memcache</p>
+            <p>Redis</p>
+            <br>
+            <blockquote>
+              Out of the box, they won't scale past 1 server, won't have high availability, won't bring you a drink.
+            </blockquote>
+          </section>
+
+          <section>
+            <h3>Retour sur les stratégies de stockages</h3>
+            <h4>Clustering VS Sharding</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Clustering</th><th>Sharding</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Distribue les données sur les noeuds automatiquement</td>
+                  <td>Distribue les données sur les noeuds manuellement</td>
+                </tr>
+                <tr>
+                  <td>Les données peuvent bouger</td>
+                  <td>Les données ne peuvent pas bouger</td>
+                </tr>
+                <tr>
+                  <td>Rebalance les données entre les noeuds pour distribuer la charge</td>
+                  <td>Découpe les tables de données pour distribuer la charge</td>
+                </tr>
+                <tr>
+                  <td>Les noeuds communiquent entre eux</td>
+                  <td>Les noeuds s'ignorent</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section>
+            <h3>Le clustering est séduisant</h3>
+            <p>Cassandra, Membase, HBase, Riak</p>
+            <p class="fragment">MAIS<p>
+            <ul class="fragment">
+              <li>Technologies jeunes</li>
+              <li>Compétences difficiles à trouver</li>
+              <li>Et la magie du clustering en fait sa force et sa faiblesse</li>
+            </ul>
+            <p class="fragment">Finalement : sharding avec stratégie de preshard (databases dans mysql)</p>
           </section>
         </section>
 
+
+
         <section>
           <section>
-            <h2>Case study #3</h2>
+            <h2>Case study #4</h2>
 
             <h3>Reddit</h3>
-          </section>
 
-          <section>
-            <h3>Architecture</h3>
-            Reddit architecture is straightforward. Users connect to a web tier which talks to an application tier. The application tier talks to memcache, Cassandra, and Postgres. Postgres uses a master-slave configuration. A batch system makes use of Cassandra and Postgres.
-          </section>
-
-          <section>
-            EC2
-
-Motivators for moving to EC2
-
-Racking and stacking is not fun. Didn’t want to rent more cabinets and buy more servers.
-
-Outgrew datacenter and in the early days growth was unpredictable.
-
-Cost was beneficial for their use case of a team of 4 people. EC2 was 29% cheaper than their San Francisco datacenter.
-
-EC2 is not a magic bullet. You suffer from higher network latency and noisy neighbors, so plan to work around it. Benefit is that you can grow as you need to.
-
-Keep track of resource limits on EC2
-
-All resources have per account limits.
-Amazon doesn’t even know what some of their limits are.
-Track limits and get them raised ahead of when you need them.
-Catch exceptions to notice when limits have been reached.
+            <p><small>http://highscalability.com - 2013</small></p>
           </section>
 
 
           <section>
-            <h3>Petite Apparté : Différence Netflix</h3>
-            In contrast Netflix use a service-oriented architecture where components talk to each other using REST APIs.
-
-Advantages: Easier auto-scaling because just the service that is having the problem needs to scale; Easier capacity planning; Problems can be identified more easily because they are isolated behind REST calls; Effects of change are narrowed; More efficient local caching.
-
-Disadvantages: Need multiple dev teams or devs to work on multiple services so you need more people; Need a common platform to prevent work duplication; Too much overhead for a small team just starting out.
+            <h3>Stats</h3>
+            <p>Le traffic double toutes les 15 mois.</p>
+            <p>67,328,706 visiteurs uniques</p>
+            <p>4,692,494,641 pages vues</p>
+            <p>240 serveurs (2012)</p>
           </section>
+
+
+          <section>
+            <h3>Historique dans EC2</h3>
+            <p><b>2005</b> création</p>
+            <p><b>2006</b> les logos sur S3</p>
+            <p><b>2007</b> les miniatures sur S3</p>
+            <p><b>2008</b> EC2 pour les traitement asynchrones</p>
+            <p><b>2009</b> EC2 pour les frontaux web : 1 journée de downtime pour basculer sur EC2</p>
+          </section>
+
+
+          <section>
+            <h3>Retour d'expérience AWS</h3>
+
+            <p>Racker des serveurs n'est pas marrant et chronophage, surtout pour une petite équipe</p>
+            <p>La croissance n'est pas prévisible, surtout sur les débuts</p>
+            <p>EC2 n'est pas "a silver bullet" : latence réseau, IO déplorables. Prévoir de fonctionner avec. Le bénéfice ? on peut grandir autant que l'on veut</p>
+
+            <div class="fragment">
+              <p>Tenir compte des limites d'EC2</p>
+              <p>qui ne sont pas connues à priori, et qui évoluent dans le temps</p>
+            </div>
+          </section>
+
+
+          <section>
+            <h3>Concept de attraction des données (data gravity)</h3>
+            <p>Les données étant les choses les plus pénibles à bouger, tout ce qui a besoin d'y accéder ne doit pas être loin</p>
+            <p>Une fois les données dans le cloud, autant tout basculer dessus</p>
+          </section>
+
         </section>
 
 
 
         <section>
           <h1>THE END</h1>
+          <h3>INSSET - 2013</h3>
+          <p><a href="mailto:bertrand.tornil@gmail.com">bertrand.tornil@gmail.com</a></p>
         </section>
 
       </div>

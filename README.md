@@ -4,6 +4,8 @@ Intervention INSSET - Septembre 2013
 
 ## lundi
 
+
+
 ### Présentation générale
 
 - qui suis-je ?
@@ -19,7 +21,6 @@ Intervention INSSET - Septembre 2013
 - quelques briques IAAS
 	- instances EC2
 	- AMI
-	- Security groups
 	- S3
 	- EBS
 - quelques briques SAAS
@@ -34,14 +35,19 @@ Intervention INSSET - Septembre 2013
 
 
 
-Atelier AWS
+### Atelier AWS
 
 
-(Mardi)
+
+
+## Mardi
+
 
 Poursuite de l'atelier AWS
 
 Discussion
+
+
 
 
 
@@ -80,21 +86,43 @@ Les données
 - Case study #4 : Reddit
 
 
+### TP
 
-Devops
-------
-
-Dev = ajouter / améliorer des fonctionnalités == changements
-Ops = assurer la stabilité
+ELB
 
 
-### Culture
+### Auto-Scaling
 
-### Automatisation
 
-### Metriques
 
-### Partage
+jeudi - vendredi
+----------------
+
+### Devops
+
+- concepts
+
+- industrialisation
+
+1.ssh
+2.pssh
+3.fabric / capistrano
+4.fabtools / cuisine
+5.puppet / chef / saltstack
+
+5 (bis) docker
+
+- communication... aussi par l'outil
+
+HuBot
+
+Workflow Dev -> Integration continue -> Deploiement
+
+
+
+
+
+
 
 
 
@@ -133,7 +161,20 @@ Contenu des Ateliers
 
 ### AutoScaling
 
-### TP : L'art de la distribution de don
+### DevOps
+
+- installation d'une gate
+- developpement de l'outil de provisionning / déploiement
+- notions de recettes / roles
+- passage de tag dans les lancements d'instances
+- lock
+- historisation de la release
+- taches (mise à jour du code, métier)
+- outiller / outiller / outiller
+
+
+
+
 
 
 
