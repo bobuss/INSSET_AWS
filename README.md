@@ -1,9 +1,6 @@
 # Intervention AWS - INSSET - Master 2 Cloud Computing - Bertrand Tornil - Septembre 2013
 
 
-### [Introduction](00_plan.html)
-
-
 ## Présentations
 
 ### [AWS](01_aws.html)
