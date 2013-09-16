@@ -3,18 +3,22 @@
 
 ## Présentations
 
-### [AWS](01_aws.html)
-
-### [Scale](02_scaling.html)
-
-### [DevOps](03_devops.html)
-
+- AWS
+- Scaling
+- DevOps
 
 
 ## Ateliers
 
-### [AWS](TP_Aws.html)
+- AWS
+- Autoscaling
+- DevOps
 
-### [Autoscaling](TP_Autoscaling.html)
 
-### [DevOps](TP_DevOps.html)
+## HowTo
+
+```
+git clone https://github.com/bobuss/2013_INSSET_AWS
+```
+
+Et faire servir le tout par un serveur.
