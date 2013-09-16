@@ -21,4 +21,4 @@
 git clone https://github.com/bobuss/2013_INSSET_AWS
 ```
 
-Et faire servir le tout par un serveur.
+Et faire servir le tout par un serveur web.
