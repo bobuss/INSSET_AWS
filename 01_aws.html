@@ -98,37 +98,33 @@
           <section>
             <h2>Amazon Elastic Compute Cloud (EC2)</h2>
             <p>L'embarras du choix</p>
-            <p>Mais tout a un prix : de $0,060/h à $4,600/h</p>
-            <p>Possibilité de réservation... après c'est un boulot de commercial...</p>
+            <p>Mais tout a un prix : de $0,013/h à $6,820/h</p>
+            <p>Possibilité de réservation</p>
+            <p>Possibilité d'instances ponctuelles (Spot Instances)</p>
+            <p><a target="_blank" href="http://aws.amazon.com/fr/ec2/pricing/">Voir la page sur AWS</a></p>
           </section>
 
           <section>
 
-            <h3>Usage général</h3>
+            <h3>Usage général : M3</h3>
             <table>
               <thead>
                 <tr>
-                  <th>Nom</th><th>vCPU</th><th>ECU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Réseau</th>
+                  <th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage sur SSD (Go)</th><th>Mise en réseau améliorée</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>m1.small</td><td>1</td><td>1</td><td>1,7</td><td>1 x 160</td><td>Faibles</td>
+                  <td>m3.medium</td><td>1</td><td>3,75</td><td>1 x 4</td><td>Non</td>
                 </tr>
                 <tr>
-                  <td>m1.medium</td><td>1</td><td>2</td><td>3,75</td><td>1 x 410</td><td>Modérées</td>
+                  <td>m3.large</td><td>2</td><td>7,5</td><td>1 x 32</td><td>Non</td>
                 </tr>
                 <tr>
-                  <td>m1.large</td><td>2</td><td>4</td><td>7,5</td><td>2 x 410</td><td>Modérées</td>
+                  <td>m3.xlarge</td><td>4</td><td>15</td><td>2 x 40</td><td>Non</td>
                 </tr>
                 <tr>
-                  <td>m1.xlarge</td><td>4</td><td>8</td><td>15</td><td>4 x 410</td><td>Elevées</td>
-                </tr>
-                <tr>
-                  <td>m3.xlarge</td><td>4</td><td>13</td><td>15</td><td>EBS</td><td>Modérées</td>
-                </tr>
-                <tr>
-                  <td>m3.2xlarge</td><td>8</td><td>26</td><td>30</td><td>EBS</td><td>Elevées</td>
+                  <td>m3.2xlarge</td><td>8</td><td>30</td><td>2 x 80</td><td>Non</td>
                 </tr>
               </tbody>
             </table>
@@ -136,48 +132,84 @@
           </section>
 
           <section>
-            <h3>Calcul optimisé</h3>
+            <h3>Calcul optimisé : C3</h3>
 
             <table>
               <thead>
                 <tr>
-                  <th>Nom</th><th>vCPU</th><th>ECU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Réseau</th>
+                  <th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage sur SSD (Go)</th><th>Mise en réseau améliorée</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>c1.medium</td><td>2</td><td>5</td><td>1,7</td><td>350</td><td>Modérées</td>
+                  <td>c3.large</td><td>2</td><td>3,75</td><td>2 x 16</td><td>Oui</td>
                 </tr>
                 <tr>
-                  <td>c1.xlarge</td><td>8</td><td>20</td><td>7</td><td>4 x 420</td><td>Elevées</td>
+                  <td>c3.xlarge</td><td>4</td><td>7,5</td><td>2 x 40</td><td>Oui</td>
                 </tr>
                 <tr>
-                  <td>cc2.8xlarge</td><td>32</td><td>88</td><td>60,5</td><td>4 x 840</td><td>10 Gigabit </td>
+                  <td>c3.2xlarge</td><td>8</td><td>15</td><td>2 x 80</td><td>Oui</td>
+                </tr>
+                <tr>
+                  <td>c3.4xlarge</td><td>16</td><td>30</td><td>2 x 160</td><td>Oui</td>
+                </tr>
+                <tr>
+                  <td>c3.8xlarge</td><td>32</td><td>60</td><td>2 x 320</td><td>Oui</td>
                 </tr>
               </tbody>
             </table>
           </section>
 
           <section>
-            <h3>Mémoire optimisée</h3>
+            <h3>Mémoire optimisée : R3</h3>
             <table>
               <thead>
                 <tr>
-                  <th>Nom</th><th>vCPU</th><th>ECU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Réseau</th>
+                  <th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage sur SSD (Go)</th><th>Mise en réseau améliorée</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>m2.xlarge</td><td>2</td><td>6,5</td><td>17,1</td><td>1 x 420</td><td>Modérées</td>
+                  <td>r3.large</td><td>2</td><td>15</td><td>1 x 32</td><td>Oui</td>
                 </tr>
                 <tr>
-                  <td>m2.2xlarge</td><td>4</td><td>13</td><td>34,2</td><td>1 x 850</td><td>Modérées</td>
+                  <td>r3.xlarge</td><td>4</td><td>30,5</td><td>1 x 40</td><td>Oui</td>
                 </tr>
                 <tr>
-                  <td>m2.4xlarge</td><td>8</td><td>26</td><td>58,4</td><td>2 x 840</td><td>Elevées</td>
+                  <td>r3.2xlarge</td><td>8</td><td>61</td><td>1 x 80</td><td>Oui</td>
                 </tr>
                 <tr>
-                  <td>cr1.8xlarge</td><td>32</td><td>88</td><td>244</td><td>2 x 120 SSD</td><td>10 Gigabit</td>
+                  <td>r3.4xlarge</td><td>16</td><td>122</td><td>1 x 160</td><td>Oui</td>
+                </tr>
+                <tr>
+                  <td>r3.8xlarge</td><td>32</td><td>244</td><td>1 x 320</td><td>Oui</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </section>
+
+          <section>
+
+            <h3>Stockage optimisé : I2</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Mise en réseau améliorée</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>i2.xlarge</td><td>4</td><td>30,5</td><td>1 x 800 SSD</td><td>Oui</td>
+                </tr>
+                <tr>
+                  <td>i2.2xlarge</td><td>8</td><td>61</td><td>2 x 800 SSD</td><td>Oui</td>
+                </tr>
+                <tr>
+                  <td>i2.4xlarge</td><td>16</td><td>122</td><td>4 x 800 SSD</td><td>Oui</td>
+                </tr>
+                <tr>
+                  <td>i2.8xlarge</td><td>32</td><td>244</td><td>8 x 800 SSD</td><td>Oui</td>
                 </tr>
               </tbody>
             </table>
@@ -187,27 +219,27 @@
           <section>
             <h3>Autres</h3>
 
+
+            <h4></h4>
+
             <table>
               <thead>
                 <tr>
-                  <th>Usage</th><th>Nom</th><th>vCPU</th><th>ECU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Réseau</th>
+                  <th>Usage</th><th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Stockage optimisé</td><td>hi1.4xlarge</td><td>16</td><td>35</td><td>60,5</td><td>2 x 1 024
-SSD</td><td>10 Gigabit</td>
+                  <td>Instance GPU</td><td>g2.2xlarge</td><td>8</td><td>15</td><td>1 x 60 SSD</td>
                 </tr>
                 <tr>
-                  <td>Stockage optimisé</td><td>hs1.8xlarge</td><td>16</td><td>35</td><td>117</td><td>24 x 2 048
-SSD</td><td>10 Gigabit</td>
+                  <td>HS1</td><td>hs1.8xlarge</td><td>16</td><td>117</td><td>24 x 2048</td>
                 </tr>
                 <tr>
-                  <td>Micro-instances</td><td>t1.micro</td><td>1</td><td>Variable</td><td>0,615</td><td>EBS</td><td>Très faibles</td>
+                  <td>Micro</td><td>t1.micro</td><td>1</td><td>0,615</td><td>EBS</td>
                 </tr>
                 <tr>
-                  <td>Instances GPU</td><td>cg1.4xlarge</td><td>16</td><td>33,5</td><td>22,5</td><td>2 x 840
-SSD</td><td>10 Gigabit</td>
+                  <td>Micro</td><td>m1.small</td><td>1</td><td>1,7</td><td>1 x 160</td>
                 </tr>
               </tbody>
             </table>
