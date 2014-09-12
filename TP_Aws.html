@@ -8,7 +8,7 @@
 La doc en ligne
 ---------------
 
-http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
+http://docs.aws.amazon.com/cli/latest/reference/
 
 
 
@@ -21,9 +21,9 @@ Pour info : https://github.com/aws/aws-cli
 ($sudo apt-get install -y python-pip)
 $ sudo pip install awscli
 ...
-$ vi .aws-config
+$ vi ~/.aws-config
 ...
-$ cat .aws-config
+$ cat ~/.aws-config
 [default]
 aws_access_key_id = <access key id>
 aws_secret_access_key = <secret access key>
@@ -75,7 +75,7 @@ complete -C aws_completer aws
 ```
 
 
-On commence Par se créer une paire de clés
+On commence par se créer une paire de clés
 ------------------------------------------
 
 ```bash
@@ -90,6 +90,9 @@ $ aws ec2 create-key-pair --key-name MyKeyPair
 }
 
 $ vi my-key-pair.pem
+(copier la clé)
+
+
 $ cat my-key-pair.pem
 -----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEAgDbY5Hzlv+wP4nTVXkwRHemd3/OLo/O6u+kI2UloHqN6mZLP+XoFcEAmNmM0
@@ -121,7 +124,15 @@ Astuce pour afficher clairement la clé... et panipuler plus facilement du json 
 Installer jq : http://stedolan.github.io/jq/
 
 ```
-aws ec2 create-key-pair --key-name kp_test | jq '.KeyPair.KeyMaterial' | xargs -0 printf
+aws ec2 create-key-pair --key-name MyKeyPair | jq '.KeyPair.KeyMaterial' | xargs -0 printf
+```
+
+Important : MyKeyPair est le nom de notre clé. Rien à voir avec le ficher en local qui est la clé publique. Lors des appels à l'API, on passera le nom de la clé (donc MyKeyPair). Lors de la connexion aux instances, on passera à la commande ssh le ficher de la clé publique (donc le fichier `my-key-pair.pem`).
+
+Nous avons notre clé publique en local. Pour pouvoir l'utiliser, on va la protéger.
+
+```
+chmod 600 my-key-pair.pem
 ```
 
 
@@ -130,58 +141,89 @@ Lancement de notre première instance
 
 ### choix d'une ami
 
-pour ubuntu 12.04 (LTS), c'est https://cloud-images.ubuntu.com/precise/current/
+pour ubuntu 14.04 (LTS), c'est https://cloud-images.ubuntu.com/trusty/current/
 
-Nous allons prendre l'image du système 64 bits, en root store sur EBS - ami : ami-7daee114. D'où la commande :
+Nous allons prendre l'image du système 64 bits, en root store sur EBS - ami : ami-b0c36ed8. D'où la commande :
 
 
 ```
-aws ec2 run-instances --image-id ami-7daee114 --instance-type t1.micro --region us-east-1 --key MyKeyPair
+aws ec2 run-instances --image-id ami-b0c36ed8 --instance-type t1.micro --region us-east-1 --key MyKeyPair
 {
-    "OwnerId": "511122800347",
-    "ReservationId": "r-f6edcf94",
-    "Groups": [
-        {
-            "GroupName": "upicardie-asdemo-web",
-            "GroupId": "sg-6563ed0e"
-        }
-    ],
+    "OwnerId": "447005562149",
+    "ReservationId": "r-06199676",
+    "Groups": [],
     "Instances": [
         {
             "Monitoring": {
                 "State": "disabled"
             },
             "PublicDnsName": null,
-            "KernelId": "aki-407d9529",
+            "KernelId": "aki-919dcaf8",
             "State": {
                 "Code": 0,
                 "Name": "pending"
             },
             "EbsOptimized": false,
-            "LaunchTime": "2013-08-29T20:18:10.000Z",
+            "LaunchTime": "2014-09-12T15:24:07.000Z",
+            "PrivateIpAddress": "172.31.37.163",
             "ProductCodes": [],
+            "VpcId": "vpc-ab8e3dce",
             "StateTransitionReason": null,
-            "InstanceId": "i-cb3d58a6",
-            "ImageId": "ami-8c1fece5",
-            "PrivateDnsName": null,
+            "InstanceId": "i-e4e01b0a",
+            "ImageId": "ami-b0c36ed8",
+            "PrivateDnsName": "ip-172-31-37-163.ec2.internal",
             "KeyName": "MyKeyPair",
             "SecurityGroups": [
                 {
-                    "GroupName": "upicardie-asdemo-web",
-                    "GroupId": "sg-6563ed0e"
+                    "GroupName": "default",
+                    "GroupId": "sg-2be2c34e"
                 }
             ],
             "ClientToken": null,
+            "SubnetId": "subnet-3f0e1c17",
             "InstanceType": "t1.micro",
-            "NetworkInterfaces": [],
+            "NetworkInterfaces": [
+                {
+                    "Status": "in-use",
+                    "SourceDestCheck": true,
+                    "VpcId": "vpc-ab8e3dce",
+                    "Description": null,
+                    "NetworkInterfaceId": "eni-58a35472",
+                    "PrivateIpAddresses": [
+                        {
+                            "PrivateDnsName": "ip-172-31-37-163.ec2.internal",
+                            "Primary": true,
+                            "PrivateIpAddress": "172.31.37.163"
+                        }
+                    ],
+                    "PrivateDnsName": "ip-172-31-37-163.ec2.internal",
+                    "Attachment": {
+                        "Status": "attaching",
+                        "DeviceIndex": 0,
+                        "DeleteOnTermination": true,
+                        "AttachmentId": "eni-attach-1937d164",
+                        "AttachTime": "2014-09-12T15:24:07.000Z"
+                    },
+                    "Groups": [
+                        {
+                            "GroupName": "default",
+                            "GroupId": "sg-2be2c34e"
+                        }
+                    ],
+                    "SubnetId": "subnet-3f0e1c17",
+                    "OwnerId": "447005562149",
+                    "PrivateIpAddress": "172.31.37.163"
+                }
+            ],
+            "SourceDestCheck": true,
             "Placement": {
                 "Tenancy": "default",
                 "GroupName": null,
-                "AvailabilityZone": "us-east-1a"
+                "AvailabilityZone": "us-east-1d"
             },
             "Hypervisor": "xen",
             "BlockDeviceMappings": [],
-            "Architecture": "i386",
+            "Architecture": "x86_64",
             "StateReason": {
                 "Message": "pending",
                 "Code": "pending"
@@ -207,48 +249,88 @@ aws ec2 describe-instances
 {
     "Reservations": [
         {
-            "OwnerId": "511122800347",
-            "ReservationId": "r-f6edcf94",
-            "Groups": [
-                {
-                    "GroupName": "upicardie-asdemo-web",
-                    "GroupId": "sg-6563ed0e"
-                }
-            ],
+            "OwnerId": "447005562149",
+            "ReservationId": "r-06199676",
+            "Groups": [],
             "Instances": [
                 {
                     "Monitoring": {
                         "State": "disabled"
                     },
-                    "PublicDnsName": "ec2-107-22-76-96.compute-1.amazonaws.com",
+                    "PublicDnsName": "ec2-54-165-229-123.compute-1.amazonaws.com",
                     "RootDeviceType": "ebs",
                     "State": {
                         "Code": 16,
                         "Name": "running"
                     },
                     "EbsOptimized": false,
-                    "LaunchTime": "2013-08-29T20:18:10.000Z",
-                    "PublicIpAddress": "107.22.76.96",
-                    "PrivateIpAddress": "10.202.59.53",
+                    "LaunchTime": "2014-09-12T15:24:07.000Z",
+                    "PublicIpAddress": "54.165.229.123",
+                    "PrivateIpAddress": "172.31.37.163",
                     "ProductCodes": [],
+                    "VpcId": "vpc-ab8e3dce",
                     "StateTransitionReason": null,
-                    "InstanceId": "i-cb3d58a6",
-                    "ImageId": "ami-8c1fece5",
-                    "PrivateDnsName": "ip-10-202-59-53.ec2.internal",
+                    "InstanceId": "i-e4e01b0a",
+                    "ImageId": "ami-b0c36ed8",
+                    "PrivateDnsName": "ip-172-31-37-163.ec2.internal",
                     "KeyName": "MyKeyPair",
                     "SecurityGroups": [
                         {
-                            "GroupName": "upicardie-asdemo-web",
-                            "GroupId": "sg-6563ed0e"
+                            "GroupName": "default",
+                            "GroupId": "sg-2be2c34e"
                         }
                     ],
                     "ClientToken": null,
+                    "SubnetId": "subnet-3f0e1c17",
                     "InstanceType": "t1.micro",
-                    "NetworkInterfaces": [],
+                    "NetworkInterfaces": [
+                        {
+                            "Status": "in-use",
+                            "SourceDestCheck": true,
+                            "VpcId": "vpc-ab8e3dce",
+                            "Description": null,
+                            "Association": {
+                                "PublicIp": "54.165.229.123",
+                                "PublicDnsName": "ec2-54-165-229-123.compute-1.amazonaws.com",
+                                "IpOwnerId": "amazon"
+                            },
+                            "NetworkInterfaceId": "eni-58a35472",
+                            "PrivateIpAddresses": [
+                                {
+                                    "PrivateDnsName": "ip-172-31-37-163.ec2.internal",
+                                    "Association": {
+                                        "PublicIp": "54.165.229.123",
+                                        "PublicDnsName": "ec2-54-165-229-123.compute-1.amazonaws.com",
+                                        "IpOwnerId": "amazon"
+                                    },
+                                    "Primary": true,
+                                    "PrivateIpAddress": "172.31.37.163"
+                                }
+                            ],
+                            "PrivateDnsName": "ip-172-31-37-163.ec2.internal",
+                            "Attachment": {
+                                "Status": "attached",
+                                "DeviceIndex": 0,
+                                "DeleteOnTermination": true,
+                                "AttachmentId": "eni-attach-1937d164",
+                                "AttachTime": "2014-09-12T15:24:07.000Z"
+                            },
+                            "Groups": [
+                                {
+                                    "GroupName": "default",
+                                    "GroupId": "sg-2be2c34e"
+                                }
+                            ],
+                            "SubnetId": "subnet-3f0e1c17",
+                            "OwnerId": "447005562149",
+                            "PrivateIpAddress": "172.31.37.163"
+                        }
+                    ],
+                    "SourceDestCheck": true,
                     "Placement": {
                         "Tenancy": "default",
                         "GroupName": null,
-                        "AvailabilityZone": "us-east-1a"
+                        "AvailabilityZone": "us-east-1d"
                     },
                     "Hypervisor": "xen",
                     "BlockDeviceMappings": [
@@ -257,13 +339,13 @@ aws ec2 describe-instances
                             "Ebs": {
                                 "Status": "attached",
                                 "DeleteOnTermination": true,
-                                "VolumeId": "vol-8fa0b6cf",
-                                "AttachTime": "2013-08-29T20:18:14.000Z"
+                                "VolumeId": "vol-49fc4906",
+                                "AttachTime": "2014-09-12T15:24:11.000Z"
                             }
                         }
                     ],
-                    "Architecture": "i386",
-                    "KernelId": "aki-407d9529",
+                    "Architecture": "x86_64",
+                    "KernelId": "aki-919dcaf8",
                     "RootDeviceName": "/dev/sda1",
                     "VirtualizationType": "paravirtual",
                     "AmiLaunchIndex": 0
@@ -274,106 +356,255 @@ aws ec2 describe-instances
 }
 ```
 
-Et Bam ! la machine est prête (statut "running"). Notons le DNS public (pour nous c'est `ec2-107-22-76-96.compute-1.amazonaws.com`).
+Et Bam ! la machine est prête (statut "running"). Notons le DNS public (pour nous c'est `ec2-54-165-229-123.compute-1.amazonaws.com`).
 
 Attention aux machines des petits camarades. Vous les verrez :)
 
 Normalement, nous avons maintenant tout ce qu'il faut pour nous connecter à notre toute première instance en SSH. Chaque système a ses petites habitudes. Sous ubuntu, c'est l'user ubuntu qui doit se connecter.
 
 ```
-ssh ubuntu@ec2-107-22-76-96.compute-1.amazonaws.com -i my-key-pair.pem -v
+ssh ubuntu@ec2-54-165-229-123.compute-1.amazonaws.com -i my-key-pair.pem -v
 ...
 ...
-[ubuntu@ip-10-202-59-53 ~]$
+...
+```
+Ca ne fonctionne pas... Pourquoi ?
+
+Le security group par défaut n'autorise aucun accès. Pas même ssh.
+
+Il faudrait ouvrir le port ssh (22).
+
+### Les security groups
+
+La gestion des politique de securité est spécifiée au travers des security-groups.
+
+```
+aws ec2 describe-security-groups
+{
+    "SecurityGroups": [
+        {
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "UserIdGroupPairs": []
+                }
+            ],
+            "Description": "default VPC security group",
+            "IpPermissions": [],
+            "GroupName": "default",
+            "VpcId": "vpc-ab8e3dce",
+            "OwnerId": "447005562149",
+            "GroupId": "sg-2be2c34e"
+        }
+    ]
+}
+```
+
+Important : il est IMPOSSIBLE d'ajouter un groupe de sécurité à une intance. Dans notre cas, on va donc ajouter une règle au groupe de sécurité par defaut. Ca n'est pas forcémment une bonne pratique...
+
+
+Maintenant, on peut ajouter notre règle d'accès SSH à ce sécurity group :
+
+```
+aws ec2 authorize-security-group-ingress --group-name default --protocol tcp --port 22 --cidr 0.0.0.0/0
+{
+    "return": "true"
+}
+```
+
+Alors, voyons voir :
+
+```
+aws ec2 describe-security-groups --profile insset
+{
+    "SecurityGroups": [
+        {
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "UserIdGroupPairs": []
+                }
+            ],
+            "Description": "default VPC security group",
+            "IpPermissions": [
+                {
+                    "ToPort": 22,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "UserIdGroupPairs": [],
+                    "FromPort": 22
+                }
+            ],
+            "GroupName": "default",
+            "VpcId": "vpc-ab8e3dce",
+            "OwnerId": "447005562149",
+            "GroupId": "sg-2be2c34e"
+        }
+    ]
+}
+```
+
+C'est bon...
+
+@TODO stopper l'instance, créer un groupe de sécurité, ajouter une règle pour les accès SSH, relancer une intance avec ce groups de sécurié. RTFM
+
+
+### Alors, cette instance ?
+
+```
+ssh ubuntu@ec2-54-165-229-123.compute-1.amazonaws.com -i my-key-pair.pem -v
+...
+...
+ubuntu@ip-172-31-37-163:~$
 ```
 
 On peut en lancer une deuxième, une troisième ... La commande describe-instances nous fournira les informations de ces instances.
+
+Depuis l'instance on peut récupérer un certain nombre d'information : les meta-data
+
+```
+ubuntu@ip-172-31-42-29:~$ curl http://169.254.169.254/latest/meta-data/
+ami-id
+ami-launch-index
+ami-manifest-path
+block-device-mapping/
+hostname
+instance-action
+instance-id
+instance-type
+kernel-id
+local-hostname
+local-ipv4
+mac
+metrics/
+network/
+placement/
+profile
+public-hostname
+public-ipv4
+public-keys/
+reservation-id
+security-groups
+services/
+```
+
+Enfin, on est sudo...
+
+```
+ubuntu@ip-172-31-37-163:~$ sudo apt-get update
+...
+...
+```
+
+## Automatiser l'installation des services au lancement de l'instance
+
+On a pour le moment été capable de lancer une instance, et de s'y connecter. Un fois dessus, on peut manuellement installer ce que l'on veut, comme sur n'importe quelle machine.
+
+Par exemple :
+
+- installer l'écosystème du langage/framework qu'il nous faut
+- git clone notre super projet
+- regler 2-3 paramètres + fichiers de configuration
+- lancer les services
+
+Ainsi, tout s'installe et se lance, dès que l'instance est lancée.
+
+Un tel script de lancement s'écrit dans le fichier `user-data` que l'on peut passer en paramètre à la commande `aws ec2 run-instance ..... --user-data user-data-file`.
+
+Un exemple pour dans un écosystème node.js à jour (donc, en compilant) + quelques astuces...
+
+```bash
+#!/bin/bash
+
+apt-get update
+apt-get install git make g++ -y
+
+wget http://nodejs.org/dist/v0.10.31/node-v0.10.31.tar.gz
+tar xvzf node-v0.10.31.tar.gz
+cd node-v0.10.31
+./configure
+make
+make install
+
+npm install forever -g
+cd /home/ubuntu/
+git clone git://github.com/MY_NAME/MY_PROJECT.git
+cd MY_PROJECT
+cat >> config/config.json << EOD
+var conf = {
+    'maVariable': 1
+}
+EOD
+npm install .
+ulimit -n 102400
+PORT=80 NODE_ENV=production forever start app.js
+
+```
+
 
 
 
 ## Stopper une instance
 
 ```
-aws ec2 stop-instance --instance-id i-cb3d58a6
+aws ec2 stop-instance --instance-id i-e4e01b0a
 {
-    "Reservations": [
+    "StoppingInstances": [
         {
-            "OwnerId": "511122800347",
-            "ReservationId": "r-f6edcf94",
-            "Groups": [
-                {
-                    "GroupName": "upicardie-asdemo-web",
-                    "GroupId": "sg-6563ed0e"
-                }
-            ],
-            "Instances": [
-                {
-                    "Monitoring": {
-                        "State": "disabled"
-                    },
-                    "PublicDnsName": "ec2-107-22-76-96.compute-1.amazonaws.com",
-                    "RootDeviceType": "ebs",
-                    "State": {
-                        "Code": 16,
-                        "Name": "running"
-                    },
-                    "EbsOptimized": false,
-                    "LaunchTime": "2013-08-29T20:18:10.000Z",
-                    "PublicIpAddress": "107.22.76.96",
-                    "PrivateIpAddress": "10.202.59.53",
-                    "ProductCodes": [],
-                    "StateTransitionReason": null,
-                    "InstanceId": "i-cb3d58a6",
-                    "ImageId": "ami-8c1fece5",
-                    "PrivateDnsName": "ip-10-202-59-53.ec2.internal",
-                    "KeyName": "MyKeyPair",
-                    "SecurityGroups": [
-                        {
-                            "GroupName": "upicardie-asdemo-web",
-                            "GroupId": "sg-6563ed0e"
-                        }
-                    ],
-                    "ClientToken": null,
-                    "InstanceType": "t1.micro",
-                    "NetworkInterfaces": [],
-                    "Placement": {
-                        "Tenancy": "default",
-                        "GroupName": null,
-                        "AvailabilityZone": "us-east-1a"
-                    },
-                    "Hypervisor": "xen",
-                    "BlockDeviceMappings": [
-                        {
-                            "DeviceName": "/dev/sda1",
-                            "Ebs": {
-                                "Status": "attached",
-                                "DeleteOnTermination": true,
-                                "VolumeId": "vol-8fa0b6cf",
-                                "AttachTime": "2013-08-29T20:18:14.000Z"
-                            }
-                        }
-                    ],
-                    "Architecture": "i386",
-                    "KernelId": "aki-407d9529",
-                    "RootDeviceName": "/dev/sda1",
-                    "VirtualizationType": "paravirtual",
-                    "AmiLaunchIndex": 0
-                }
-            ]
+            "InstanceId": "i-e4e01b0a",
+            "CurrentState": {
+                "Code": 64,
+                "Name": "stopping"
+            },
+            "PreviousState": {
+                "Code": 16,
+                "Name": "running"
+            }
         }
     ]
 }
 ```
 
-## terminer une instance
+## Terminer une instance
 
 ```
-aws ec2 terminate-instances --instance-id i-cb3d58a6
+aws ec2 terminate-instances --instance-id i-e4e01b0a
+{
+    "TerminatingInstances": [
+        {
+            "InstanceId": "i-e4e01b0a",
+            "CurrentState": {
+                "Code": 32,
+                "Name": "shutting-down"
+            },
+            "PreviousState": {
+                "Code": 64,
+                "Name": "stopping"
+            }
+        }
+    ]
+}
 ```
 
 ## Mumuse avec les EBS (Elasctic Block Storage)
 
-Dans la description de notre instance, nous notons
+On relance deux(!) instances.
+
+Dans la description de la première instance, nous notons
 
 ```
 "BlockDeviceMappings": [
@@ -383,13 +614,13 @@ Dans la description de notre instance, nous notons
                                 "Status": "attached",
                                 "DeleteOnTermination": true,
                                 "VolumeId": "vol-21726d61",
-                                "AttachTime": "2013-09-02T13:25:36.000Z"
+                                "AttachTime": "2014-09-12T15:24:11.000Z"
                             }
                         }
                     ],
 ```
 
-Nous pouvons le détacher
+Nous pouvons le détacher, puis
 
 Au préalable, on le démonte.
 
@@ -401,6 +632,12 @@ Et depuis la ligne de commande :
 
 ```
 aws ec2 detach-volume --instance-id i-3a0ba252 --volume-id vol-21726d61
+```
+
+et on va remonter l'EBS sur la deuxième instance
+
+```
+aws ec2 attach-volume --instance-id i-xxxxxxxx --volume-id vol-21726d61
 ```
 
 
@@ -431,8 +668,8 @@ Attachons-lui les 2 instances que nous avons créées.
 aws elb register-instances-with-load-balancer --load-balancer-name upicardie-asdemo1 --instances i-a0eccdc1 i-a0eccda1
 ```
 
-Excercice
----------
+Exercice
+--------
 
 Installer un site web quelconque sur 3 instances, rattachées à un ELB. Lancer un test de charge naif (ou pas) afin d'observer les logs sur chaque machine.
 
