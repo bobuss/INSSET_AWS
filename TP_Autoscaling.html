@@ -33,13 +33,55 @@ Déclaration de l'ELB
 
 On déclare un ELB nommé upicardie-asdemo sur la zone us-east-1d, qui écoute sur le port 80 et qui répartit les requêtes sur le port 80 des instances :
 
+Attention, avec un compte amazon VPC (ce qui est maintenant le cas par défaut), on oublie la notion de zone lors de la création de l'ELB. Par contre, on se base sur les "subnets" VPC.
+
+```bash
+aws ec2  describe-subnets
+{
+    "Subnets": [
+        {
+            "VpcId": "vpc-ab8e3dce",
+            "CidrBlock": "172.31.16.0/20",
+            "MapPublicIpOnLaunch": true,
+            "DefaultForAz": true,
+            "State": "available",
+            "AvailabilityZone": "us-east-1a",
+            "SubnetId": "subnet-19c2126e",
+            "AvailableIpAddressCount": 4089
+        },
+        {
+            "VpcId": "vpc-ab8e3dce",
+            "CidrBlock": "172.31.32.0/20",
+            "MapPublicIpOnLaunch": true,
+            "DefaultForAz": true,
+            "State": "available",
+            "AvailabilityZone": "us-east-1d",
+            "SubnetId": "subnet-3f0e1c17",
+            "AvailableIpAddressCount": 4087
+        },
+        {
+            "VpcId": "vpc-ab8e3dce",
+            "CidrBlock": "172.31.0.0/20",
+            "MapPublicIpOnLaunch": true,
+            "DefaultForAz": true,
+            "State": "available",
+            "AvailabilityZone": "us-east-1b",
+            "SubnetId": "subnet-d9bd4f80",
+            "AvailableIpAddressCount": 4091
+        }
+    ]
+}
+```
+
+On peut reporter les subnets qui nous interessent dans la création du load-balancer.
+
 ```
 aws elb create-load-balancer \
+  --subnets subnet-d9bd4f80 subnet-3f0e1c17 subnet-19c2126e \
   --load-balancer-name upicardie-asdemo \
-  --availability-zones us-east-1d \
   --listeners "LoadBalancerPort=80,InstancePort=80,Protocol=http"
 {
-    "DNSName": "upicardie-asdemo-764036086.us-east-1.elb.amazonaws.com"
+    "DNSName": "upicardie-asdemo-992010360.us-east-1.elb.amazonaws.com"
 }
 ```
 
@@ -94,7 +136,7 @@ aws ec2 create-security-group \
 ```bash
 aws ec2 authorize-security-group-ingress \
   --group-name upicardie-asdemo-common \
-  --protocol icmp
+  --protocol icmp \
   --port -1
 {
     "return": "true"
@@ -111,33 +153,54 @@ aws ec2 authorize-security-group-ingress \
 }
 ```
 
+On ouvre le port 80 sur le group web :
+
 ```bash
 aws ec2 authorize-security-group-ingress \
   --group-name upicardie-asdemo-web \
   --protocol tcp \
   --port 80 \
-  --source-group sg-6563ed0e
+  --source-group sg-92cdeef7
 {
-    "IpPermissionsEgress": [],
-    "Description": "Serveurs Web upicardie-asdemo",
-    "IpPermissions": [
+    "return": "true"
+}
+
+aws ec2 describe-security-groups --group-ids sg-92cdeef7
+{
+    "SecurityGroups": [
         {
-            "ToPort": 80,
-            "IpProtocol": "tcp",
-            "IpRanges": [],
-            "UserIdGroupPairs": [
+            "IpPermissionsEgress": [
                 {
-                    "GroupName": "upicardie-asdemo-web",
-                    "UserId": "511122800347",
-                    "GroupId": "sg-6563ed0e"
+                    "IpProtocol": "-1",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "UserIdGroupPairs": []
                 }
             ],
-            "FromPort": 80
+            "Description": "Serveurs Web upicardie-asdemo",
+            "IpPermissions": [
+                {
+                    "ToPort": 80,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [],
+                    "UserIdGroupPairs": [
+                        {
+                            "UserId": "447005562149",
+                            "GroupId": "sg-92cdeef7"
+                        }
+                    ],
+                    "FromPort": 80
+                }
+            ],
+            "GroupName": "upicardie-asdemo-web",
+            "VpcId": "vpc-ab8e3dce",
+            "OwnerId": "447005562149",
+            "GroupId": "sg-92cdeef7"
         }
-    ],
-    "GroupName": "upicardie-asdemo-web",
-    "OwnerId": "511122800347",
-    "GroupId": "sg-6563ed0e"
+    ]
 }
 
 ```
@@ -148,7 +211,7 @@ Création de la configuration de lancement
 
 Avant de déclarer le groupe d'autoscaling à proprement parler, nous allons définir tout ce qui est relatif à une instance du groupe, à savoir :
 
-- son AMI (ami-94cd60fd)
+- son AMI (ami-b0c36ed8)
 - son type t1.micro
 - ses groupes de sécurité (upicardie-asdemo-common et upicardie-asdemo-web)
 - le fichier user-data qu'on a préparé (user-data-imageable, stocké dans le répertoire courant de la machine à partir de laquelle on tape les commandes d'autoscaling)
@@ -157,10 +220,10 @@ Avant de déclarer le groupe d'autoscaling à proprement parler, nous allons dé
 ```bash
 aws autoscaling create-launch-configuration \
   --launch-configuration-name upicardie-asdemo-lc \
-  --image-id ami-94cd60fd \
+  --image-id ami-b0c36ed8 \
   --instance-type t1.micro \
   --security-groups '["upicardie-asdemo-common","upicardie-asdemo-web"]' \
-  --user-data user-data-imageable \
+  --user-data file://user-data-imageable \
   --key-name MyKeyPair
 {}
 ```
@@ -170,16 +233,16 @@ aws autoscaling describe-launch-configurations
 {
     "LaunchConfigurations": [
         {
-            "UserData": "dXNlci1kYXRhLWltYWdlYWJsZQ==",
+            "UserData": "...XXXXX..."
             "EbsOptimized": false,
-            "LaunchConfigurationARN": "arn:aws:autoscaling:us-east-1:511122800347:launchConfiguration:4c9d7ee0-47cd-407d-bc5d-bef4f7fe8195:launchConfigurationName/upicardie-asdemo-lc",
+            "LaunchConfigurationARN": "arn:aws:autoscaling:us-east-1:447005562149:launchConfiguration:0141a8f5-1cad-4dfc-a62f-7f012e02f067:launchConfigurationName/upicardie-asdemo-lc",
             "InstanceMonitoring": {
                 "Enabled": true
             },
-            "ImageId": "ami-94cd60fd",
-            "CreatedTime": "2013-08-28T22:13:31.740Z",
+            "ImageId": "ami-b0c36ed8",
+            "CreatedTime": "2014-09-15T18:23:37.312Z",
             "BlockDeviceMappings": [],
-            "KeyName": "MyKeyPair",
+            "KeyName": "kp_test",
             "SecurityGroups": [
                 "upicardie-asdemo-common",
                 "upicardie-asdemo-web"
@@ -191,6 +254,7 @@ aws autoscaling describe-launch-configurations
         }
     ]
 }
+
 
 ```
 
@@ -223,7 +287,7 @@ aws autoscaling describe-auto-scaling-groups
 {
     "AutoScalingGroups": [
         {
-            "AutoScalingGroupARN": "arn:aws:autoscaling:us-east-1:511122800347:autoScalingGroup:eca4e01a-06f0-4373-8ab2-7210c006c450:autoScalingGroupName/upicardie-asdemo-asg",
+            "AutoScalingGroupARN": "arn:aws:autoscaling:us-east-1:447005562149:autoScalingGroup:467e886b-ede8-40eb-9338-a6bd9f53f3af:autoScalingGroupName/upicardie-asdemo-asg",
             "HealthCheckGracePeriod": 300,
             "SuspendedProcesses": [],
             "DesiredCapacity": 0,
@@ -242,7 +306,7 @@ aws autoscaling describe-auto-scaling-groups
                 "Default"
             ],
             "LaunchConfigurationName": "upicardie-asdemo-lc",
-            "CreatedTime": "2013-08-28T22:19:51.106Z",
+            "CreatedTime": "2014-09-15T18:24:56.744Z",
             "AvailabilityZones": [
                 "us-east-1d"
             ],
@@ -250,7 +314,6 @@ aws autoscaling describe-auto-scaling-groups
         }
     ]
 }
-
 ```
 
 Triggers de mise à l'échelle
@@ -267,7 +330,7 @@ aws autoscaling put-scaling-policy \
   --adjustment-type PercentChangeInCapacity \
   --cooldown 300
 {
-    "PolicyARN": "arn:aws:autoscaling:us-east-1:511122800347:scalingPolicy:37583020-faf5-4990-a2ec-0aa0ecad9cae:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up"
+    "PolicyARN": "arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:c7d0ed93-f391-43e4-91a3-e9e977dbb6f3:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up"
 }
 ```
 
@@ -281,7 +344,7 @@ aws autoscaling put-scaling-policy \
   --adjustment-type ChangeInCapacity \
   --cooldown 300
 {
-    "PolicyARN": "arn:aws:autoscaling:us-east-1:511122800347:scalingPolicy:924d37fe-90f1-466c-90e8-196f9e28b36a:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-down"
+    "PolicyARN": "arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:84ece9a9-759f-4230-996d-83c132935b1e:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-down"
 }
 ```
 
@@ -304,7 +367,7 @@ aws cloudwatch put-metric-alarm \
   --period 60 \
   --threshold 70 \
   --evaluation-periods 2 \
-  --alarm-actions arn:aws:autoscaling:us-east-1:511122800347:scalingPolicy:37583020-faf5-4990-a2ec-0aa0ecad9cae:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up
+  --alarm-actions arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:c7d0ed93-f391-43e4-91a3-e9e977dbb6f3:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up
 {}
 
 ```
@@ -328,7 +391,7 @@ aws cloudwatch put-metric-alarm \
   --period 60 \
   --threshold 36 \
   --evaluation-periods 2 \
-  --alarm-actions arn:aws:autoscaling:us-east-1:511122800347:scalingPolicy:924d37fe-90f1-466c-90e8-196f9e28b36a:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-down
+  --alarm-actions arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:84ece9a9-759f-4230-996d-83c132935b1e:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-down
 {}
 
 ```
@@ -352,7 +415,7 @@ aws cloudwatch put-metric-alarm \
   --period 60 \
   --threshold 3 \
   --evaluation-periods 1 \
-  --alarm-actions arn:aws:autoscaling:us-east-1:511122800347:scalingPolicy:37583020-faf5-4990-a2ec-0aa0ecad9cae:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up
+  --alarm-actions arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:c7d0ed93-f391-43e4-91a3-e9e977dbb6f3:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up
 {}
 
 ```
@@ -397,7 +460,7 @@ aws aws autoscaling put-scheduled-update-group-action \
 Mise à jour de l'autoscaling
 ----------------------------
 
-Les commandes d'autoscaling prévoient la mise à jour du groupe d'autoscaling, mais pas de la configuration de lancement de ce même groupe. Qu'importe, nous pouvons contourner cette limitation en passant une configuration de lancement temporaire. Si nous voulons par exemple changer l'AMI de nos instances de ami-94cd60fd vers ami-7daee114 :
+Les commandes d'autoscaling prévoient la mise à jour du groupe d'autoscaling, mais pas de la configuration de lancement de ce même groupe. Qu'importe, nous pouvons contourner cette limitation en passant une configuration de lancement temporaire. Si nous voulons par exemple changer l'AMI de nos instances de ami-b0c36ed8 vers ami-7daee114 :
 
 ```bash
 as-create-launch-config upicardie-asdemo-lc \
@@ -440,7 +503,7 @@ sudo apt-get install siege
 Il suffit de donner à siege le nombre de connexions concurrentes (`-c`), et le temps du test (`-t`).
 
 ```
-siege -c25 -t10M  upicardie-asdemo-764036086.us-east-1.elb.amazonaws.com
+siege -c25 -t10M  upicardie-asdemo-992010360.us-east-1.elb.amazonaws.com
 ```
 
 Une chose à noter est que le monitoring basique de CloudWatch est rafraichi toutes les 5 minutes. Nos politiques d'auto-scaling doivent se réaliser pendant 3 minutes consécutives. Donc, pour que siege puisse déclencher l'auto-scaling, il faut le laisser tourner 6 à 10 minutes. Enfin, il faut rafraichir l'onglet CloudWatch dans la console AWS afin de vérifier que des serveurs se lancent.

@@ -21,14 +21,16 @@ Pour info : https://github.com/aws/aws-cli
 ($ sudo apt-get install -y python-pip)
 $ sudo pip install awscli
 ...
-$ vi ~/.aws-config
+
+$ aws configure
 ...
-$ cat ~/.aws-config
+
+$ cat ~/.aws/config
 [default]
 aws_access_key_id = <access key id>
 aws_secret_access_key = <secret access key>
 region = us-east-1
-$ chmod 600 $HOME/.aws-config
+
 $ aws ec2 describe-regions
 {
     "Regions": [
@@ -515,9 +517,9 @@ Par exemple :
 
 Ainsi, tout s'installe et se lance, dès que l'instance est lancée.
 
-Un tel script de lancement s'écrit dans le fichier `user-data` que l'on peut passer en paramètre à la commande `aws ec2 run-instance ..... --user-data user-data-file`.
+Un tel script de lancement s'écrit dans le fichier `user-data` que l'on peut passer en paramètre à la commande `aws ec2 run-instance ..... --user-data file://user-data-file`.
 
-Un exemple pour dans un écosystème node.js à jour (donc, en compilant) + quelques astuces...
+Un exemple dans un écosystème node.js à jour (donc, en compilant) + quelques astuces...
 
 ```bash
 #!/bin/bash
@@ -640,24 +642,56 @@ aws ec2 attach-volume --instance-id i-abcd1234 --volume-id vol-21726d61 --device
 
 ## Elastic Load Balancer
 
-On déclare un ELB nommé upicardie-asdemo1 sur la zone us-east-1d, qui écoute sur le port 80 et qui répartit les requêtes sur le port 80 des instances :
+On déclare un ELB nommé upicardie-asdemo1 sur la zone us-east-1d, qui écoute sur le port 80 et qui répartit les requêtes sur le port 80 des instances. Notre compte AWS est en mode VPC, nous allons devoir utiliser les subnets VPC pour initialiser le load balancer.
+
+```bash
+aws ec2  describe-subnets
+{
+    "Subnets": [
+        {
+            "VpcId": "vpc-ab8e3dce",
+            "CidrBlock": "172.31.16.0/20",
+            "MapPublicIpOnLaunch": true,
+            "DefaultForAz": true,
+            "State": "available",
+            "AvailabilityZone": "us-east-1a",
+            "SubnetId": "subnet-19c2126e",
+            "AvailableIpAddressCount": 4089
+        },
+        {
+            "VpcId": "vpc-ab8e3dce",
+            "CidrBlock": "172.31.32.0/20",
+            "MapPublicIpOnLaunch": true,
+            "DefaultForAz": true,
+            "State": "available",
+            "AvailabilityZone": "us-east-1d",
+            "SubnetId": "subnet-3f0e1c17",
+            "AvailableIpAddressCount": 4087
+        },
+        {
+            "VpcId": "vpc-ab8e3dce",
+            "CidrBlock": "172.31.0.0/20",
+            "MapPublicIpOnLaunch": true,
+            "DefaultForAz": true,
+            "State": "available",
+            "AvailabilityZone": "us-east-1b",
+            "SubnetId": "subnet-d9bd4f80",
+            "AvailableIpAddressCount": 4091
+        }
+    ]
+}
+``
 
 ```
 aws elb create-load-balancer \
   --load-balancer-name upicardie-asdemo1 \
-  --availability-zones us-east-1d \
+  --subnets subnet-d9bd4f80 subnet-3f0e1c17 subnet-19c2126e \
   --listeners "LoadBalancerPort=80,InstancePort=80,Protocol=http"
 {
     "DNSName": "upicardie-asdemo1-2087259529.us-east-1.elb.amazonaws.com"
 }
 ```
 
-
-Penser à ajouter les availability zones accéssibles à notre ELB
-
-```
-aws elb enable-availability-zones-for-load-balancer --load-balancer-name upicardie-asdemo --availability-zones us-east-1a
-```
 
 Attachons-lui les 2 instances que nous avons créées.
 
@@ -677,7 +711,7 @@ La même chose en console WEB (ouf!)
 
 Amazon est un des pioniers du Web. Il aurait été étonnant de ne pas avoir une façon plus visuelle d'utiliser les services d'AWS.
 
-C'est possible à l'addresse : https://YOUR_AMAZON_ID.signin.aws.amazon.com/console/
+C'est possible à l'addresse : https://447005562149.signin.aws.amazon.com/console/
 
 Mais vous allez devoir vous créer votre login
 
@@ -691,7 +725,6 @@ Regarder aussi
 aws iam get-account-password-policy
 ```
 
-Enfin pour le YOUR_AMAZON_ID... il faut chercher du côté des ARN (Amazon Resource Name)...
 
 
 

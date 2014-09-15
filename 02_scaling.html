@@ -306,7 +306,7 @@ Hello bob
 
             <div class="fragment">
               <h4>C : Consistency</h4>
-              <p>Un service est dit "consistent" s'il opère ses opérations entièrement... ou pas du tout</p>
+              <p>Un service distribué est dit "consistent" s'il opère ses opérations entièrement... ou pas du tout</p>
               <p>Notions de transactions, propriétés ACID (Atomicité, Cohérence, Isolation, Durabilité)</p>
               <p>Tous les nœuds du système voient exactement les mêmes données au même moment</p>
             </div>
@@ -314,7 +314,7 @@ Hello bob
 
           <section>
             <h4>A : Availability</h4>
-            <p>Un service est "available"... s'il marche...</p>
+            <p>Un service distribué est "available"... s'il marche...</p>
             <p>On considère qu'il marche quand chaque client peut utiliser le service en écriture et en lecture</p>
             <p>Garantie que toutes les requêtes reçoivent une réponse</p>
           </section>
@@ -328,7 +328,7 @@ Hello bob
             <h3>Que dit le théorème CAP ?</h3>
 
             <blockquote class="fragment">
-            des 3 propriétés CAP... on peut n'en garantir que 2
+            Dans un système distribué, des 3 propriétés CAP... on peut n'en garantir que 2
             </blockquote>
             <br><br>
             <p class="fragment">Et bien, nous voilà bien ...</p>
@@ -347,14 +347,7 @@ Hello bob
           </section>
 
           <section>
-            <h4>Garder CP</h4>
-
-            <p>L'applicatif doit supporter la panne de partitions</p>
-            <p>Peut se réaliser entre autre par du découpage fonctionnel : 1 fonctionnalité est down, mais ne gène pas le reste du service</p>
-          </section>
-
-          <section>
-            <h4>Garder le AP</h4>
+            <h4>Exemple : garder le AP</h4>
 
             <p>concept du "Eventually Consistent" (W.Vogels)</p>
             <p>notions de replicas(N), de quorum en lecture(R), en écriture(W)</p>
