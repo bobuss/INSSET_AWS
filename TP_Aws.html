@@ -18,7 +18,7 @@ Installer AWS CLI
 Pour info : https://github.com/aws/aws-cli
 
 ```
-($sudo apt-get install -y python-pip)
+($ sudo apt-get install -y python-pip)
 $ sudo pip install awscli
 ...
 $ vi ~/.aws-config
@@ -90,7 +90,7 @@ $ aws ec2 create-key-pair --key-name MyKeyPair
 }
 
 $ vi my-key-pair.pem
-(copier la clé)
+(copier la clé. Attention aux retours chariots)
 
 
 $ cat my-key-pair.pem
@@ -119,14 +119,6 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
 -----END RSA PRIVATE KEY-----
 ```
 
-Astuce pour afficher clairement la clé... et panipuler plus facilement du json en ligne de commande.
-
-Installer jq : http://stedolan.github.io/jq/
-
-```
-aws ec2 create-key-pair --key-name MyKeyPair | jq '.KeyPair.KeyMaterial' | xargs -0 printf
-```
-
 Important : MyKeyPair est le nom de notre clé. Rien à voir avec le ficher en local qui est la clé publique. Lors des appels à l'API, on passera le nom de la clé (donc MyKeyPair). Lors de la connexion aux instances, on passera à la commande ssh le ficher de la clé publique (donc le fichier `my-key-pair.pem`).
 
 Nous avons notre clé publique en local. Pour pouvoir l'utiliser, on va la protéger.
@@ -139,7 +131,7 @@ chmod 600 my-key-pair.pem
 Lancement de notre première instance
 ------------------------------------
 
-### choix d'une ami
+### Choix d'une AMI
 
 pour ubuntu 14.04 (LTS), c'est https://cloud-images.ubuntu.com/trusty/current/
 
@@ -240,7 +232,7 @@ aws ec2 run-instances --image-id ami-b0c36ed8 --instance-type t1.micro --region 
 On note le `"PublicDnsName": null`, ce qui signifie que l'instance n'a pour le moment pas d'entrée DNS, puisqu'elle est en train de se lance (statut `pending`).
 
 
-## se connecter à l'instance
+## Se connecter à l'instance
 
 Quelques instants plus tard, nous allons redemander :
 
@@ -608,24 +600,22 @@ Dans la description de la première instance, nous notons
 
 ```
 "BlockDeviceMappings": [
-                        {
-                            "DeviceName": "/dev/sda1",
-                            "Ebs": {
-                                "Status": "attached",
-                                "DeleteOnTermination": true,
-                                "VolumeId": "vol-21726d61",
-                                "AttachTime": "2014-09-12T15:24:11.000Z"
-                            }
-                        }
-                    ],
+    {
+        "DeviceName": "/dev/sda1",
+        "Ebs": {
+            "Status": "attached",
+            "DeleteOnTermination": true,
+            "VolumeId": "vol-21726d61",
+            "AttachTime": "2014-09-12T15:24:11.000Z"
+        }
+    }
+],
 ```
 
-Nous pouvons le détacher, puis
-
-Au préalable, on le démonte.
+Nous pouvons le détacher ; au préalable, on le démonte. Donc sur l'instance :
 
 ```
-umount -d /dev/sda
+ubuntu@ip-172-31-37-163:~$ umount -d /dev/sda
 ```
 
 Et depuis la ligne de commande :
@@ -634,10 +624,17 @@ Et depuis la ligne de commande :
 aws ec2 detach-volume --instance-id i-3a0ba252 --volume-id vol-21726d61
 ```
 
-et on va remonter l'EBS sur la deuxième instance
+On peut alors remonter cet EBS sur la deuxième instance.
 
 ```
-aws ec2 attach-volume --instance-id i-xxxxxxxx --volume-id vol-21726d61
+aws ec2 attach-volume --instance-id i-abcd1234 --volume-id vol-21726d61 --device /dev/sdf
+{
+    "AttachTime": "2014-09-12T15:26:13.000Z",
+    "InstanceId": "i-abcd1234",
+    "VolumeId": "vol-21726d61",
+    "State": "attaching",
+    "Device": "/dev/sdf"
+}
 ```
 
 
@@ -687,6 +684,16 @@ Mais vous allez devoir vous créer votre login
 ```
 aws iam create-login-profile help
 ```
+
+Regarder aussi
+
+```
+aws iam get-account-password-policy
+```
+
+Enfin pour le YOUR_AMAZON_ID... il faut chercher du côté des ARN (Amazon Resource Name)...
+
+
 
 
 </xmp>
