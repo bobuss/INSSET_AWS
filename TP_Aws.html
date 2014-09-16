@@ -680,7 +680,7 @@ aws ec2  describe-subnets
         }
     ]
 }
-``
+```
 
 ```
 aws elb create-load-balancer \
@@ -696,7 +696,9 @@ aws elb create-load-balancer \
 Attachons-lui les 2 instances que nous avons créées.
 
 ```
-aws elb register-instances-with-load-balancer --load-balancer-name upicardie-asdemo1 --instances i-a0eccdc1 i-a0eccda1
+aws elb register-instances-with-load-balancer \
+  --load-balancer-name upicardie-asdemo1 \
+  --instances i-a0eccdc1 i-a0eccda1
 ```
 
 Exercice
