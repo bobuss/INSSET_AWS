@@ -111,7 +111,7 @@ Déclaration des groupes de sécurité
 Les instances d'une groupe d'autoscaling ne dérogent pas aux règles en vigueur sur EC2, elles doivent faire partie d'au moins un groupe de sécurité. Ainsi, nous déclarerons :
 
 - upicardie-asdemo-common : le groupe commun à toutes les instances. Autorise le ping et le SSH de partout.
-- upicardie-asdemo-web : le groupe des instances Web. Autorise le HTTP à partir du groupe de sécurité de l'ELB (sg-6563ed0e dans notre cas)
+- upicardie-asdemo-web : le groupe des instances Web. Autorise le HTTP à partir du groupe de sécurité de l'ELB (sg-92cdeef7 dans notre cas)
 
 ```bash
 aws ec2 create-security-group \
@@ -129,7 +129,7 @@ aws ec2 create-security-group \
     --description "Serveurs Web upicardie-asdemo"
 {
     "return": "true",
-    "GroupId": "sg-6563ed0e"
+    "GroupId": "sg-92cdeef7"
 }
 ```
 
