@@ -596,44 +596,33 @@ aws ec2 terminate-instances --instance-id i-e4e01b0a
 
 ## Mumuse avec les EBS (Elasctic Block Storage)
 
-On relance deux(!) instances.
-
-Dans la description de la première instance, nous notons
-
-```
-"BlockDeviceMappings": [
-    {
-        "DeviceName": "/dev/sda1",
-        "Ebs": {
-            "Status": "attached",
-            "DeleteOnTermination": true,
-            "VolumeId": "vol-21726d61",
-            "AttachTime": "2014-09-12T15:24:11.000Z"
-        }
-    }
-],
-```
-
-Nous pouvons le détacher ; au préalable, on le démonte. Donc sur l'instance :
+Nos t1.micro sont en EBS-root : il n'y a qu'un volume, et c'est / (le root). Impossible donc de le démonter
+On va créer un nouveau volume.
 
 ```
-ubuntu@ip-172-31-37-163:~$ umount -d /dev/sda
-```
-
-Et depuis la ligne de commande :
-
-```
-aws ec2 detach-volume --instance-id i-3a0ba252 --volume-id vol-21726d61
+aws ec2 create-volume --size 100 --availability-zone us-east-1d
+{
+    "AvailabilityZone": "us-east-1d",
+    "Attachments": [],
+    "Tags": [],
+    "Encrypted": false,
+    "VolumeType": "standard",
+    "VolumeId": "vol-99922fd6",
+    "State": "creating",
+    "SnapshotId": null,
+    "CreateTime": "2014-09-16T08:23:40.498Z",
+    "Size": 100
+}
 ```
 
 On peut alors remonter cet EBS sur la deuxième instance.
 
 ```
-aws ec2 attach-volume --instance-id i-abcd1234 --volume-id vol-21726d61 --device /dev/sdf
+aws ec2 attach-volume --instance-id i-abcd1234 --volume-id vol-99922fd6 --device /dev/sdf
 {
     "AttachTime": "2014-09-12T15:26:13.000Z",
     "InstanceId": "i-abcd1234",
-    "VolumeId": "vol-21726d61",
+    "VolumeId": "vol-99922fd6",
     "State": "attaching",
     "Device": "/dev/sdf"
 }
