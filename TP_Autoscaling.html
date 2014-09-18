@@ -111,7 +111,7 @@ Déclaration des groupes de sécurité
 Les instances d'une groupe d'autoscaling ne dérogent pas aux règles en vigueur sur EC2, elles doivent faire partie d'au moins un groupe de sécurité. Ainsi, nous déclarerons :
 
 - upicardie-asdemo-common : le groupe commun à toutes les instances. Autorise le ping et le SSH de partout.
-- upicardie-asdemo-web : le groupe des instances Web. Autorise le HTTP à partir du groupe de sécurité de l'ELB (sg-92cdeef7 dans notre cas)
+- upicardie-asdemo-web : le groupe des instances Web. Autorise le HTTP à partir du groupe de sécurité de l'ELB (sg-8962ece2 dans notre cas)
 
 ```bash
 aws ec2 create-security-group \
@@ -129,7 +129,7 @@ aws ec2 create-security-group \
     --description "Serveurs Web upicardie-asdemo"
 {
     "return": "true",
-    "GroupId": "sg-92cdeef7"
+    "GroupId": "sg-8962ece2"
 }
 ```
 
@@ -160,7 +160,7 @@ aws ec2 authorize-security-group-ingress \
   --group-name upicardie-asdemo-web \
   --protocol tcp \
   --port 80 \
-  --source-group sg-92cdeef7
+  --source-group sg-8962ece2
 {
     "return": "true"
 }
@@ -189,7 +189,7 @@ aws ec2 describe-security-groups --group-ids sg-92cdeef7
                     "UserIdGroupPairs": [
                         {
                             "UserId": "447005562149",
-                            "GroupId": "sg-92cdeef7"
+                            "GroupId": "sg-8962ece2"
                         }
                     ],
                     "FromPort": 80
@@ -460,32 +460,22 @@ aws aws autoscaling put-scheduled-update-group-action \
 Mise à jour de l'autoscaling
 ----------------------------
 
-Les commandes d'autoscaling prévoient la mise à jour du groupe d'autoscaling, mais pas de la configuration de lancement de ce même groupe. Qu'importe, nous pouvons contourner cette limitation en passant une configuration de lancement temporaire. Si nous voulons par exemple changer l'AMI de nos instances de ami-b0c36ed8 vers ami-7daee114 :
+Les commandes d'autoscaling prévoient la mise à jour du groupe d'autoscaling, mais pas de la configuration de lancement de ce même groupe. Qu'importe, nous pouvons contourner cette limitation en passant une configuration de lancement temporaire. Si nous voulons par exemple retirer les security groupes de notre groupe de lancement.
 
 ```bash
-as-create-launch-config upicardie-asdemo-lc \
+aws autoscaling create-launch-configuration \
+  --launch-configuration-name upicardie-asdemo-lc2 \
   --image-id ami-7daee114 \
   --instance-type t1.micro \
-  --group upicardie-asdemo-common,upicardie-asdemo-web \
-  --user-data-file user-data-imageable \
+  --user-data file://user-data-imageable \
   --key MyKeyPair
 
-as-update-auto-scaling-group upicardie-asdemo-asg \
-  --launch-configuration upicardie-asdemo-lc-tmp
+aws autoscaling update-auto-scaling-group \
+  --auto-scaling-group-name upicardie-asdemo-asg \
+  --launch-configuration-name upicardie-asdemo-lc-2
 
-as-delete-launch-config -f --launch-config upicardie-asdemo-lc
-
-as-create-launch-config upicardie-asdemo-lc \
-  --image-id ami-7daee114 \
-  --instance-type t1.micro \
-  --group upicardie-asdemo-common,upicardie-asdemo-web \
-  --user-data-file user-data-imageable \
-  --key MyKeyPair
-
-as-update-auto-scaling-group upicardie-asdemo-asg \
-  --launch-configuration upicardie-asdemo-lc
-
-as-delete-launch-config -f --launch-config upicardie-asdemo-lc
+aws autoscaling delete-launch-configuration \
+  --launch-configuration-name upicardie-asdemo-lc
 ```
 
 Note : cette double déclaration de configurations de lancement peut être évitée si on horodate le nom de la configuration plutôt que de le garder fixe.
@@ -493,6 +483,8 @@ Note : cette double déclaration de configurations de lancement peut être évit
 
 Tester
 ------
+
+### Siege
 
 Siege permet de simuler de la charge sur service web, en maintenant ouvert des dizaines voir centaines de connexions pendant une temps défini.
 
@@ -504,6 +496,20 @@ Il suffit de donner à siege le nombre de connexions concurrentes (`-c`), et le 
 
 ```
 siege -c25 -t10M  upicardie-asdemo-992010360.us-east-1.elb.amazonaws.com
+```
+
+
+### Autre possibilité : boom
+
+Un équivalent à Apache Benchmark.
+
+```
+pip install boom
+```
+
+Puis
+```
+boom -c 5 -n 100 "http://upicardie-asdemo-992010360.us-east-1.elb.amazonaws.com/resize/magic?url=http://www.google.com/intl/en_ALL/images/logo.gif&size=400x300"
 ```
 
 Une chose à noter est que le monitoring basique de CloudWatch est rafraichi toutes les 5 minutes. Nos politiques d'auto-scaling doivent se réaliser pendant 3 minutes consécutives. Donc, pour que siege puisse déclencher l'auto-scaling, il faut le laisser tourner 6 à 10 minutes. Enfin, il faut rafraichir l'onglet CloudWatch dans la console AWS afin de vérifier que des serveurs se lancent.
