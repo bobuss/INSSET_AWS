@@ -169,7 +169,7 @@ from fabric.api import task, settings, run, sudo
 
 @task
 def deploy():
-    code_dir = '/var/www'
+    code_dir = '/var/www/my_project'
     # check the existence of the repositiry
     with settings(warn_only=True):
         if run("test -d %s" % code_dir).failed:
@@ -185,12 +185,12 @@ Et pour lancer la tâche sur une machine:
 ```bash
 $ fab deploy
 No hosts found. Please specify (single) host string for connection: my_server
-[my_server] run: test -d /srv/django/myproject
+[my_server] run: test -d /var/www/my_project
 
-Warning: run() encountered an error (return code 1) while executing 'test -d /srv/django/myproject'
+Warning: run() encountered an error (return code 1) while executing 'test -d /var/www/my_project'
 
 [my_server] run: git clone user@vcshost:/path/to/repo/.git /var/www
-[my_server] out: Cloning into /var/www...
+[my_server] out: Cloning into /var/www/my_project...
 [my_server] out: Password: <enter password>
 [my_server] out: remote: Counting objects: 6698, done.
 [my_server] out: remote: Compressing objects: 100% (2237/2237), done.
