@@ -1,322 +1,560 @@
 <!doctype html>
 <html lang="en">
 
-  <head>
+<head>
     <meta charset="utf-8">
-
     <title>Amazon Web Services</title>
-
     <meta name="description" content="">
     <meta name="author" content="Bertrand Tornil">
-
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/default.css" id="theme">
-
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
-
     <link rel="stylesheet" href="css/style.css">
-
     <!-- If the query includes 'print-pdf', use the PDF print sheet -->
     <script>
-      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    document.write('<link rel="stylesheet" href="css/print/' + (window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper') + '.css" type="text/css" media="print">');
     </script>
-
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
+</head>
 
-  </head>
-
-  <body>
-
+<body>
     <div class="reveal">
-      <!-- Any section element inside of this container is displayed as a slide -->
-      <div class="slides">
-        <section>
-          <h1>Amazon Web Services</h1>
-          <p>
-            <small>INSSET - Master 2 Cloud Computing</small>
-          </p>
-          <p>
-            <small>Septembre 2014 - <a href="http://tornil.me">Bertrand Tornil</a></small>
-          </p>
-        </section>
-
-        <section>
-          <h2>AWS : Généralités</h2>
-          <p>No 1 du Cloud Computing IAAS</p>
-          <p>Utilisé entre autre par Netflix, Instagram, Pinterest, Reddit, Zynga...</p>
-          <br><br>
-          <p>IAAS et PAAS</p>
-        </section>
-
-        <section>
-          <h2>L'anecdote historique</h2>
-          <p class="fragment">Fin des Années 90 : pour Amazon, Thanksgiving représentait un pic de charge nécéssitant ponctuellement une grosse infrastructure </p>
-          <p class="fragment">mais inutile le reste du temps</p>
-          <p class="fragment">D'où l'idée de louer cet excédent d'infrastructure</p>
-          <p class="fragment">2002 : apparition d'Amazon Web Services</p>
-
-        </section>
-
-        <section>
-          <section>
-            <h2>Organisation</h2>
-            <p class="fragment">AWS est disponible dans 9 Régions</p>
-            <p class="fragment">Chaque région dispose d'au moins 2 zones de disponibilité (Availability zones)</p>
-          </section>
-
-          <section>
-            <img src="img/aws_availability_zones.jpg">
-          </section>
-
-          <section>
-            <p>L'idée étant de choisir un data-center près de chez soi...</p>
-            <p>ou à côté d'un fournisseur de contenu / client</p>
-            <br>
-            <p>Dans tous les cas, à cette flexibilité géographique, s'ajoute une notion de disponibilité : les zones de disponibilité correspondent en fait à des data-centers physiques différents.</p>
-          </section>
-        </section>
-
-        <section>
-          <h1>Philosophie du Cloud d'Amazon</h1>
-          <h2 class="fragment">IAAS ...</h2>
-          <h2 class="fragment">... et PAAS</h2>
-        </section>
-
-        <section>
-          <h1>Quelques Briques IAAS</h1>
-        </section>
-
-        <section>
-          <section>
-            <h2>Amazon Elastic Compute Cloud (EC2)</h2>
-            <p>L'embarras du choix</p>
-            <p>Mais tout a un prix : de $0,013/h à $6,820/h</p>
-            <p>Possibilité de réservation</p>
-            <p>Possibilité d'instances ponctuelles (Spot Instances)</p>
-            <p><a target="_blank" href="http://aws.amazon.com/fr/ec2/pricing/">Voir la page sur AWS</a></p>
-          </section>
-
-          <section>
-
-            <h3>Usage général : M3</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage sur SSD (Go)</th><th>Mise en réseau améliorée</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>m3.medium</td><td>1</td><td>3,75</td><td>1 x 4</td><td>Non</td>
-                </tr>
-                <tr>
-                  <td>m3.large</td><td>2</td><td>7,5</td><td>1 x 32</td><td>Non</td>
-                </tr>
-                <tr>
-                  <td>m3.xlarge</td><td>4</td><td>15</td><td>2 x 40</td><td>Non</td>
-                </tr>
-                <tr>
-                  <td>m3.2xlarge</td><td>8</td><td>30</td><td>2 x 80</td><td>Non</td>
-                </tr>
-              </tbody>
-            </table>
-
-          </section>
-
-          <section>
-            <h3>Calcul optimisé : C3</h3>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage sur SSD (Go)</th><th>Mise en réseau améliorée</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>c3.large</td><td>2</td><td>3,75</td><td>2 x 16</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>c3.xlarge</td><td>4</td><td>7,5</td><td>2 x 40</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>c3.2xlarge</td><td>8</td><td>15</td><td>2 x 80</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>c3.4xlarge</td><td>16</td><td>30</td><td>2 x 160</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>c3.8xlarge</td><td>32</td><td>60</td><td>2 x 320</td><td>Oui</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-
-          <section>
-            <h3>Mémoire optimisée : R3</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage sur SSD (Go)</th><th>Mise en réseau améliorée</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>r3.large</td><td>2</td><td>15</td><td>1 x 32</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>r3.xlarge</td><td>4</td><td>30,5</td><td>1 x 40</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>r3.2xlarge</td><td>8</td><td>61</td><td>1 x 80</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>r3.4xlarge</td><td>16</td><td>122</td><td>1 x 160</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>r3.8xlarge</td><td>32</td><td>244</td><td>1 x 320</td><td>Oui</td>
-                </tr>
-              </tbody>
-            </table>
-
-          </section>
-
-          <section>
-
-            <h3>Stockage optimisé : I2</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th><th>Mise en réseau améliorée</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>i2.xlarge</td><td>4</td><td>30,5</td><td>1 x 800 SSD</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>i2.2xlarge</td><td>8</td><td>61</td><td>2 x 800 SSD</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>i2.4xlarge</td><td>16</td><td>122</td><td>4 x 800 SSD</td><td>Oui</td>
-                </tr>
-                <tr>
-                  <td>i2.8xlarge</td><td>32</td><td>244</td><td>8 x 800 SSD</td><td>Oui</td>
-                </tr>
-              </tbody>
-            </table>
-
-          </section>
-
-          <section>
-            <h3>Autres</h3>
-
-
-            <h4></h4>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Usage</th><th>Nom</th><th>vCPU</th><th>Mémoire (Gio)</th><th>Stockage (Go)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Instance GPU</td><td>g2.2xlarge</td><td>8</td><td>15</td><td>1 x 60 SSD</td>
-                </tr>
-                <tr>
-                  <td>HS1</td><td>hs1.8xlarge</td><td>16</td><td>117</td><td>24 x 2048</td>
-                </tr>
-                <tr>
-                  <td>Micro</td><td>t1.micro</td><td>1</td><td>0,615</td><td>EBS</td>
-                </tr>
-                <tr>
-                  <td>Micro</td><td>m1.small</td><td>1</td><td>1,7</td><td>1 x 160</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </section>
-
-        <section>
-          <h2>Amazon Machine Images (AMI)</h2>
-          <p>Une AMI est une image d'un système d'exploitation pré-configuré à destination des EC2</p>
-          <p>Comme elles peuvent être créées à l'envie, l'utilisation des AMIs peut servir de base au déploiement de services</p>
-        </section>
-
-        <section>
-          <h2>Les volumes Elastic Block Storage (ELB)</h2>
-          <p>Sorte de disque dur réseau</p>
-          <p>Plug / Unplug à chaud d'une instance à une autre</p>
-          <p>Très resistant</p>
-        </section>
-
-        <section>
-          <h2>Simple Storage Service (S3)</h2>
-          <p>Stockage d'objets dans le cloud</p>
-          <p>Pas de notion de file-system</p>
-          <p>C'est un stockage clé -> valeur</p>
-        </section>
-
-        <section>
-          <h1>Quelques briques SAAS</h1>
-        </section>
-
-        <section>
-          <h2>Elastic Load Balancing (ELB)</h2>
-          <p>Le répartiteur de charge des EC2</p>
-          <p>Peut se coupler à l'autoscaling</p>
-          <p>Détecte automatiquement les instances malades derrière lui, et les retire de son pool.</p>
-        </section>
-
-        <section>
-          <h2>Relational Database Service (RDS)</h2>
-          <p>Un MySQL empaqueté, pré-configuré</p>
-          <p>Réplication</p>
-          <p>Fail-over cross-zone</p>
-        </section>
-
-        <section>
-          <h2>Simple Queue Service (SQS)</h2>
-          <p>Service de Queuing</p>
-        </section>
-
-        <section>
-          <h2>Dynamo</h2>
-          <p>Stockage NoSQL</p>
-          <p>Autoscaling</p>
-          <p>Replica</p>
-          <p>...</p>
-          <p>Pour les amateurs, il s'agit de la mise en application des travaux de thèse de Werner Vogels, CTO d'Amazon</p>
-          <span class="fragment">(sous la direction de Andrew S. Tanenbaum, l'auteur de Minix)</span>
-        </section>
-
-        <section>
-          <h2>Route53</h2>
-          <p>Le Domaine Name Server (DNS)</p>
-        </section>
-
-        <section>
-          <h2>CloudFront</h2>
-          <p>Le Content Delivery Network (CDN)</p>
-        </section>
-
-        <section>
-          <h2>Une architecture WEB, vue par AWS</h2>
-          <img src="img/aws_web.png">
-        </section>
-
-        <section>
-          <h2>Photo de famille en septembre 2014</h2>
-          <small>Amazon Elastic Compute Cloud (EC2) -
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section>
+                <h1>Amazon Web Services</h1>
+                <p>
+                    <small>INSSET - Master 2 Cloud Computing</small>
+                </p>
+                <p>
+                    <small>Octobre 2015 - <a href="http://tornil.me">Bertrand Tornil</a></small>
+                </p>
+            </section>
+            <section>
+                <h2>AWS : Généralités</h2>
+                <p>No 1 du Cloud Computing IAAS</p>
+                <p>Utilisé entre autre par Netflix, Instagram, Pinterest, Reddit, Zynga, Airbnb, Spotify, Foursquare, Rovio, Slack, etc, etc, ....</p>
+                <br>
+                <br>
+                <p>IAAS et PAAS</p>
+            </section>
+            <section>
+                <h2>L'anecdote historique</h2>
+                <p class="fragment">Fin des Années 90 : pour Amazon, Thanksgiving représentait un pic de charge nécéssitant ponctuellement une grosse infrastructure </p>
+                <p class="fragment">mais inutile le reste du temps</p>
+                <p class="fragment">D'où l'idée de louer cet excédent d'infrastructure</p>
+                <p class="fragment">2002 : apparition d'Amazon Web Services</p>
+            </section>
+            <section>
+                <section>
+                    <h2>Organisation</h2>
+                    <p class="fragment">AWS est disponible dans 11 Régions</p>
+                    <p class="fragment">Chaque région dispose d'au moins 2 zones de disponibilité (Availability zones)</p>
+                </section>
+                <section>
+                    <img src="img/aws_availability_zones.png">
+                </section>
+                <section>
+                    <p>L'idée étant de choisir un data-center près de chez soi...</p>
+                    <p>ou à côté d'un fournisseur de contenu / client</p>
+                    <br>
+                    <p>Dans tous les cas, à cette flexibilité géographique, s'ajoute une notion de disponibilité : les zones de disponibilité correspondent en fait à des data-centers physiques différents.</p>
+                </section>
+            </section>
+            <section>
+                <h1>Philosophie du Cloud d'Amazon</h1>
+                <h2 class="fragment">IAAS ...</h2>
+                <h2 class="fragment">... et PAAS</h2>
+            </section>
+            <section>
+                <h1>Quelques Briques IAAS</h1>
+            </section>
+            <section>
+                <section>
+                    <h2>Amazon Elastic Compute Cloud (EC2)</h2>
+                    <p>L'embarras du choix</p>
+                    <p>Mais tout a un prix : de $0,013/h à $6,82/h</p>
+                    <p>Possibilité de réservation</p>
+                    <p>Possibilité d'instances ponctuelles (Spot Instances)</p>
+                    <p><a target="_blank" href="http://aws.amazon.com/fr/ec2/pricing/">Voir la page sur AWS</a></p>
+                </section>
+                <section>
+                    <h3>Usage général</h3>
+                    <table>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th class="rate">vCPU</th>
+                            <th class="rate">ECU</th>
+                            <th class="rate">Mémoire (GiB)</th>
+                            <th class="rate">Stockage</th>
+                            <th class="rate">Par heure</th>
+                          </tr>
+                        </thead>
+                        <tbody class="body">
+                            <tr class="sizes">
+                                <td class="size">t2.micro</td>
+                                <td class="vCPU">1</td>
+                                <td class="ECU">~</td>
+                                <td class="memory">1</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.013</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">t2.small</td>
+                                <td class="vCPU">1</td>
+                                <td class="ECU">~</td>
+                                <td class="memory">2</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.026</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">t2.medium</td>
+                                <td class="vCPU">2</td>
+                                <td class="ECU">~</td>
+                                <td class="memory">4</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.052</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">t2.large</td>
+                                <td class="vCPU">2</td>
+                                <td class="ECU">~</td>
+                                <td class="memory">8</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.104</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m4.large</td>
+                                <td class="vCPU">2</td>
+                                <td class="ECU">6.5</td>
+                                <td class="memory">8</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.126</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m4.xlarge</td>
+                                <td class="vCPU">4</td>
+                                <td class="ECU">13</td>
+                                <td class="memory">16</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.252</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m4.2xlarge</td>
+                                <td class="vCPU">8</td>
+                                <td class="ECU">26</td>
+                                <td class="memory">32</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.504</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m4.4xlarge</td>
+                                <td class="vCPU">16</td>
+                                <td class="ECU">53.5</td>
+                                <td class="memory">64</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$1.008</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m4.10xlarge</td>
+                                <td class="vCPU">40</td>
+                                <td class="ECU">124.5</td>
+                                <td class="memory">160</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$2.52</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </section>
+                      <section>
+                        <table>
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th class="rate">vCPU</th>
+                              <th class="rate">ECU</th>
+                              <th class="rate">Mémoire (GiB)</th>
+                              <th class="rate">Stockage</th>
+                              <th class="rate">Par heure</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="sizes">
+                                <td class="size">m3.medium</td>
+                                <td class="vCPU">1</td>
+                                <td class="ECU">3</td>
+                                <td class="memory">3.75</td>
+                                <td class="storage">1 x 4 SSD</td>
+                                <td class="rate linux">$0.067</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m3.large</td>
+                                <td class="vCPU">2</td>
+                                <td class="ECU">6.5</td>
+                                <td class="memory">7.5</td>
+                                <td class="storage">1 x 32 SSD</td>
+                                <td class="rate linux">$0.133</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m3.xlarge</td>
+                                <td class="vCPU">4</td>
+                                <td class="ECU">13</td>
+                                <td class="memory">15</td>
+                                <td class="storage">2 x 40 SSD</td>
+                                <td class="rate linux">$0.266</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m3.2xlarge</td>
+                                <td class="vCPU">8</td>
+                                <td class="ECU">26</td>
+                                <td class="memory">30</td>
+                                <td class="storage">2 x 80 SSD</td>
+                                <td class="rate linux">$0.532</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>Calcul optimisé</h3>
+                    <table>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th class="rate">vCPU</th>
+                            <th class="rate">ECU</th>
+                            <th class="rate">Mémoire (GiB)</th>
+                            <th class="rate">Stockage</th>
+                            <th class="rate">Par heure</th>
+                          </tr>
+                        </thead>
+                        <tbody class="body">
+                            <tr class="sizes">
+                                <td class="size">c4.large</td>
+                                <td class="vCPU">2</td>
+                                <td class="ECU">8</td>
+                                <td class="memory">3.75</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.11</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c4.xlarge</td>
+                                <td class="vCPU">4</td>
+                                <td class="ECU">16</td>
+                                <td class="memory">7.5</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.22</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c4.2xlarge</td>
+                                <td class="vCPU">8</td>
+                                <td class="ECU">31</td>
+                                <td class="memory">15</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.441</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c4.4xlarge</td>
+                                <td class="vCPU">16</td>
+                                <td class="ECU">62</td>
+                                <td class="memory">30</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.882</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c4.8xlarge</td>
+                                <td class="vCPU">36</td>
+                                <td class="ECU">132</td>
+                                <td class="memory">60</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$1.763</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c3.large</td>
+                                <td class="vCPU">2</td>
+                                <td class="ECU">7</td>
+                                <td class="memory">3.75</td>
+                                <td class="storage">2 x 16 SSD</td>
+                                <td class="rate linux">$0.105</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c3.xlarge</td>
+                                <td class="vCPU">4</td>
+                                <td class="ECU">14</td>
+                                <td class="memory">7.5</td>
+                                <td class="storage">2 x 40 SSD</td>
+                                <td class="rate linux">$0.21</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c3.2xlarge</td>
+                                <td class="vCPU">8</td>
+                                <td class="ECU">28</td>
+                                <td class="memory">15</td>
+                                <td class="storage">2 x 80 SSD</td>
+                                <td class="rate linux">$0.42</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c3.4xlarge</td>
+                                <td class="vCPU">16</td>
+                                <td class="ECU">55</td>
+                                <td class="memory">30</td>
+                                <td class="storage">2 x 160 SSD</td>
+                                <td class="rate linux">$0.84</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">c3.8xlarge</td>
+                                <td class="vCPU">32</td>
+                                <td class="ECU">108</td>
+                                <td class="memory">60</td>
+                                <td class="storage">2 x 320 SSD</td>
+                                <td class="rate linux">$1.68</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>Instances GPU</h3>
+                    <table>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th class="rate">vCPU</th>
+                            <th class="rate">ECU</th>
+                            <th class="rate">Mémoire (GiB)</th>
+                            <th class="rate">Stockage</th>
+                            <th class="rate">Par heure</th>
+                          </tr>
+                        </thead>
+                        <tbody class="body">
+                            <tr class="sizes">
+                                <td class="size">g2.2xlarge</td>
+                                <td class="vCPU">8</td>
+                                <td class="ECU">26</td>
+                                <td class="memory">15</td>
+                                <td class="storage">60 SSD</td>
+                                <td class="rate linux">$0.65</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">g2.8xlarge</td>
+                                <td class="vCPU">32</td>
+                                <td class="ECU">104</td>
+                                <td class="memory">60</td>
+                                <td class="storage">2 x 120 SSD</td>
+                                <td class="rate linux">$2.6</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>Mémoire optimisée</h3>
+                    <table>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th class="rate">vCPU</th>
+                            <th class="rate">ECU</th>
+                            <th class="rate">Mémoire (GiB)</th>
+                            <th class="rate">Stockage</th>
+                            <th class="rate">Par heure</th>
+                          </tr>
+                        </thead>
+                        <tbody class="body">
+                            <tr class="sizes">
+                                <td class="size">r3.large</td>
+                                <td class="vCPU">2</td>
+                                <td class="ECU">6.5</td>
+                                <td class="memory">15</td>
+                                <td class="storage">1 x 32 SSD</td>
+                                <td class="rate linux">$0.175</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">r3.xlarge</td>
+                                <td class="vCPU">4</td>
+                                <td class="ECU">13</td>
+                                <td class="memory">30.5</td>
+                                <td class="storage">1 x 80 SSD</td>
+                                <td class="rate linux">$0.35</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">r3.2xlarge</td>
+                                <td class="vCPU">8</td>
+                                <td class="ECU">26</td>
+                                <td class="memory">61</td>
+                                <td class="storage">1 x 160 SSD</td>
+                                <td class="rate linux">$0.7</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">r3.4xlarge</td>
+                                <td class="vCPU">16</td>
+                                <td class="ECU">52</td>
+                                <td class="memory">122</td>
+                                <td class="storage">1 x 320 SSD</td>
+                                <td class="rate linux">$1.4</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">r3.8xlarge</td>
+                                <td class="vCPU">32</td>
+                                <td class="ECU">104</td>
+                                <td class="memory">244</td>
+                                <td class="storage">2 x 320 SSD</td>
+                                <td class="rate linux">$2.8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>Stockage optimisé</h3>
+                    <table>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th class="rate">vCPU</th>
+                            <th class="rate">ECU</th>
+                            <th class="rate">Mémoire (GiB)</th>
+                            <th class="rate">Stockage</th>
+                            <th class="rate">Par heure</th>
+                          </tr>
+                        </thead>
+                        <tbody class="body">
+                            <tr class="heading">
+                                <th colspan="6" class="type"></th>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">i2.xlarge</td>
+                                <td class="vCPU">4</td>
+                                <td class="ECU">14</td>
+                                <td class="memory">30.5</td>
+                                <td class="storage">1 x 800 SSD</td>
+                                <td class="rate linux">$0.853</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">i2.2xlarge</td>
+                                <td class="vCPU">8</td>
+                                <td class="ECU">27</td>
+                                <td class="memory">61</td>
+                                <td class="storage">2 x 800 SSD</td>
+                                <td class="rate linux">$1.705</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">i2.4xlarge</td>
+                                <td class="vCPU">16</td>
+                                <td class="ECU">53</td>
+                                <td class="memory">122</td>
+                                <td class="storage">4 x 800 SSD</td>
+                                <td class="rate linux">$3.41</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">i2.8xlarge</td>
+                                <td class="vCPU">32</td>
+                                <td class="ECU">104</td>
+                                <td class="memory">244</td>
+                                <td class="storage">8 x 800 SSD</td>
+                                <td class="rate linux">$6.82</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">d2.xlarge</td>
+                                <td class="vCPU">4</td>
+                                <td class="ECU">14</td>
+                                <td class="memory">30.5</td>
+                                <td class="storage">3 x 2000 HDD</td>
+                                <td class="rate linux">$0.69</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">d2.2xlarge</td>
+                                <td class="vCPU">8</td>
+                                <td class="ECU">28</td>
+                                <td class="memory">61</td>
+                                <td class="storage">6 x 2000 HDD</td>
+                                <td class="rate linux">$1.38</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">d2.4xlarge</td>
+                                <td class="vCPU">16</td>
+                                <td class="ECU">56</td>
+                                <td class="memory">122</td>
+                                <td class="storage">12 x 2000 HDD</td>
+                                <td class="rate linux">$2.76</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">d2.8xlarge</td>
+                                <td class="vCPU">36</td>
+                                <td class="ECU">116</td>
+                                <td class="memory">244</td>
+                                <td class="storage">24 x 2000 HDD</td>
+                                <td class="rate linux">$5.52</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+            <section>
+                <h2>Amazon Machine Images (AMI)</h2>
+                <p>Une AMI est une image d'un système d'exploitation pré-configuré à destination des EC2</p>
+                <p>Comme elles peuvent être créées à l'envie, l'utilisation des AMIs peut servir de base au déploiement de services</p>
+            </section>
+            <section>
+                <h2>Les volumes Elastic Block Storage (ELB)</h2>
+                <p>Sorte de disque dur réseau</p>
+                <p>Plug / Unplug à chaud d'une instance à une autre</p>
+                <p>Très resistant</p>
+            </section>
+            <section>
+                <h2>Simple Storage Service (S3)</h2>
+                <p>Stockage d'objets dans le cloud</p>
+                <p>Bien qu'il n'y ait pas de réel file-system, on peut le voir comme le FTP illimité d'Amazon</p>
+                <p>On y loge les images et autres assets de site webs, les backups et autres fichiers d'échange entre services, on y héberge des sites statiques. Enfin, S3 peut servire de backend à d'autres services AWS (CloudSearch, ElasticMapReduce)</p>
+            </section>
+            <section>
+                <h1>Quelques briques SAAS</h1>
+            </section>
+            <section>
+                <h2>Elastic Load Balancing (ELB)</h2>
+                <p>Le répartiteur de charge des EC2</p>
+                <p>Peut se coupler à l'autoscaling</p>
+                <p>Détecte automatiquement les instances malades derrière lui, et les retire de son pool.</p>
+            </section>
+            <section>
+                <h2>Relational Database Service (RDS)</h2>
+                <p>Un DB relationnelle as a Service</p>
+                <p>Réplication</p>
+                <p>Fail-over cross-zone</p>
+                <p>Support de MySQL, PortgreSQL, Oracle, SQLServer, Aurora</p>
+            </section>
+            <section>
+                <h2>Simple Queue Service (SQS)</h2>
+                <p>Service de Queuing</p>
+            </section>
+            <section>
+                <h2>DynamoDB</h2>
+                <p>Stockage NoSQL</p>
+                <p>Autoscaling</p>
+                <p>Replica</p>
+                <p>...</p>
+                <p>Pour les amateurs, il s'agit de la mise en application des travaux de thèse de Werner Vogels, CTO d'Amazon</p>
+                <span class="fragment">(sous la direction de Andrew S. Tanenbaum, l'auteur de Minix)</span>
+            </section>
+            <section>
+                <h2>Route53</h2>
+                <p>Le Domaine Name Server (DNS)</p>
+            </section>
+            <section>
+                <h2>CloudFront</h2>
+                <p>Le Content Delivery Network (CDN)</p>
+            </section>
+            <section>
+                <h2>Une architecture WEB, vue par AWS</h2>
+                <img src="img/aws_web.png">
+            </section>
+            <section>
+                <h3>Photo de famille</h3>
+                <p>Septembre 2013</p>
+                <small>Elastic Compute Cloud (EC2) -
           CloudWatch -
           Virtual Private Cloud (VPC) -
           Simple Storage Service (S3) -
@@ -325,6 +563,7 @@
           Simple Queue Service (SQS) -
           Simple Notification Service (SNS) -
           Elastic Load Balancing -
+          Support -
           DynamoDB -
           Relational Database Service (RDS) -
           Simple Workflow Service (SWF) -
@@ -343,85 +582,126 @@
           Redshift -
           CloudHSM -
           Simple Email Service (SES) -
-          Data Pipeline -
-          Kinesis -
-          AppStream -
-          Cognito -
-          Mobile Analytics -
-          Trusted Advisor
-          </small>
-        </section>
+          Data Pipeline</small>
+                <br>
+                <br>
+                <div class="fragment">
+                    <p> ++ Octobre 2015</p>
+                    <small>API Gateway -
+            AppStream -
+            CloudTrail -
+            CodeCommit -
+            CodeDeploy -
+            CodePipeline -
+            Cognito -
+            Config -
+            Device Farm - 
+            Directory Service -
+            EC2 Container Service -
+            Elastic File System -
+            EMR -
+            Kinesis -
+            Lambda -
+            Machine Learning -
+            Mobile Analytics -
+            Service Catalog -
+            Trusted Advisor
+            WorkDocs -
+            WorkMail -
+            WorkSpaces</small>
+                </div>
+                <br>
+                <p class="fragment">À voir : <a href="https://www.expeditedssl.com/aws-in-plain-english">http://www.expeditedssl.com/aws-in-plain-english</a></p>
+            </section>
+            <section>
+                <h2>Publicité</h2>
+                <p>Je n'ai pas d'action chez Amazon, mais</p>
+                <div class="fragment">
+                    <p>Niveau gratuit pendant un an.
+                        <br> Soit par mois :
+                        <ul>
+                            <li>750 heures sur une Micro EC2</li>
+                            <li>750 heures d'ELB, 15 Go de traitement</li>
+                            <li>30 Go de stockage sur EBS</li>
+                            <li>15 Go de bande passante sortante combinée pour tous les services AWS</li>
+                            <li>1 Go de transfert de données régional</li>
+                        </ul>
+                    </p>
+            </section>
+            <section>
+                <h1>THE END</h1>
+                <h3>INSSET - 2015</h3>
+                <p><a href="mailto:bertrand.tornil@gmail.com">bertrand.tornil@gmail.com</a></p>
+            </section>
+            </div>
+        </div>
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+        <script>
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
 
-        <section>
-          <h2>Publicité</h2>
-          <p>Je n'ai pas d'action chez Amazon, mais</p>
-          <div class="fragment">
-            <p>Niveau gratuit pendant un an.<br>
-            Soit par mois :
-            <ul>
-              <li>750 heures sur une Micro EC2</li>
-              <li>750 heures d'ELB, 15 Go de traitement</li>
-              <li>30 Go de stockage sur EBS</li>
-              <li>15 Go de bande passante sortante combinée pour tous les services AWS</li>
-              <li>1 Go de transfert de données régional</li>
-            </ul>
-          </p>
-        </section>
+            theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+            transition: Reveal.getQueryHash().transition || 'concave', // default/cube/page/concave/zoom/linear/fade/none
 
+            // Optional libraries used to extend on reveal.js
+            dependencies: [{
+                src: 'lib/js/classList.js',
+                condition: function() {
+                    return !document.body.classList;
+                }
+            }, {
+                src: 'plugin/markdown/marked.js',
+                condition: function() {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'plugin/markdown/markdown.js',
+                condition: function() {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'plugin/highlight/highlight.js',
+                async: true,
+                callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            }, {
+                src: 'plugin/zoom-js/zoom.js',
+                async: true,
+                condition: function() {
+                    return !!document.body.classList;
+                }
+            }, {
+                src: 'plugin/notes/notes.js',
+                async: true,
+                condition: function() {
+                    return !!document.body.classList;
+                }
+            }]
+        });
+        </script>
+        <!-- GA -->
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32527212-2']);
+        _gaq.push(['_trackPageview']);
 
-        <section>
-          <h1>THE END</h1>
-          <h3>INSSET - 2014</h3>
-          <p><a href="mailto:bertrand.tornil@gmail.com">bertrand.tornil@gmail.com</a></p>
-        </section>
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+        </script>
+        <!-- End GA -->
+</body>
 
-      </div>
-
-    </div>
-
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.min.js"></script>
-
-    <script>
-
-      // Full list of configuration options available here:
-      // https://github.com/hakimel/reveal.js#configuration
-      Reveal.initialize({
-        controls: true,
-        progress: true,
-        history: true,
-        center: true,
-
-        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-        transition: Reveal.getQueryHash().transition || 'concave', // default/cube/page/concave/zoom/linear/fade/none
-
-        // Optional libraries used to extend on reveal.js
-        dependencies: [
-          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-        ]
-      });
-
-    </script>
-    <!-- GA -->
-    <script type="text/javascript">
-
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-32527212-2']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-
-    </script>
-    <!-- End GA -->
-
-  </body>
 </html>

@@ -49,7 +49,7 @@
             <small>INSSET - Master 2 Cloud Computing</small>
           </p>
           <p>
-            <small>Septembre 2014 - <a href="http://tornil.me">Bertrand Tornil</a></small>
+            <small>Octobre 2015 - <a href="http://tornil.me">Bertrand Tornil</a></small>
           </p>
         </section>
 
@@ -98,7 +98,7 @@ Hello bob
             <h3>Raisons ?</h3>
             <p class="fragment">Plusieurs clients en même temps</p>
             <p class="fragment">Des résultats plus lourds depuis la DB</p>
-            <p class="fragment">L'API d'un partenaire qui "lag"</p>
+            <p class="fragment">L' API d'un partenaire qui "lag"</p>
             <p class="fragment">...</p>
           </section>
         </section>
@@ -306,9 +306,13 @@ Hello bob
 
             <div class="fragment">
               <h4>C : Consistency</h4>
-              <p>Un service distribué est dit "consistent" s'il opère ses opérations entièrement... ou pas du tout</p>
+              <p>Un service distribué est dit "consistent" s'il opère ses opérations entièrement... ou pas du tout ... et partout !</p>
               <p>Notions de transactions, propriétés ACID (Atomicité, Cohérence, Isolation, Durabilité)</p>
               <p>Tous les nœuds du système voient exactement les mêmes données au même moment</p>
+            </div>
+
+            <div class="fragment">
+              <p>Dans la pratique, c'est une propriété très difficile à atteindre, même pour un système non distribué <small>Linearisability, sequential consistency, or serializability, or snapshot isolation, sequential, serializable, repeatable read, snapshot isolation, or cursor stability ,causal consistency, PRAM, and read-your-writes consistency</small>.</p>
             </div>
           </section>
 
@@ -341,7 +345,8 @@ Hello bob
             <h3>Quelles conséquences ?</h3>
 
             <p class="fragment">
-              La conviction générale est que pour des systèmes distribués très étendus, les concepteurs ne peuvent renoncer à P et doivent donc faire le choix difficile entre C et A. </p>
+              Dans un système distribué, on a forcément des partitions qui se forment. Désolé, le réseau n'est pas fiable, et même dans une même machine, ca n'est pas assuré...
+              On garde donc systématiquement P et on doit donc faire le choix difficile entre C et A. </p>
             <p class="fragment">Dans un certain sens, le mouvement NoSQL consiste à faire des choix qui se concentrent sur la disponibilité en premier lieu, et la cohérence en second; les bases de données qui adhèrent aux propriétés ACID (Atomicité, Cohérence, Isolation, Durabilité) font l'inverse.
             </p>
           </section>
@@ -942,10 +947,49 @@ machineA:               machineA’:
         </section>
 
 
+        <section>
+
+          <section>
+            <h2>The end <span class="fragment">?</span></h2>
+
+            <h3 class="fragment">Nous n'avons parlé que de la monté en charge côté technique</h3>
+
+
+          </section>
+
+          <section>
+
+            <h3>Quand l'équipe autour d'un projet grandit,</h3>
+            <h3>elle &laquo;scale up&raquo; en même temps que son projet</h3>
+
+          </section>
+
+          <section>
+
+            <h3>Certains problèmes peuvent se produirent</h3>
+            <p class="fragment">Ralentissement paradoxal du développement</p>
+            <p class="fragment">Déploiement de plus en plus compliqué</p>
+            <p class="fragment">Tout changement devient risqué</p>
+
+          </section>
+
+          <section>
+
+            <h3>Quelques solutions</h3>
+
+            <p class="fragment">Méthodes agiles</p>
+            <p class="fragment">Devops</p>
+            <p class="fragment">Microservices</p>
+            <p class="fragment">...</p>
+
+          </section>
+        </section>
+
+
 
         <section>
           <h1>THE END</h1>
-          <h3>INSSET - 2014</h3>
+          <h3>INSSET - 2015</h3>
           <p><a href="mailto:bertrand.tornil@gmail.com">bertrand.tornil@gmail.com</a></p>
         </section>
 

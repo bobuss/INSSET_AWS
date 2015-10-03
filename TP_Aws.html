@@ -78,6 +78,11 @@ complete -C aws_completer aws
 ```
 
 
+### Alternative : SAWS (AWS cli on Steroids)
+
+https://github.com/donnemartin/saws
+
+
 On commence par se créer une paire de clés
 ------------------------------------------
 
@@ -134,15 +139,27 @@ chmod 600 my-key-pair.pem
 Lancement de notre première instance
 ------------------------------------
 
-### Choix d'une AMI
+### Choix d'une AMI (Amazon Machine Image)
 
-pour ubuntu 14.04 (LTS), c'est https://cloud-images.ubuntu.com/trusty/current/
+Comme son nom l'indique, c'est l'image que l'on utilise lors du lancement de l'instance. Elle est spécifique :
 
-Nous allons prendre l'image du système 64 bits, en root store sur EBS - ami : ami-b0c36ed8. D'où la commande :
+- à la région,
+- au système d'exploitation,
+- à l'architecture (32 ou 64bits),
+- aux permissions
+- et au type de stockage du _root device_.
+
+
+Pour faire son choix en Ubuntu : http://cloud-images.ubuntu.com/locator/ec2/
+
+Donc, pour une instance t2.micro, le _root device_ est EBS en Hardware Virtual Machine (HVM), on choisit l'image pour la région us-east-1 d'une ubuntu 15.04 (vivid) en 64bits : _ami-e7de9b82_.
+
+D'où la commande :
+
 
 
 ```
-aws ec2 run-instances --image-id ami-b0c36ed8 --instance-type t1.micro --region us-east-1 --key MyKeyPair
+aws ec2 run-instances --image-id ami-e7de9b82 --instance-type t2.micro --region us-east-1 --key MyKeyPair
 {
     "OwnerId": "447005562149",
     "ReservationId": "r-06199676",
@@ -165,7 +182,7 @@ aws ec2 run-instances --image-id ami-b0c36ed8 --instance-type t1.micro --region 
             "VpcId": "vpc-ab8e3dce",
             "StateTransitionReason": null,
             "InstanceId": "i-e4e01b0a",
-            "ImageId": "ami-b0c36ed8",
+            "ImageId": "ami-e7de9b82",
             "PrivateDnsName": "ip-172-31-37-163.ec2.internal",
             "KeyName": "MyKeyPair",
             "SecurityGroups": [
@@ -176,7 +193,7 @@ aws ec2 run-instances --image-id ami-b0c36ed8 --instance-type t1.micro --region 
             ],
             "ClientToken": null,
             "SubnetId": "subnet-3f0e1c17",
-            "InstanceType": "t1.micro",
+            "InstanceType": "t2.micro",
             "NetworkInterfaces": [
                 {
                     "Status": "in-use",
@@ -266,7 +283,7 @@ aws ec2 describe-instances
                     "VpcId": "vpc-ab8e3dce",
                     "StateTransitionReason": null,
                     "InstanceId": "i-e4e01b0a",
-                    "ImageId": "ami-b0c36ed8",
+                    "ImageId": "ami-e7de9b82",
                     "PrivateDnsName": "ip-172-31-37-163.ec2.internal",
                     "KeyName": "MyKeyPair",
                     "SecurityGroups": [
@@ -277,7 +294,7 @@ aws ec2 describe-instances
                     ],
                     "ClientToken": null,
                     "SubnetId": "subnet-3f0e1c17",
-                    "InstanceType": "t1.micro",
+                    "InstanceType": "t2.micro",
                     "NetworkInterfaces": [
                         {
                             "Status": "in-use",
@@ -360,108 +377,6 @@ Normalement, nous avons maintenant tout ce qu'il faut pour nous connecter à not
 ```
 ssh ubuntu@ec2-54-165-229-123.compute-1.amazonaws.com -i my-key-pair.pem -v
 ...
-...
-...
-```
-Ca ne fonctionne pas... Pourquoi ?
-
-Le security group par défaut n'autorise aucun accès. Pas même ssh.
-
-Il faudrait ouvrir le port ssh (22).
-
-### Les security groups
-
-La gestion des politique de securité est spécifiée au travers des security-groups.
-
-```
-aws ec2 describe-security-groups
-{
-    "SecurityGroups": [
-        {
-            "IpPermissionsEgress": [
-                {
-                    "IpProtocol": "-1",
-                    "IpRanges": [
-                        {
-                            "CidrIp": "0.0.0.0/0"
-                        }
-                    ],
-                    "UserIdGroupPairs": []
-                }
-            ],
-            "Description": "default VPC security group",
-            "IpPermissions": [],
-            "GroupName": "default",
-            "VpcId": "vpc-ab8e3dce",
-            "OwnerId": "447005562149",
-            "GroupId": "sg-2be2c34e"
-        }
-    ]
-}
-```
-
-Important : il est IMPOSSIBLE d'ajouter un groupe de sécurité à une intance. Dans notre cas, on va donc ajouter une règle au groupe de sécurité par defaut. Ca n'est pas forcémment une bonne pratique...
-
-
-Maintenant, on peut ajouter notre règle d'accès SSH à ce sécurity group :
-
-```
-aws ec2 authorize-security-group-ingress --group-name default --protocol tcp --port 22 --cidr 0.0.0.0/0
-{
-    "return": "true"
-}
-```
-
-Alors, voyons voir :
-
-```
-aws ec2 describe-security-groups --profile insset
-{
-    "SecurityGroups": [
-        {
-            "IpPermissionsEgress": [
-                {
-                    "IpProtocol": "-1",
-                    "IpRanges": [
-                        {
-                            "CidrIp": "0.0.0.0/0"
-                        }
-                    ],
-                    "UserIdGroupPairs": []
-                }
-            ],
-            "Description": "default VPC security group",
-            "IpPermissions": [
-                {
-                    "ToPort": 22,
-                    "IpProtocol": "tcp",
-                    "IpRanges": [
-                        {
-                            "CidrIp": "0.0.0.0/0"
-                        }
-                    ],
-                    "UserIdGroupPairs": [],
-                    "FromPort": 22
-                }
-            ],
-            "GroupName": "default",
-            "VpcId": "vpc-ab8e3dce",
-            "OwnerId": "447005562149",
-            "GroupId": "sg-2be2c34e"
-        }
-    ]
-}
-```
-
-C'est bon...
-
-@TODO stopper l'instance, créer un groupe de sécurité, ajouter une règle pour les accès SSH, relancer une intance avec ce groups de sécurié. RTFM
-
-
-### Alors, cette instance ?
-
-```
-ssh ubuntu@ec2-54-165-229-123.compute-1.amazonaws.com -i my-key-pair.pem -v
 ...
 ...
 ubuntu@ip-172-31-37-163:~$
@@ -597,7 +512,7 @@ aws ec2 terminate-instances --instance-id i-e4e01b0a
 
 ## Mumuse avec les EBS (Elasctic Block Storage)
 
-Nos t1.micro sont en EBS-root : il n'y a qu'un volume, et c'est / (le root). Impossible donc de le démonter
+Nos t2.micro sont en EBS-root : il n'y a qu'un volume, et c'est / (le root). Impossible donc de le démonter
 On va créer un nouveau volume.
 
 ```
