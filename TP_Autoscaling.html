@@ -105,106 +105,6 @@ aws elb configure-health-check \
 Ces tests sont vitaux afin de s'assurer que l'instance cible ne rentre dans l'ELB que quand  elle est pleinement opérationnelle (à l'issue de son boot via user-data)
 
 
-Déclaration des groupes de sécurité
------------------------------------
-
-Les instances d'une groupe d'autoscaling ne dérogent pas aux règles en vigueur sur EC2, elles doivent faire partie d'au moins un groupe de sécurité. Ainsi, nous déclarerons :
-
-- upicardie-asdemo-common : le groupe commun à toutes les instances. Autorise le ping et le SSH de partout.
-- upicardie-asdemo-web : le groupe des instances Web. Autorise le HTTP à partir du groupe de sécurité de l'ELB (sg-8962ece2 dans notre cas)
-
-```bash
-aws ec2 create-security-group \
-  --group-name upicardie-asdemo-common \
-  --description "Serveurs upicardie-asdemo"
-{
-    "return": "true",
-    "GroupId": "sg-8962ece2"
-}
-```
-
-```bash
-aws ec2 create-security-group \
-    --group-name upicardie-asdemo-web \
-    --description "Serveurs Web upicardie-asdemo"
-{
-    "return": "true",
-    "GroupId": "sg-8962ece2"
-}
-```
-
-```bash
-aws ec2 authorize-security-group-ingress \
-  --group-name upicardie-asdemo-common \
-  --protocol icmp \
-  --port -1
-{
-    "return": "true"
-}
-```
-
-```bash
-aws ec2 authorize-security-group-ingress \
-  --group-name upicardie-asdemo-common \
-  --protocol tcp \
-  --port 22
-{
-    "return": "true"
-}
-```
-
-On ouvre le port 80 sur le group web :
-
-```bash
-aws ec2 authorize-security-group-ingress \
-  --group-name upicardie-asdemo-web \
-  --protocol tcp \
-  --port 80 \
-  --source-group sg-8962ece2
-{
-    "return": "true"
-}
-
-aws ec2 describe-security-groups --group-ids sg-92cdeef7
-{
-    "SecurityGroups": [
-        {
-            "IpPermissionsEgress": [
-                {
-                    "IpProtocol": "-1",
-                    "IpRanges": [
-                        {
-                            "CidrIp": "0.0.0.0/0"
-                        }
-                    ],
-                    "UserIdGroupPairs": []
-                }
-            ],
-            "Description": "Serveurs Web upicardie-asdemo",
-            "IpPermissions": [
-                {
-                    "ToPort": 80,
-                    "IpProtocol": "tcp",
-                    "IpRanges": [],
-                    "UserIdGroupPairs": [
-                        {
-                            "UserId": "447005562149",
-                            "GroupId": "sg-8962ece2"
-                        }
-                    ],
-                    "FromPort": 80
-                }
-            ],
-            "GroupName": "upicardie-asdemo-web",
-            "VpcId": "vpc-ab8e3dce",
-            "OwnerId": "447005562149",
-            "GroupId": "sg-92cdeef7"
-        }
-    ]
-}
-
-```
-
 
 Création de la configuration de lancement
 -----------------------------------------
@@ -222,7 +122,6 @@ aws autoscaling create-launch-configuration \
   --launch-configuration-name upicardie-asdemo-lc \
   --image-id ami-b0c36ed8 \
   --instance-type t1.micro \
-  --security-groups '["upicardie-asdemo-common","upicardie-asdemo-web"]' \
   --user-data file://user-data-imageable \
   --key-name MyKeyPair
 {}
@@ -244,8 +143,7 @@ aws autoscaling describe-launch-configurations
             "BlockDeviceMappings": [],
             "KeyName": "kp_test",
             "SecurityGroups": [
-                "upicardie-asdemo-common",
-                "upicardie-asdemo-web"
+                ...
             ],
             "LaunchConfigurationName": "upicardie-asdemo-lc",
             "KernelId": null,
