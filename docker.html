@@ -5,7 +5,117 @@
 
 <xmp theme="simplex" style="display:none;">
 
-## Docker
+# Docker 
+
+
+## Un survol de la chose
+
+L'intéret des containers (et en particulier de Docker) en une illustration :
+
+![Docker vs VM](img/Docker-technology.png)
+
+
+De plus Docker a construit tout un écosystème cohérent :
+
+- DockerHub : c'est le github des images Docker. D'ailleurs les commandes reprennent un peu la même syntaxe : pull, commit, push en particulier.
+- Docker-compose (anciennement fig) : pour déclarer facilement l'agencement de plusieurs Dockers entre eux
+- Docker-machine : provisionning dans le cloud de containers. Fonctionne avec AWS, Microsoft Azure, Digital Ocean... ou même VirtualBox en local.
+- Docker-swarm : solution de clustering pour Docker.
+
+On peut définir Docker en définissant ses 3 composants essentiels :
+
+- les images
+- les registries
+- les containers
+
+
+### Les images Docker
+
+Une image Docker est un template de logiciel en lecture seule. Par exemple, une image peut contenir une système d'exploitation ubuntu, avec Nginx et votre application web installés. Les images servent à créer des containers Docker.
+
+Docker permet de créer de nouvelles images, ou d'en amender des images existantes ; ou bien, il est possible de télécharger des images que d'autres ont créées depuis les registries.
+
+
+### Les registries Docker
+
+Les registries Docker . Il y a des espaces privés ou public sur lequels vous pouvez pousser ou récupérer des images. Le registry public de Docker est (DockerHub)[http://hub.docker.com/]. On y trouve une large collection d'images prêtes à l'emploi.
+
+
+### Les containers Docker
+
+Les containers Docker "hébergent" une ou plusieurs images Docker. Les containers Docker peuvent être démarrés, arrêtés, déplacés, ... Chaque container est une plateforme isolée et sécurisé.
+
+
+
+## Installation
+
+Et là, ça fonctionne bien mieux sous linux. Toute distribution, avec un kernel > 3.8 supporte Docker nativement.
+Sous mac ou windows, c'est plus indirect : il faut passer par un système intérmédiaire léger (Tiny Core Linux) qui tourne dans VirtualBox. BootToDocker permet l'installation aisé de ce système.
+
+
+## Alors, ces images
+
+On peut commencer par chercher dans le registry :
+
+```bash
+$ docker search ubuntu
+NAME                           DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+ubuntu                         Ubuntu is a Debian-based Linux operating s...   2362      [OK]       
+ubuntu-upstart                 Upstart is an event-based replacement for ...   35        [OK]       
+torusware/speedus-ubuntu       Always updated official Ubuntu docker imag...   25                   [OK]
+tleyden5iwx/ubuntu-cuda        Ubuntu 14.04 with CUDA drivers pre-installed    18                   [OK]
+...
+```
+
+À noter le statut offciel de certaines images.
+
+On récupère l'image, via un _pull_.
+
+```bash
+$ docker pull ubuntu  
+Using default tag: latest
+latest: Pulling from library/ubuntu
+d3a1f33e8a5a:  Downloading [========================================>          ] 53.51 MB/65.79 MB
+c22013c84729: Download complete 
+d74508fb6632: Download complete 
+91e54dfb1179: Download complete 
+...
+```
+
+On peut à présent lister les images que l'on a localement :
+
+```bash
+$ docker images
+REPOSITORY                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+ubuntu                     latest              91e54dfb1179        6 weeks ago         188.4 MB
+```
+
+Première commande indispensable :
+
+```bash
+$ docker run ubuntu:latest /bin/echo 'Hello World!'
+Hello World!
+```
+
+Wow ! Une fois le conteneur instancié, Docker a exécuté la commande /bin/echo 'Hello World!' à l’intérieur de celui-ci et nous a retourné le résultat : Hello World!
+Ensuite, le container s'est terminé.
+
+D'ailleurs, on peut le retrouvé via :
+
+```bash
+$ docker ps -a
+CONTAINER ID        IMAGE                      COMMAND                  CREATED              STATUS                          PORTS                      NAMES
+b104d0657323        ubuntu:latest              "/bin/echo 'Hello Wor"   41 seconds ago       Exited (0) 40 seconds ago                                  compassionate_yalow
+
+```
+
+Bon sérieusement, on se connecte : 
+
+```bash
+$ docker run -t -i ubuntu:latest /bin/bash
+root@5aff723e8730:/# 
+
+```
 
 
 
