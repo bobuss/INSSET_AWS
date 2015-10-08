@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<title>Atelier EC2 Container System</title>
+<meta charset="utf-8">
+
+<xmp theme="simplex" style="display:none;">
+
+## EC2 Container System (ECS)
+
+Docker on EC2, as a service... using ELB, and so, autoscaling \o/
+
+
+Allez, on débute par se créer un cluster
+
+On va lancer une instance avec une AMI spéciale ECS (spécifique par région)
+
+|Region          |  AMI ID      |
+|----------------|--------------|
+|us-east-1       | ami-c16422a4 |
+|us-west-1       | ami-c9ae688d |
+|us-west-2       | ami-478b9177 |
+|eu-west-1       | ami-6b12271c |
+|ap-northeast-1  | ami-6e920b6e |
+|ap-southeast-2  | ami-fb0d45c1 |
+
+
+```bash
+$ aws ec2 run-instances --image-id ami-c16422a4 --instance-type t2.micro --key-name bertrand --iam-instance-profile Name=ecsInstanceRole 
+{
+...
+...
+}
+
+$ aws ecs list-container-instances
+{
+    "containerInstanceArns": [
+        "arn:aws:ecs:us-east-1:447005562149:container-instance/c024e532-f878-4b08-9af1-7a7ef0f2bc8a"
+    ]
+}
+
+```
+
+Le lien entre les images DockerHub et ECS : les Task Definitions
+
+Il s'agit d'écrire un fichier `taskfile.json` dans un format se rapprochant de ce qu'on trouve dans le `docker-compose.yml`... mais pas tout-à-fait...
+
+![How Standards Proliferate](http://imgs.xkcd.com/comics/standards.png)
+
+Bon, une bonne âme a écrit un convertisseur de `docker-compose.yml` vers `taskfile.json` : on peut le trouver sur https://github.com/ambitioninc/container-transform.
+
+```
+$ sudo pip install container-transform 
+...
+
+cat docker-compose.yml | container-transform  -v
+{
+    "containerDefinitions": [
+        {
+            "essential": true, 
+            "links": [
+                "redis"
+            ], 
+            "mountPoints": [
+                {
+                    "containerPath": "/src", 
+                    "sourceVolume": "_Src"
+                }
+            ], 
+            "name": "web", 
+            "portMappings": [
+                {
+                    "containerPort": 8080, 
+                    "hostPort": 8080
+                }
+            ]
+        }, 
+        {
+            "essential": true, 
+            "image": "redis", 
+            "name": "redis"
+        }
+    ], 
+    "family": "", 
+    "volumes": [
+        {
+            "host": {
+                "sourcePath": "./src"
+            }, 
+            "name": "_Src"
+        }
+    ]
+}
+Container redis is missing required parameter "cpu".
+Container web is missing required parameter "image".
+Container redis is missing required parameter "memory".
+Container web is missing required parameter "cpu".
+Container web is missing required parameter "memory".
+
+```
+
+Avant de spécifier la Task à ECS, il faut corriger le fichier suivant les préconisations ci dessus. À noter `cpu` qui n'est pas le nombre de CPU, mais le nombre d'unité cpu à allouer ; il y a 1024 unité CPU par coeur.
+
+Finalement, le fichier `taskfile.json` ressemble à
+
+```javascript
+{
+    "containerDefinitions": [
+        {
+            "essential": true, 
+            "image": "bobuss/node",
+            "cpu": 200,
+            "memory": 200,
+            "links": [
+                "redis"
+            ], 
+            "mountPoints": [
+                {
+                    "containerPath": "/src", 
+                    "sourceVolume": "_Src"
+                }
+            ], 
+            "name": "web", 
+            "portMappings": [
+                {
+                    "containerPort": 8080, 
+                    "hostPort": 8080
+                }
+            ]
+        }, 
+        {
+            "essential": true, 
+            "image": "redis", 
+            "name": "redis",
+            "cpu": 200,
+            "memory": 200
+        }
+    ], 
+    "family": "", 
+    "volumes": [
+        {
+            "host": {
+                "sourcePath": "./src"
+            }, 
+            "name": "_Src"
+        }
+    ]
+}
+
+```
+
+Nous pouvons enregistrer la task auprès de ECS :
+
+```bash
+$ aws ecs register-task-definition --family nodejs --cli-input-json file://taskfile.json
+{
+    "taskDefinition": {
+        "status": "ACTIVE", 
+        "family": "nodejs", 
+        "volumes": [
+            {
+                "host": {
+                    "sourcePath": "./src"
+                }, 
+                "name": "_Src"
+            }
+        ], 
+        "taskDefinitionArn": "arn:aws:ecs:us-east-1:447005562149:task-definition/nodejs:1", 
+        "containerDefinitions": [
+            {
+                "environment": [], 
+                "name": "web", 
+                "links": [
+                    "redis"
+                ], 
+                "mountPoints": [
+                    {
+                        "sourceVolume": "_Src", 
+                        "containerPath": "/src"
+                    }
+                ], 
+                "image": "bobuss/node", 
+                "essential": true, 
+                "portMappings": [
+                    {
+                        "protocol": "tcp", 
+                        "containerPort": 8080, 
+                        "hostPort": 8080
+                    }
+                ], 
+                "memory": 400, 
+                "cpu": 1, 
+                "volumesFrom": []
+            }, 
+            {
+                "environment": [], 
+                "name": "redis", 
+                "mountPoints": [], 
+                "image": "redis", 
+                "cpu": 1, 
+                "portMappings": [], 
+                "memory": 500, 
+                "essential": true, 
+                "volumesFrom": []
+            }
+        ], 
+        "revision": 1
+    }
+}
+```
+
+Et la lancer !!
+
+```bash
+$ aws ecs run-task --task-definition test:1 --count 1                           
+{
+    "failures": [], 
+    "tasks": [
+        {
+            "taskArn": "arn:aws:ecs:us-east-1:447005562149:task/fb70a012-afe6-4075-afa4-4d8c98b3240c", 
+            "overrides": {
+                "containerOverrides": [
+                    {
+                        "name": "web"
+                    }, 
+                    {
+                        "name": "redis"
+                    }
+                ]
+            }, 
+            "lastStatus": "PENDING", 
+            "containerInstanceArn": "arn:aws:ecs:us-east-1:447005562149:container-instance/c024e532-f878-4b08-9af1-7a7ef0f2bc8a", 
+            "clusterArn": "arn:aws:ecs:us-east-1:447005562149:cluster/default", 
+            "desiredStatus": "RUNNING", 
+            "taskDefinitionArn": "arn:aws:ecs:us-east-1:447005562149:task-definition/test:1", 
+            "containers": [
+                {
+                    "containerArn": "arn:aws:ecs:us-east-1:447005562149:container/50171db6-ee3b-46aa-9932-fa40114c2a7a", 
+                    "taskArn": "arn:aws:ecs:us-east-1:447005562149:task/fb70a012-afe6-4075-afa4-4d8c98b3240c", 
+                    "lastStatus": "PENDING", 
+                    "name": "web"
+                }, 
+                {
+                    "containerArn": "arn:aws:ecs:us-east-1:447005562149:container/76d36426-c251-4677-9c3d-1a5995b53938", 
+                    "taskArn": "arn:aws:ecs:us-east-1:447005562149:task/fb70a012-afe6-4075-afa4-4d8c98b3240c", 
+                    "lastStatus": "PENDING", 
+                    "name": "redis"
+                }
+            ]
+        }
+    ]
+}
+
+```
+
+OK ! L'instance que l'on a sert de host docker. Et une t2.micro est toute juste pour loger les 2 containers de 400Mo et 500Mo.
+
+Si on se connecte dessus (attention ... c'est l'user `ec2-user`): 
+
+```bash
+$ ssh ec2-user@ec2-52-91-231-61.compute-1.amazonaws.com -i ~/bertrand.pem -v
+...
+...
+debug1: Sending env LANG = fr_FR.UTF-8
+debug1: Sending env LC_CTYPE = fr_FR.UTF-8
+
+   __|  __|  __|
+   _|  (   \__ \   Amazon ECS-Optimized Amazon Linux AMI 2015.09.a
+ ____|\___|____/
+
+For documentation visit, http://aws.amazon.com/documentation/ecs
+[ec2-user@ip-172-31-33-43 ~]$ dpcker ps
+CONTAINER ID        IMAGE                            COMMAND             CREATED             STATUS              PORTS                        NAMES
+0d17e8d7f958        amazon/amazon-ecs-agent:latest   "/agent"            About an hour ago   Up About an hour    127.0.0.1:51678->51678/tcp   ecs-agent          
+
+```
+
+
+### Intégration de l'autoscaling
+
+On se créée 2 intances ECS, en IAM `ecsServiceRole`.
+
+```bash
+$ aws ec2 run-instances --image-id ami-c16422a4 --instance-type t2.micro --key-name bertrand --iam-instance-profile Name=ecsServiceRole
+...
+...
+$ aws ec2 run-instances --image-id ami-c16422a4 --instance-type t2.micro --key-name bertrand --iam-instance-profile Name=ecsServiceRole
+...
+...
+
+$ aws ecs list-container-instances
+{
+    "containerInstanceArns": [
+        "arn:aws:ecs:us-east-1:447005562149:container-instance/a00a97d0-8945-4e78-8712-955b780201ea", 
+        "arn:aws:ecs:us-east-1:447005562149:container-instance/bca6026c-70be-44ad-a1b0-131d4af8cb9a"
+    ]
+}
+
+
+On va séparer les services :
+
+
+
+
+```
+
+On va pouvoir créer un Service pour le service web, succeptible de lancer 2 tasks web.
+
+```bash
+$ aws ecs create-service \
+--load-balancers=loadBalancerName=elbbobuss,containerName=web,containerPort=8080 \
+--service-name myweb \
+--task-definition web:1 \
+--desired-count 2 \
+--role ecsServiceRoleELB
+{
+    "service": {
+        "status": "ACTIVE", 
+        "taskDefinition": "arn:aws:ecs:us-east-1:447005562149:task-definition/test:1", 
+        "pendingCount": 0, 
+        "loadBalancers": [
+            {
+                "containerName": "web", 
+                "containerPort": 8080, 
+                "loadBalancerName": "elbbobuss"
+            }
+        ], 
+        "roleArn": "arn:aws:iam::447005562149:role/ecsServiceRoleELB", 
+        "desiredCount": 1, 
+        "serviceName": "myservice", 
+        "clusterArn": "arn:aws:ecs:us-east-1:447005562149:cluster/default", 
+        "serviceArn": "arn:aws:ecs:us-east-1:447005562149:service/myservice", 
+        "deployments": [
+            {
+                "status": "PRIMARY", 
+                "pendingCount": 0, 
+                "createdAt": 1444236710.87, 
+                "desiredCount": 1, 
+                "taskDefinition": "arn:aws:ecs:us-east-1:447005562149:task-definition/test:1", 
+                "updatedAt": 1444236710.87, 
+                "id": "ecs-svc/9223370592618064937", 
+                "runningCount": 0
+            }
+        ], 
+        "events": [], 
+        "runningCount": 0
+    }
+}
+
+```
+
+Puis un service pour le stockage redis
+
+```bash
+$ aws ecs create-service \
+--service-name myredis \
+--task-definition redis:1 \
+--desired-count 1 \
+--role ecsServiceRole
+
+```
+
+Bon, pour la suite, on va passer par l'interface graphique : la CLI n'est pas tout
+
+
+
+
+
+### On nettoie ce qu'on a fait
+
+
+
+</xmp>
+<a class="home-link" href="index.html">...</a>
+<style>
+a.home-link {
+    position: fixed;
+    top : 4px;
+    left: 4px;
+    width : 32px;
+    height: 32px;
+    z-index : 1;
+    font-size: 40px;
+}
+</style>
+<script src="strapdown/strapdown.js"></script>
+<!-- GA -->
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-32527212-2']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+</script>
+<!-- End GA -->
+</html>

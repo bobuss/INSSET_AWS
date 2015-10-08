@@ -111,8 +111,8 @@ Création de la configuration de lancement
 
 Avant de déclarer le groupe d'autoscaling à proprement parler, nous allons définir tout ce qui est relatif à une instance du groupe, à savoir :
 
-- son AMI (ami-b0c36ed8)
-- son type t1.micro
+- son AMI (ami-e7de9b82)
+- son type t2.micro
 - ses groupes de sécurité (upicardie-asdemo-common et upicardie-asdemo-web)
 - le fichier user-data qu'on a préparé (user-data-imageable, stocké dans le répertoire courant de la machine à partir de laquelle on tape les commandes d'autoscaling)
 - la clé pour l'accès SSH (MyKeyPair générée normalement plus tôt)
@@ -120,8 +120,8 @@ Avant de déclarer le groupe d'autoscaling à proprement parler, nous allons dé
 ```bash
 aws autoscaling create-launch-configuration \
   --launch-configuration-name upicardie-asdemo-lc \
-  --image-id ami-b0c36ed8 \
-  --instance-type t1.micro \
+  --image-id ami-e7de9b82 \
+  --instance-type t2.micro \
   --user-data file://user-data-imageable \
   --key-name MyKeyPair
 {}
@@ -138,7 +138,7 @@ aws autoscaling describe-launch-configurations
             "InstanceMonitoring": {
                 "Enabled": true
             },
-            "ImageId": "ami-b0c36ed8",
+            "ImageId": "ami-e7de9b82",
             "CreatedTime": "2014-09-15T18:23:37.312Z",
             "BlockDeviceMappings": [],
             "KeyName": "kp_test",
@@ -148,7 +148,7 @@ aws autoscaling describe-launch-configurations
             "LaunchConfigurationName": "upicardie-asdemo-lc",
             "KernelId": null,
             "RamdiskId": null,
-            "InstanceType": "t1.micro"
+            "InstanceType": "t2.micro"
         }
     ]
 }
@@ -363,8 +363,8 @@ Les commandes d'autoscaling prévoient la mise à jour du groupe d'autoscaling, 
 ```bash
 aws autoscaling create-launch-configuration \
   --launch-configuration-name upicardie-asdemo-lc2 \
-  --image-id ami-7daee114 \
-  --instance-type t1.micro \
+  --image-id ami-e7de9b82 \
+  --instance-type t2.micro \
   --user-data file://user-data-imageable \
   --key MyKeyPair
 
