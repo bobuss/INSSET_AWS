@@ -3,7 +3,7 @@
 <title>Atelier Docker</title>
 <meta charset="utf-8">
 
-<xmp theme="simplex" style="display:none;">
+<xmp theme="spacelab" hljs-theme="agate" style="display:none;">
 
 # Docker 
 
@@ -109,7 +109,7 @@ b104d0657323        ubuntu:latest              "/bin/echo 'Hello Wor"   41 secon
 
 ```
 
-Il est possible de se connecter en lancant une session interactive (-i) dans un terminal (-t) et en y executant bash : 
+Il est possible de se connecter en lancant une session interactive `-i` dans un terminal `-t` et en y executant bash : 
 
 ```bash
 $ docker run -t -i ubuntu:latest /bin/bash
@@ -117,7 +117,7 @@ root@5aff723e8730:/#
 
 ```
 
-Il est également possible de lancer un container en mode daemon (-d) :
+Il est également possible de lancer un container en mode daemon `-d` :
 
 ```bash
 $ docker run -d ubuntu:latest /bin/bash -c "while true; do echo Hello; sleep 1; done"
@@ -169,7 +169,7 @@ $ docker attach cranky_swartz
 root@82a7a75b7d25:/#
 ```
 
-Pourquoi le CTRL-C ? en fait, le attach ne peut utiliser qu'une seule instance de shell, donc on doit killer le shell existant pour y accéder. 
+Pourquoi le `CTRL-C` ? en fait, le attach ne peut utiliser qu'une seule instance de shell, donc on doit killer le shell existant pour y accéder. 
 
 À noter que si on quitte en faisant `exit`, on stop le container. Pas très pratique.
 
@@ -261,7 +261,7 @@ var server = app.listen(8080, function () {
 
 ### Le Dockerfile
 
-```
+```dockerfile
 # depuis l'image officielle ubuntu
 FROM ubuntu
 
@@ -289,7 +289,7 @@ CMD ["node", "/src/index.js"]
 
 ```
 
-On construit l'image. On donne un tag avec l'option -t. À Noter la nommenclature username/projet à la github, qui est repris par DockerHub.
+On construit l'image. On donne un tag avec l'option `-t`. À Noter la nommenclature `username/projet` à la github, qui est repris par DockerHub.
 
 ```bash
 $ docker build -t bobuss/node .
@@ -371,7 +371,7 @@ var server = app.listen(8080, function () {
 
 ### src/package.json
 
-```javascript
+```json
 {
   "name": "dockerapp",
   "dependencies": {
@@ -384,7 +384,7 @@ var server = app.listen(8080, function () {
 
 ### Dockerfile
 
-```
+```dockerfile
 FROM ubuntu
 
 MAINTAINER bobuss
@@ -465,8 +465,6 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 On peut aller voir notre oeuvre sur http://localhost:8080
 
 
-@TODO
-
 
 ## docker-compose
 
@@ -481,6 +479,7 @@ web:
    - "8080:8080"
   volumes:
    - ./src:/src
+   - /src/node_modules
   links:
    - redis
 redis:
@@ -635,7 +634,7 @@ $ eval "$(docker-machine env dev)"
 
 Maintenant, toute commande docker adressera le docker hébergé sur le VirtualBox en local.
 
-De manière symétrique, pour adresser le docker hebergé sur ec2 :
+De manière symétrique, pour adresser le docker hebergé sur EC2 :
 
 ```bash
 $ eval "$(docker-machine env ec2box_bobuss)"
@@ -652,9 +651,6 @@ $ eval "$(docker-machine env -u)"
 ```
 
 
-
-
-
 </xmp>
 <a class="home-link" href="index.html">...</a>
 <style>
@@ -668,7 +664,7 @@ a.home-link {
     font-size: 40px;
 }
 </style>
-<script src="strapdown/strapdown.js"></script>
+<script src="downstrap/downstrap.js"></script>
 <!-- GA -->
 <script type="text/javascript">
 

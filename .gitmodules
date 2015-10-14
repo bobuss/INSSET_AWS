@@ -1,0 +1,3 @@
+[submodule "downstrap"]
+	path = downstrap
+	url = git@github.com:bobuss/downstrap.git

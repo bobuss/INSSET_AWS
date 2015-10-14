@@ -3,7 +3,7 @@
 <title>TP AWS</title>
 <meta charset="utf-8">
 
-<xmp theme="simplex" style="display:none;">
+<xmp theme="spacelab" hljs-theme="agate" style="display:none;">
 
 
 La doc en ligne
@@ -18,7 +18,8 @@ Installer AWS CLI
 
 Pour info : https://github.com/aws/aws-cli
 
-```
+```bash
+
 ($ sudo apt-get install -y python-pip)
 $ sudo pip install awscli
 ...
@@ -88,7 +89,8 @@ On commence par se créer une paire de clés
 
 ```bash
 $ aws ec2 create-key-pair --key-name MyKeyPair
-
+```
+```json
 {
     "KeyPair": {
         "KeyMaterial": "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEAgDbY5Hzlv+wP4nTVXkwRHemd3/OLo/O6u+kI2UloHqN6mZLP+XoFcEAmNmM0\n3sA/mfv0B9fKktSUqnAEPlygS35P1xJhUXqvdFhh4m7mF+D7naPPHWcg581sdhfqEQU1uMcFq+14\nfTgkQRCLkoNNsf3c4O1KxhJ6etHFxcqr/V104PnOPGlWWni+kIMyMP/+CvzzKCZkkL/EUk6LDH4T\nHqG4nDmEd4u0oNPakWd1nX26hfYN61IhkNedtqU9CnJPHBFRbl+BZbllB4ZkxYn6QHi5t7J0Lj26\nruq6URfKLIO4ZOcZ35ZARSFB4nYtU6tbw78sE0jJqZ6ibwHyPhw8fwIDAQABAoIBAEGs1pjjqUQQ\nBWr4cbslt7bczfPDawoGdOaATfoPcfgPwWMdIs8lw9dl5K0DUDexvmJ//tZtoORpY+WSD3pqM+m3\nv+npDlSQRYORKkK0j8Q3iGuNVzA2fVJ/lUlAorMpOgV2XN9eetOZiGiTswrPm2LLKPNGWYDwQjDb\ndzUDxem300kdPZcGiiW6OIIF39s0cHdYSurLlfFGBgT1YZUQQI8AyAZOA/uI5gzlXHo6pmOGc61Y\nnIGqAYV3k8eCsEag9XMyrAih1DiuSMEUzwXImPHuFQTB/Z28rhPPbdQ3mioHJBRDn3wGRz233q44\n5ZHGsi/XdeA2oNAIIg+20LFVhdECgYEA1jnngYbv30JPO/IAQdAjM4r4bV5adqQRhsZFeFcjI1pL\n6JXHnuBBN69z5liCICRLfWHtEwUXDbt/9tZmmG6Qp5SZdPSncmAbzsDuA7nKKrnhdoNDw4V8MN++\n+Hn+T0ezJp8dXNB3EnDiLvO71sunJMTAIxKjPejFG6SsqALWrSMCgYEAmTdB1XgOCdgl3P+8/Og0\nM3qwZGTbX641ug30QBgYmDKA3D+vLRBeGtxU+j/y41Ah2W016amtdM7KgMTVdB0ZjSR70TmaETrD\nkW449q0J/UrH9DmcOpUf8qVS8QwG/fhH/VElLKiWGitulHrZPVSSBomLpJKOUzHnSGl6ZO+m7vUC\ngYA5YVUjGpORh19VvSJYfnmPSr/z+3vbn2KaaO0eqKhexcbjS4smgQa29aXjov1nwpD9yocHuytL\noFdMNG1SkvroCCN6cjWPqzKHlKGsGc2O2C8N4Wb7Lfvv016Bi5uUfK39wEzLGYNrSxUqYlqD1BS3\nAoQ8YLec04ZIOzmL3wbFZQKBgHAeZYim3+8IQzzj0BJqgbiiMW5l97qeqyZJi9FTULwfSPjjiXc6\noQKa9XxjS4RYYUzQhEFHL21o3fs5DtJ3cPk+F3VV545wKCjGNd0dZ0/5ZzUq605bThOsM3O9T2iO\nRW/z73YssBraaYMyGsKsnmc2Q//cV1Y+EHeG6E/wp4H5AoGAT/jpdHo6hjYDd6z8WJT6zuyecT39\nl4oB72CO6PCJXLLtTj85brYLP6mZyecOvD4a7Zr97NcmA4aUZtv7ERHoHSRhyOm1ePHaV2i7JFfo\nHvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=\n-----END RSA PRIVATE KEY-----",
@@ -96,7 +98,9 @@ $ aws ec2 create-key-pair --key-name MyKeyPair
         "KeyFingerprint": "24:86:89:71:68:af:3e:00:49:15:96:06:2d:f3:2e:96:da:66:6e:d8"
     }
 }
+```
 
+```bash
 $ vi my-key-pair.pem
 (copier la clé. Attention aux retours chariots)
 
@@ -131,8 +135,8 @@ Important : MyKeyPair est le nom de notre clé. Rien à voir avec le ficher en l
 
 Nous avons notre clé publique en local. Pour pouvoir l'utiliser, on va la protéger.
 
-```
-chmod 600 my-key-pair.pem
+```bash
+$ chmod 600 my-key-pair.pem
 ```
 
 
@@ -158,8 +162,10 @@ D'où la commande :
 
 
 
+```bash
+$ aws ec2 run-instances --image-id ami-e7de9b82 --instance-type t2.micro --region us-east-1 --key MyKeyPair
 ```
-aws ec2 run-instances --image-id ami-e7de9b82 --instance-type t2.micro --region us-east-1 --key MyKeyPair
+```json
 {
     "OwnerId": "447005562149",
     "ReservationId": "r-06199676",
@@ -256,8 +262,10 @@ On note le `"PublicDnsName": null`, ce qui signifie que l'instance n'a pour le m
 
 Quelques instants plus tard, nous allons redemander :
 
+```bash
+$ aws ec2 describe-instances
 ```
-aws ec2 describe-instances
+```json
 {
     "Reservations": [
         {
@@ -374,8 +382,8 @@ Attention aux machines des petits camarades. Vous les verrez :)
 
 Normalement, nous avons maintenant tout ce qu'il faut pour nous connecter à notre toute première instance en SSH. Chaque système a ses petites habitudes. Sous ubuntu, c'est l'user ubuntu qui doit se connecter.
 
-```
-ssh ubuntu@ec2-54-165-229-123.compute-1.amazonaws.com -i my-key-pair.pem -v
+```bash
+$ ssh ubuntu@ec2-54-165-229-123.compute-1.amazonaws.com -i my-key-pair.pem -v
 ...
 ...
 ...
@@ -386,7 +394,7 @@ On peut en lancer une deuxième, une troisième ... La commande describe-instanc
 
 Depuis l'instance on peut récupérer un certain nombre d'information : les meta-data
 
-```
+```bash
 ubuntu@ip-172-31-42-29:~$ curl http://169.254.169.254/latest/meta-data/
 ami-id
 ami-launch-index
@@ -414,7 +422,7 @@ services/
 
 Enfin, on est sudo...
 
-```
+```bash
 ubuntu@ip-172-31-37-163:~$ sudo apt-get update
 ...
 ...
@@ -470,8 +478,10 @@ PORT=80 NODE_ENV=production pm2 start app.js
 
 ## Stopper une instance
 
+```bash
+$ aws ec2 stop-instance --instance-id i-e4e01b0a
 ```
-aws ec2 stop-instance --instance-id i-e4e01b0a
+```json
 {
     "StoppingInstances": [
         {
@@ -491,8 +501,10 @@ aws ec2 stop-instance --instance-id i-e4e01b0a
 
 ## Terminer une instance
 
+```bash
+$ aws ec2 terminate-instances --instance-id i-e4e01b0a
 ```
-aws ec2 terminate-instances --instance-id i-e4e01b0a
+```json
 {
     "TerminatingInstances": [
         {
@@ -515,8 +527,10 @@ aws ec2 terminate-instances --instance-id i-e4e01b0a
 Nos t2.micro sont en EBS-root : il n'y a qu'un volume, et c'est / (le root). Impossible donc de le démonter
 On va créer un nouveau volume.
 
+```bash
+$ aws ec2 create-volume --size 100 --availability-zone us-east-1d
 ```
-aws ec2 create-volume --size 100 --availability-zone us-east-1d
+```json
 {
     "AvailabilityZone": "us-east-1d",
     "Attachments": [],
@@ -533,8 +547,10 @@ aws ec2 create-volume --size 100 --availability-zone us-east-1d
 
 On peut alors remonter cet EBS sur la deuxième instance.
 
+```bash
+$ aws ec2 attach-volume --instance-id i-abcd1234 --volume-id vol-99922fd6 --device /dev/sdf
 ```
-aws ec2 attach-volume --instance-id i-abcd1234 --volume-id vol-99922fd6 --device /dev/sdf
+```json
 {
     "AttachTime": "2014-09-12T15:26:13.000Z",
     "InstanceId": "i-abcd1234",
@@ -550,7 +566,9 @@ aws ec2 attach-volume --instance-id i-abcd1234 --volume-id vol-99922fd6 --device
 On déclare un ELB nommé upicardie-asdemo1 sur la zone us-east-1d, qui écoute sur le port 80 et qui répartit les requêtes sur le port 80 des instances. Notre compte AWS est en mode VPC, nous allons devoir utiliser les subnets VPC pour initialiser le load balancer.
 
 ```bash
-aws ec2  describe-subnets
+$ aws ec2  describe-subnets
+```
+```json
 {
     "Subnets": [
         {
@@ -587,11 +605,13 @@ aws ec2  describe-subnets
 }
 ```
 
-```
-aws elb create-load-balancer \
+```bash
+$ aws elb create-load-balancer \
   --load-balancer-name upicardie-asdemo1 \
   --subnets subnet-d9bd4f80 subnet-3f0e1c17 subnet-19c2126e \
   --listeners "LoadBalancerPort=80,InstancePort=80,Protocol=http"
+```
+```json
 {
     "DNSName": "upicardie-asdemo1-2087259529.us-east-1.elb.amazonaws.com"
 }
@@ -600,8 +620,8 @@ aws elb create-load-balancer \
 
 Attachons-lui les 2 instances que nous avons créées.
 
-```
-aws elb register-instances-with-load-balancer \
+```bash
+$ aws elb register-instances-with-load-balancer \
   --load-balancer-name upicardie-asdemo1 \
   --instances i-a0eccdc1 i-a0eccda1
 ```
@@ -622,14 +642,14 @@ C'est possible à l'addresse : https://447005562149.signin.aws.amazon.com/consol
 
 Mais vous allez devoir vous créer votre login
 
-```
-aws iam create-login-profile help
+```bash
+$ aws iam create-login-profile help
 ```
 
 Regarder aussi
 
-```
-aws iam get-account-password-policy
+```bash 
+$ aws iam get-account-password-policy
 ```
 
 
@@ -649,7 +669,7 @@ a.home-link {
     font-size: 40px;
 }
 </style>
-<script src="strapdown/strapdown.js"></script>
+<script src="downstrap/downstrap.js"></script>
 <!-- GA -->
 <script type="text/javascript">
 
