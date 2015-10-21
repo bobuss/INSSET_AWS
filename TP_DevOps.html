@@ -1,56 +1,26 @@
 <!DOCTYPE html>
-<html>
-<title>TP DevOps</title>
-<meta charset="utf-8">
+<html lang="fr">
+<head>
+    <meta charset="utf-8">    
+    <title>Atelier DevOps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
 
-<xmp theme="spacelab" hljs-theme="agate" style="display:none;">
+<script src="downstrap.js"></script>
+<script type="text/javascript">
+var doc = new Downstrap({
+    'theme'      : 'spacelab', 
+    'syntaxTheme': 'agate'
+});
+doc.attachToBody('cours/TP_DevOps.md')
+</script>
 
-
-# Un projet
-
-Essayons de mettre en oeuvre les bonnes pratiques tant côté DEV, que côté OPS.
-
-1. Le DEV
-  * Environnement de dev
-  * Versionning
-  * Tests
-  * Intégration continue
-  * ...
-
-2. L'OPS
-  * Comment déployer sur plusieurs machines
-  * Mises à jour simple du code
-  * Mises à jour simple de l'infra
-  * Monitoring, notifications, dashboards
-  * ...
-
-
-# Resources
-
-### Programmable Infrastructure
-
-http://programmableinfrastructure.com/
-
-Une bonne vision d'ensembre
-
-
-### Fabric
-
-- [Introduction à Fabric](Fabric.html)
-- [fabric, cuisine and watchdog for server administration in python](http://fr.slideshare.net/ffunction/fabric-cuisine-and-watchdog-for-server-administration-in-python)
-
-
-### Hubot
-
-- [http://hubot.github.com/](http://hubot.github.com/)
-
-
-</xmp>
 <a class="home-link" href="index.html">...</a>
 <style>
 a.home-link {
     position: fixed;
-    top : 4px;
+    top : 40px;
     left: 4px;
     width : 32px;
     height: 32px;
@@ -58,7 +28,6 @@ a.home-link {
     font-size: 40px;
 }
 </style>
-<script src="downstrap/downstrap.js"></script>
 <!-- GA -->
 <script type="text/javascript">
 
@@ -75,4 +44,3 @@ _gaq.push(['_trackPageview']);
 </script>
 <!-- End GA -->
 </html>
-
