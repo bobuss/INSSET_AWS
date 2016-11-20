@@ -13,6 +13,8 @@
 - AWS
 - Autoscaling
 - DevOps
+- Docker
+- ECS
 
 
 ## HowTo

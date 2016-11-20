@@ -1,4 +1,4 @@
-# Docker 
+# Docker
 
 
 ## Un survol de la chose
@@ -43,7 +43,7 @@ Les containers Docker "hébergent" une ou plusieurs images Docker. Les container
 ## Installation
 
 - Sur un linux, kernel > 3.8 : normalement disponible dans toutes les bonnes ditributions récentes du marché
-- Sous mac ou Windows, c'est indirect (pas de notion de container) : il faut passer par un système intérmédiaire léger (Tiny Core Linux) qui tourne dans VirtualBox. BootToDocker permet l'installation aisé de ce système.
+- Sous mac ou Windows, depuis cette année, il y a aussi une version native : https://www.docker.com/
 
 
 ## Alors, ces images
@@ -53,8 +53,8 @@ On peut commencer par chercher dans le registry :
 ```bash
 $ docker search ubuntu
 NAME                           DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
-ubuntu                         Ubuntu is a Debian-based Linux operating s...   2362      [OK]       
-ubuntu-upstart                 Upstart is an event-based replacement for ...   35        [OK]       
+ubuntu                         Ubuntu is a Debian-based Linux operating s...   2362      [OK]
+ubuntu-upstart                 Upstart is an event-based replacement for ...   35        [OK]
 torusware/speedus-ubuntu       Always updated official Ubuntu docker imag...   25                   [OK]
 tleyden5iwx/ubuntu-cuda        Ubuntu 14.04 with CUDA drivers pre-installed    18                   [OK]
 ...
@@ -65,13 +65,13 @@ tleyden5iwx/ubuntu-cuda        Ubuntu 14.04 with CUDA drivers pre-installed    1
 On récupère l'image, via un `pull`.
 
 ```bash
-$ docker pull ubuntu  
+$ docker pull ubuntu
 Using default tag: latest
 latest: Pulling from library/ubuntu
 d3a1f33e8a5a:  Downloading [========================================>          ] 53.51 MB/65.79 MB
-c22013c84729: Download complete 
-d74508fb6632: Download complete 
-91e54dfb1179: Download complete 
+c22013c84729: Download complete
+d74508fb6632: Download complete
+91e54dfb1179: Download complete
 ...
 ```
 
@@ -102,11 +102,11 @@ b104d0657323        ubuntu:latest              "/bin/echo 'Hello Wor"   41 secon
 
 ```
 
-Il est possible de se connecter en lancant une session interactive `-i` dans un terminal `-t` et en y executant bash : 
+Il est possible de se connecter en lancant une session interactive `-i` dans un terminal `-t` et en y executant bash :
 
 ```bash
 $ docker run -t -i ubuntu:latest /bin/bash
-root@5aff723e8730:/# 
+root@5aff723e8730:/#
 
 ```
 
@@ -162,11 +162,11 @@ $ docker attach cranky_swartz
 root@82a7a75b7d25:/#
 ```
 
-Pourquoi le `CTRL-C` ? en fait, le attach ne peut utiliser qu'une seule instance de shell, donc on doit killer le shell existant pour y accéder. 
+Pourquoi le `CTRL-C` ? en fait, le attach ne peut utiliser qu'une seule instance de shell, donc on doit killer le shell existant pour y accéder.
 
 À noter que si on quitte en faisant `exit`, on stop le container. Pas très pratique.
 
-Au final comment se connecte-t-on à notre container sans le stopper à la sortie ? 
+Au final comment se connecte-t-on à notre container sans le stopper à la sortie ?
 
 - soit on lance le _attach_ avec l'option --no-sig=true
 - soit on sort avec `CTRL-P CTRL-Q`
@@ -264,10 +264,11 @@ MAINTAINER bobuss
 # on execute des commandes dans le container
 RUN apt-get update && \
     apt-get -y install curl && \
-    curl -sL https://deb.nodesource.com/setup | sudo bash - && \
+    apt-get -y install sudo && \
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo bash - && \
     apt-get -y install python build-essential nodejs
 
-# on ajoute le contenu du répertoire courant dans le container 
+# on ajoute le contenu du répertoire courant dans le container
 # dans /src
 ADD . /src
 
@@ -384,7 +385,8 @@ MAINTAINER bobuss
 
 RUN apt-get update && \
     apt-get -y install curl && \
-    curl -sL https://deb.nodesource.com/setup | sudo bash - && \
+    apt-get -y install sudo && \
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo bash - && \
     apt-get -y install python build-essential nodejs
 
 ADD src /src
@@ -403,28 +405,28 @@ $ docker build -t bobuss/node .
 ...
 ```
 
-Pour lancer notre programme, dans un autre terminal, on lance un container redis : 
+Pour lancer notre programme, dans un autre terminal, on lance un container redis :
 
 ```bash
 docker run redis
 1:C 06 Oct 21:39:56.778 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
-                _._                                                  
-           _.-``__ ''-._                                             
+                _._
+           _.-``__ ''-._
       _.-``    `.  `_.  ''-._           Redis 3.0.3 (00000000/0) 64 bit
-  .-`` .-```.  ```\/    _.,_ ''-._                                   
+  .-`` .-```.  ```\/    _.,_ ''-._
  (    '      ,       .-`  | `,    )     Running in standalone mode
  |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
  |    `-._   `._    /     _.-'    |     PID: 1
-  `-._    `-._  `-./  _.-'    _.-'                                   
- |`-._`-._    `-.__.-'    _.-'_.-'|                                  
- |    `-._`-._        _.-'_.-'    |           http://redis.io        
-  `-._    `-._`-.__.-'_.-'    _.-'                                   
- |`-._`-._    `-.__.-'    _.-'_.-'|                                  
- |    `-._`-._        _.-'_.-'    |                                  
-  `-._    `-._`-.__.-'_.-'    _.-'                                   
-      `-._    `-.__.-'    _.-'                                       
-          `-._        _.-'                                           
-              `-.__.-'                                               
+  `-._    `-._  `-./  _.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |           http://redis.io
+  `-._    `-._`-.__.-'_.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |
+  `-._    `-._`-.__.-'_.-'    _.-'
+      `-._    `-.__.-'    _.-'
+          `-._        _.-'
+              `-.__.-'
 
 1:M 06 Oct 21:39:56.779 # Server started, Redis version 3.0.3
 1:M 06 Oct 21:39:56.779 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
@@ -448,7 +450,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 $ docker run -d -p 8080:8080 --link determined_raman:redis bobuss/node
 8cc016d648625e402fef571fc28091a9b12ce15e3aba60528499e5d00e809a60
 
-$ docker ps                                                           
+$ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
 8cc016d64862        bobuss/node         "node /src/index.js"     4 seconds ago       Up 3 seconds        0.0.0.0:8080->8080/tcp   elated_yonath
 180b25098d1d        redis               "/entrypoint.sh redis"   56 seconds ago      Up 56 seconds       6379/tcp                 determined_raman
@@ -544,24 +546,24 @@ Successfully built f2679c36d047
 Creating dockerapp_web_1...
 Attaching to dockerapp_redis_1, dockerapp_web_1
 redis_1 | 1:C 06 Oct 21:18:31.659 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
-redis_1 |                 _._                                                  
-redis_1 |            _.-``__ ''-._                                             
+redis_1 |                 _._
+redis_1 |            _.-``__ ''-._
 redis_1 |       _.-``    `.  `_.  ''-._           Redis 3.0.3 (00000000/0) 64 bit
-redis_1 |   .-`` .-```.  ```\/    _.,_ ''-._                                   
+redis_1 |   .-`` .-```.  ```\/    _.,_ ''-._
 redis_1 |  (    '      ,       .-`  | `,    )     Running in standalone mode
 redis_1 |  |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
 redis_1 |  |    `-._   `._    /     _.-'    |     PID: 1
-redis_1 |   `-._    `-._  `-./  _.-'    _.-'                                   
-redis_1 |  |`-._`-._    `-.__.-'    _.-'_.-'|                                  
-redis_1 |  |    `-._`-._        _.-'_.-'    |           http://redis.io        
-redis_1 |   `-._    `-._`-.__.-'_.-'    _.-'                                   
-redis_1 |  |`-._`-._    `-.__.-'    _.-'_.-'|                                  
-redis_1 |  |    `-._`-._        _.-'_.-'    |                                  
-redis_1 |   `-._    `-._`-.__.-'_.-'    _.-'                                   
-redis_1 |       `-._    `-.__.-'    _.-'                                       
-redis_1 |           `-._        _.-'                                           
-redis_1 |               `-.__.-'                                               
-redis_1 | 
+redis_1 |   `-._    `-._  `-./  _.-'    _.-'
+redis_1 |  |`-._`-._    `-.__.-'    _.-'_.-'|
+redis_1 |  |    `-._`-._        _.-'_.-'    |           http://redis.io
+redis_1 |   `-._    `-._`-.__.-'_.-'    _.-'
+redis_1 |  |`-._`-._    `-.__.-'    _.-'_.-'|
+redis_1 |  |    `-._`-._        _.-'_.-'    |
+redis_1 |   `-._    `-._`-.__.-'_.-'    _.-'
+redis_1 |       `-._    `-.__.-'    _.-'
+redis_1 |           `-._        _.-'
+redis_1 |               `-.__.-'
+redis_1 |
 redis_1 | 1:M 06 Oct 21:18:31.661 # Server started, Redis version 3.0.3
 redis_1 | 1:M 06 Oct 21:18:31.661 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
 redis_1 | 1:M 06 Oct 21:18:31.661 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
@@ -573,6 +575,152 @@ Stopping dockerapp_web_1... done
 Stopping dockerapp_redis_1... done
 
 ```
+
+## Les données dans docker
+
+Pour l'instant, à chaque fois que l'on lance `docker-compose up`, notre stack repart de 0. Ce qui n'est pas très pratique.
+Une facon de traiter de données persistentes avec docker, consiste à utiliser les volumes.
+
+Concernant redis, il faut tout d'abord activer la persistence. Le service doit être lancé avec l'option `--appendonly yes`.
+
+En ligne de commande cela donnerait
+
+```bash
+docker run redis redis-server --appendonly yes
+```
+
+De plus, on peut spécifier vers quel stockage on lie un volume du container. Pour le service redis, quand la persistence est activée, les données sont écrites dans le répertoire `/data`. On se crée donc un repertoire `data`dans notre projet.
+
+```bash
+mkdir data
+```
+
+Ce qui donne comme structure :
+
+```
+monAppDocker
+├── .dockerignore
+├── Dockerfile
+├── data
+└── src
+    ├── index.js
+    └── package.json
+```
+
+On peut maintenant lancer un service redis qui gardera les modifications.
+
+```bash
+docker run -v data:/data redis redis-server --appendonly yes
+```
+
+Je vous laisse vous convaincre que cela fonctionne en relançant l'application dans un autre terminal...
+
+Et si on applique toutes ces modifications dans le `docker-compose.yml`, cela nous donne :
+
+```yaml
+web:
+  build: .
+  ports:
+    - "8080:8080"
+  volumes:
+    - ./src:/src
+    - /src/node_modules
+  links:
+    - redis
+redis:
+  image: redis
+  command: redis-server --appendonly yes
+  volumes:
+    - ./data:/data
+```
+
+On relance le tout ...
+
+```bash
+docker-compose up
+Starting project_redis_1
+Starting project_web_1
+Attaching to project_redis_1, project_web_1
+redis_1  |                 _._
+redis_1  |            _.-``__ ''-._
+redis_1  |       _.-``    `.  `_.  ''-._           Redis 3.2.1 (00000000/0) 64 bit
+redis_1  |   .-`` .-```.  ```\/    _.,_ ''-._
+redis_1  |  (    '      ,       .-`  | `,    )     Running in standalone mode
+redis_1  |  |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+redis_1  |  |    `-._   `._    /     _.-'    |     PID: 1
+redis_1  |   `-._    `-._  `-./  _.-'    _.-'
+redis_1  |  |`-._`-._    `-.__.-'    _.-'_.-'|
+redis_1  |  |    `-._`-._        _.-'_.-'    |           http://redis.io
+redis_1  |   `-._    `-._`-.__.-'_.-'    _.-'
+redis_1  |  |`-._`-._    `-.__.-'    _.-'_.-'|
+redis_1  |  |    `-._`-._        _.-'_.-'    |
+redis_1  |   `-._    `-._`-.__.-'_.-'    _.-'
+redis_1  |       `-._    `-.__.-'    _.-'
+redis_1  |           `-._        _.-'
+redis_1  |               `-.__.-'
+redis_1  |
+redis_1  | 1:M 14 Nov 18:31:57.351 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1  | 1:M 14 Nov 18:31:57.352 # Server started, Redis version 3.2.1
+redis_1  | 1:M 14 Nov 18:31:57.352 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis_1  | 1:M 14 Nov 18:31:57.353 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+redis_1  | 1:M 14 Nov 18:31:57.358 * DB loaded from append only file: 0.005 seconds
+redis_1  | 1:M 14 Nov 18:31:57.358 * The server is now ready to accept connections on port 6379
+web_1    | Example app listening at http://:::8080
+```
+
+On va sur http://localhost:8080 pour faire monter le compteur. Et que voit-on dans le répertoire `data` ?
+
+```bash
+tail -f data/appendonly.aof
+2
+$6
+SELECT
+$1
+0
+*3
+$3
+set
+$2
+un
+$4
+duex
+*2
+$6
+SELECT
+$1
+0
+*2
+$4
+incr
+$7
+counter
+*2
+$4
+incr
+$7
+counter
+*2
+$4
+incr
+$7
+counter
+*2
+$6
+SELECT
+$1
+0
+*2
+$4
+incr
+$7
+counter
+*2
+$4
+incr
+$7
+counter
+```
+
 
 Et voilà \ò/ (Salut tintin). On peut passer à l'étape suivante, et se diriger vers l'informatique dans les nuages.
 
@@ -588,7 +736,7 @@ Pour tester, une fois installé, pour provisionner une instance VirutalBox en lo
 
 ```bash
 $ docker-machine create --driver virtualbox \
---virtualbox-memory 1024 dev; 
+--virtualbox-memory 1024 dev;
 No default boot2docker iso found locally, downloading the latest release...
 Downloading https://github.com/boot2docker/boot2docker/releases/download/v1.8.2/boot2docker.iso to /home/bobuss/.docker/machine/cache/boot2docker.iso...
 Creating VirtualBox VM...
@@ -612,12 +760,12 @@ To see how to connect Docker to this machine, run: docker-machine env ec2box_bob
 
 $ docker-machine ls
 NAME            ACTIVE   DRIVER       STATE     URL                         SWARM
-dev                      virtualbox   Running   tcp://192.168.99.100:2376   
-ec2box_bobuss            amazonec2    Running   tcp://54.85.61.184:2376     
+dev                      virtualbox   Running   tcp://192.168.99.100:2376
+ec2box_bobuss            amazonec2    Running   tcp://54.85.61.184:2376
 
 ```
 
-La commande `docker-machine env XXXX` exporte dans les variable d'environnement de docker la configuration de l'instance demandée. 
+La commande `docker-machine env XXXX` exporte dans les variable d'environnement de docker la configuration de l'instance demandée.
 
 Par exemple, pour configurer son client docker pour utiliser l'hôte virtualbox, on execute
 
@@ -637,7 +785,7 @@ Et ainsi, toute commande docker s'adressera au docker hébergé sur l'instance E
 
 
 
-Enfin, pour retrouver le paramétrage de notre docker local, 
+Enfin, pour retrouver le paramétrage de notre docker local,
 
 ```
 $ eval "$(docker-machine env -u)"

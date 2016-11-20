@@ -33,7 +33,7 @@
                     <small>INSSET - Master 2 Cloud Computing</small>
                 </p>
                 <p>
-                    <small>Octobre 2015 - <a href="http://tornil.me">Bertrand Tornil</a></small>
+                    <small>Novembre 2016 - <a href="http://tornil.me">Bertrand Tornil</a></small>
                 </p>
             </section>
             <section>
@@ -54,7 +54,7 @@
             <section>
                 <section>
                     <h2>Organisation</h2>
-                    <p class="fragment">AWS est disponible dans 11 Régions</p>
+                    <p class="fragment">AWS est disponible dans 14 Régions + 4 à venir début 2017 (Paris !!!)</p>
                     <p class="fragment">Chaque région dispose d'au moins 2 zones de disponibilité (Availability zones)</p>
                 </section>
                 <section>
@@ -99,6 +99,14 @@
                         </thead>
                         <tbody class="body">
                             <tr class="sizes">
+                                <td class="size">t2.nano</td>
+                                <td class="vCPU">1</td>
+                                <td class="ECU">~</td>
+                                <td class="memory">0.5</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.0065</td>
+                            </tr>
+                            <tr class="sizes">
                                 <td class="size">t2.micro</td>
                                 <td class="vCPU">1</td>
                                 <td class="ECU">~</td>
@@ -136,7 +144,7 @@
                                 <td class="ECU">6.5</td>
                                 <td class="memory">8</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$0.126</td>
+                                <td class="rate linux">$0.12</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">m4.xlarge</td>
@@ -144,7 +152,7 @@
                                 <td class="ECU">13</td>
                                 <td class="memory">16</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$0.252</td>
+                                <td class="rate linux">$0.239</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">m4.2xlarge</td>
@@ -152,7 +160,7 @@
                                 <td class="ECU">26</td>
                                 <td class="memory">32</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$0.504</td>
+                                <td class="rate linux">$0.479</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">m4.4xlarge</td>
@@ -160,7 +168,7 @@
                                 <td class="ECU">53.5</td>
                                 <td class="memory">64</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$1.008</td>
+                                <td class="rate linux">$0.958</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">m4.10xlarge</td>
@@ -168,7 +176,15 @@
                                 <td class="ECU">124.5</td>
                                 <td class="memory">160</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$2.52</td>
+                                <td class="rate linux">$2.394</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">m4.16xlarge</td>
+                                <td class="vCPU">65</td>
+                                <td class="ECU">188</td>
+                                <td class="memory">256</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$3.83</td>
                             </tr>
                           </tbody>
                         </table>
@@ -241,7 +257,7 @@
                                 <td class="ECU">8</td>
                                 <td class="memory">3.75</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$0.11</td>
+                                <td class="rate linux">$0.105</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">c4.xlarge</td>
@@ -249,7 +265,7 @@
                                 <td class="ECU">16</td>
                                 <td class="memory">7.5</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$0.22</td>
+                                <td class="rate linux">$0.209</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">c4.2xlarge</td>
@@ -257,7 +273,7 @@
                                 <td class="ECU">31</td>
                                 <td class="memory">15</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$0.441</td>
+                                <td class="rate linux">$0.419</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">c4.4xlarge</td>
@@ -265,7 +281,7 @@
                                 <td class="ECU">62</td>
                                 <td class="memory">30</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$0.882</td>
+                                <td class="rate linux">$0.838</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">c4.8xlarge</td>
@@ -273,7 +289,7 @@
                                 <td class="ECU">132</td>
                                 <td class="memory">60</td>
                                 <td class="storage">EBS</td>
-                                <td class="rate linux">$1.763</td>
+                                <td class="rate linux">$1.675</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">c3.large</td>
@@ -333,6 +349,30 @@
                         </thead>
                         <tbody class="body">
                             <tr class="sizes">
+                                <td class="size">p2.xlarge</td>
+                                <td class="vCPU">4</td>
+                                <td class="ECU">12</td>
+                                <td class="memory">61</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$0.9</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">p2.8xlarge</td>
+                                <td class="vCPU">32</td>
+                                <td class="ECU">94</td>
+                                <td class="memory">488</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$7.2</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">p2.16xlarge</td>
+                                <td class="vCPU">64</td>
+                                <td class="ECU">188</td>
+                                <td class="memory">732</td>
+                                <td class="storage">EBS</td>
+                                <td class="rate linux">$14.4</td>
+                            </tr>
+                            <tr class="sizes">
                                 <td class="size">g2.2xlarge</td>
                                 <td class="vCPU">8</td>
                                 <td class="ECU">26</td>
@@ -366,12 +406,28 @@
                         </thead>
                         <tbody class="body">
                             <tr class="sizes">
+                                <td class="size">x1.16xlarge</td>
+                                <td class="vCPU">64</td>
+                                <td class="ECU">174.5</td>
+                                <td class="memory">976</td>
+                                <td class="storage">1 x 1920 SSD</td>
+                                <td class="rate linux">$6.669</td>
+                            </tr>
+                            <tr class="sizes">
+                                <td class="size">x1.32xlarge</td>
+                                <td class="vCPU">128</td>
+                                <td class="ECU">349</td>
+                                <td class="memory">1952</td>
+                                <td class="storage">2 x 1920 SSD</td>
+                                <td class="rate linux">$13.338</td>
+                            </tr>
+                            <tr class="sizes">
                                 <td class="size">r3.large</td>
                                 <td class="vCPU">2</td>
                                 <td class="ECU">6.5</td>
                                 <td class="memory">15</td>
                                 <td class="storage">1 x 32 SSD</td>
-                                <td class="rate linux">$0.175</td>
+                                <td class="rate linux">$0.166</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">r3.xlarge</td>
@@ -379,7 +435,7 @@
                                 <td class="ECU">13</td>
                                 <td class="memory">30.5</td>
                                 <td class="storage">1 x 80 SSD</td>
-                                <td class="rate linux">$0.35</td>
+                                <td class="rate linux">$0.333</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">r3.2xlarge</td>
@@ -387,7 +443,7 @@
                                 <td class="ECU">26</td>
                                 <td class="memory">61</td>
                                 <td class="storage">1 x 160 SSD</td>
-                                <td class="rate linux">$0.7</td>
+                                <td class="rate linux">$0.665</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">r3.4xlarge</td>
@@ -395,7 +451,7 @@
                                 <td class="ECU">52</td>
                                 <td class="memory">122</td>
                                 <td class="storage">1 x 320 SSD</td>
-                                <td class="rate linux">$1.4</td>
+                                <td class="rate linux">$1.33</td>
                             </tr>
                             <tr class="sizes">
                                 <td class="size">r3.8xlarge</td>
@@ -403,7 +459,7 @@
                                 <td class="ECU">104</td>
                                 <td class="memory">244</td>
                                 <td class="storage">2 x 320 SSD</td>
-                                <td class="rate linux">$2.8</td>
+                                <td class="rate linux">$2.66</td>
                             </tr>
                         </tbody>
                     </table>
@@ -499,7 +555,7 @@
                 <p>Comme elles peuvent être créées à l'envie, l'utilisation des AMIs peut servir de base au déploiement de services</p>
             </section>
             <section>
-                <h2>Les volumes Elastic Block Storage (ELB)</h2>
+                <h2>Les volumes Elastic Block Storage (EBS)</h2>
                 <p>Sorte de disque dur réseau</p>
                 <p>Plug / Unplug à chaud d'une instance à une autre</p>
                 <p>Très resistant</p>
@@ -595,7 +651,7 @@
             CodePipeline -
             Cognito -
             Config -
-            Device Farm - 
+            Device Farm -
             Directory Service -
             EC2 Container Service -
             Elastic File System -
@@ -609,6 +665,20 @@
             WorkDocs -
             WorkMail -
             WorkSpaces</small>
+                </div>
+                <br>
+                <div class="fragment">
+                    <p> ++ Novembre 2016</p>
+                    <small>API Gateway -
+            Server Migration -
+            Snowball -
+            DMS -
+            Inspector -
+            WAF -
+            Certificate Manager -
+            AWS IOT -
+            GameLift -
+            Mobile Hub</small>
                 </div>
                 <br>
                 <p class="fragment">À voir : <a href="https://www.expeditedssl.com/aws-in-plain-english">http://www.expeditedssl.com/aws-in-plain-english</a></p>
@@ -630,7 +700,7 @@
             </section>
             <section>
                 <h1>THE END</h1>
-                <h3>INSSET - 2015</h3>
+                <h3>INSSET - 2016</h3>
                 <p><a href="mailto:bertrand.tornil@gmail.com">bertrand.tornil@gmail.com</a></p>
             </section>
             </div>
