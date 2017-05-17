@@ -791,3 +791,10 @@ Enfin, pour retrouver le paramétrage de notre docker local,
 $ eval "$(docker-machine env -u)"
 ```
 
+---
+
+#### Licence
+
+Ce(tte) œuvre est mise à disposition selon les termes de la Licence .[Creative Commons Attribution 3.0 France](http://creativecommons.org/licenses/by/3.0/fr/)
+
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](http://creativecommons.org/licenses/by/3.0/fr/)
