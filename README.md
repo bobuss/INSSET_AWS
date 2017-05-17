@@ -1,5 +1,7 @@
 # Intervention AWS - INSSET - Master 2 Cloud Computing - Bertrand Tornil
 
+http://www.tornil.me/INSSET_AWS/index.html
+
 
 ## Présentations
 
