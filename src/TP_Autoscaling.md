@@ -1,4 +1,6 @@
-Nous allons utiliser l'[AutoScaling AWS](http://aws.amazon.com/fr/autoscaling/) pour mettre en place un webservice de manipulation d'images qui puisse s'adapter à la charge entrante tout en minimisant les coûts de possession. Pour cela, nous allons partir d'une AMI, automatiser intégralement son lancement, puis l'injecter dans la configuration de notre groupe d'autoscaling afin de pouvoir faire varier le nombre de machines derrière un Elastic Load Balancer.
+[retour](index.html)
+
+Nous allons utiliser l'[AutoScaling AWS](https://aws.amazon.com/fr/autoscaling/) pour mettre en place un webservice de manipulation d'images qui puisse s'adapter à la charge entrante tout en minimisant les coûts de possession. Pour cela, nous allons partir d'une AMI, automatiser intégralement son lancement, puis l'injecter dans la configuration de notre groupe d'autoscaling afin de pouvoir faire varier le nombre de machines derrière un Elastic Load Balancer.
 
 ![Autoscaling](img/Architecture.png)
 
@@ -66,7 +68,7 @@ aws ec2  describe-subnets
 
 On peut reporter les subnets qui nous interessent dans la création du load-balancer.
 
-```
+```bash
 aws elb create-load-balancer \
   --subnets subnet-d9bd4f80 subnet-3f0e1c17 subnet-19c2126e \
   --load-balancer-name upicardie-asdemo \
@@ -413,7 +415,7 @@ Crédits
 -------
 
 - Basé sur un atelier Autoscaling de [Guillaume Plessis](https://twitter.com/@gui).
-- Gif animé autoscaling : http://www.cardinalpath.com/autoscaling-your-website-with-amazon-web-services-part-2/
+- Gif animé autoscaling : <https://www.cardinalpath.com/blog/autoscaling-your-website-with-amazon-web-services-part-2>
 
 
 
@@ -421,6 +423,6 @@ Crédits
 
 #### Licence
 
-Ce(tte) œuvre est mise à disposition selon les termes de la Licence .[Creative Commons Attribution 3.0 France](http://creativecommons.org/licenses/by/3.0/fr/)
+Cette œuvre est mise à disposition selon les termes de la Licence [Creative Commons Attribution 3.0 France](https://creativecommons.org/licenses/by/3.0/fr/).
 
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](http://creativecommons.org/licenses/by/3.0/fr/)
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](https://creativecommons.org/licenses/by/3.0/fr/)

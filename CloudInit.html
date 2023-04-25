@@ -1,47 +1,143 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-    <meta charset="utf-8">
-    <title>CloudInit</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CloudInit</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="css/github.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
+<p><a href="index.html">retour</a></p>
+<h1 id="cloudinit">CloudInit</h1>
+<p><a href="https://cloudinit.readthedocs.io/en/latest/">CloudInit</a>
+est un framework permettant d’exécuter un script fourni lors de
+l’instanciation d’une VM.</p>
+<p>Ainsi, lorsque vous utiliser un fichier user-data lors du lancement
+d’un instance :</p>
+<pre><code>aws ec2 run-instances \
+  --image-id ami-b0c36ed8 \
+  --instance-type t1.micro \
+  --region us-east-1 \
+  --key MyKeyPair \
+  --user-data file://myfile.sh</code></pre>
+<p>en fait, vous faites appel à CloudInit…</p>
+<p>Une fois l’instance lancée, CloudInit va passer par le service de
+metadata, en l’occurence l’adresse
+<code>http://169.254.169.254/latest/user-data</code> pour récupérer le
+fichier et le parser.</p>
+<h2 id="la-syntaxe-de-cloudinit">La syntaxe de CloudInit</h2>
+<p>Il y a plusieurs possibilités via une syntaxe spécifique en Yaml.</p>
+<h3 id="cloud-config">#cloud-config</h3>
+<p>Permet de décrire d’une façon plus lisible les actions à lancer. Un
+certain nombre de directives permettent la gestion “out of the box” des
+packages, des comptes utilisateurs, des client chef, puppet…</p>
+<p>Par exmple :</p>
+<pre><code>#cloud-config
+packages:
+ - git-core</code></pre>
+<p>reviens à <code>sudo apt-get install git-core</code>,</p>
+<pre><code>#cloud-config
+apt_update: true</code></pre>
+<p>reviens à <code>sudo apt-get update</code>.</p>
+<h3 id="include">#include</h3>
+<p>Spécifie la liste des fichiers à télécharger et à jouer.</p>
+<p>Exemple : installation de CouchBase</p>
+<pre><code>#include
+https://raw.github.com/couchbaselabs/cloud-init/master/couchbase-server-enterprise_x86_64_1.8.1.rpm.install</code></pre>
+<h3 id="section">#!</h3>
+<p>Les scripts bash que l’on utilise jusque là.</p>
+<pre><code>#!
+curl -L http//www.opscode.com/chef/install.sh | sudo bash</code></pre>
+<h2 id="quelques-exemples">Quelques exemples</h2>
+<pre><code>#cloud-config
+# The default is to install from packages.
+# Key from http://apt.opscode.com/packages@opscode.com.gpg.key
+apt_sources:
+ - source: &quot;deb http://apt.opscode.com/ $RELEASE-0.10 main&quot;
+   key: |
+     -----BEGIN PGP PUBLIC KEY BLOCK-----
+     Version: GnuPG v1.4.9 (GNU/Linux)
 
-<script src="downstrap.js"></script>
-<script type="text/javascript">
-var doc = new Downstrap({
-    'theme'      : 'spacelab',
-    'syntaxTheme': 'agate'
-});
-doc.attachToBody('cours/CloudInit.md')
-</script>
+     mQGiBEppC7QRBADfsOkZU6KZK+YmKw4wev5mjKJEkVGlus+NxW8wItX5sGa6kdUu
+     3ZRAq/HMGioJEtMFrvsZjGXuzef7f0ytfR1zYeLVWnL9Bd32CueBlI7dhYwkFe+V
+     Ep5jWOCj02C1wHcwt+uIRDJV6TdtbIiBYAdOMPk15+VBdweBXwMuYXr76+A7VeDL
+     zIhi7tKFo6WiwjKZq0dzctsJJjtIfr4K4vbiD9Ojg1iISQQYEQIACQUCSmkLtAIb
+     DAAKCRApQKupg++CauISAJ9CxYPOKhOxalBnVTLeNUkAHGg2gACeIsbobtaD4ZHG
+     0GLl8EkfA8uhluM=
+     -----END PGP PUBLIC KEY BLOCK-----
 
-<a class="home-link" href="index.html">...</a>
-<style>
-a.home-link {
-    position: fixed;
-    top : 40px;
-    left: 4px;
-    width : 32px;
-    height: 32px;
-    z-index : 1;
-    font-size: 40px;
-}
-</style>
-<!-- GA -->
-<script type="text/javascript">
+chef:
 
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-32527212-2']);
-_gaq.push(['_trackPageview']);
+ # Valid values are &#39;gems&#39; and &#39;packages&#39; and &#39;omnibus&#39;
+ install_type: &quot;packages&quot;
 
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
+ # Boolean: run &#39;install_type&#39; code even if chef-client
+ #          appears already installed.
+ force_install: false
 
-</script>
-<!-- End GA -->
+ # Chef settings
+ server_url: &quot;https://chef.yourorg.com:4000&quot;
+
+ # Node Name
+ # Defaults to the instance-id if not present
+ node_name: &quot;your-node-name&quot;
+
+ # Environment
+ # Defaults to &#39;_default&#39; if not present
+ environment: &quot;production&quot;
+
+ # Default validation name is chef-validator
+ validation_name: &quot;yourorg-validator&quot;
+ validation_key: |
+     -----BEGIN RSA PRIVATE KEY-----
+     YOUR-ORGS-VALIDATION-KEY-HERE
+     -----END RSA PRIVATE KEY-----
+
+ # A run list for a first boot json
+ run_list:
+  - &quot;recipe[apache2]&quot;
+  - &quot;role[db]&quot;
+
+ # Specify a list of initial attributes used by the cookbooks
+ initial_attributes:
+    apache:
+      prefork:
+        maxclients: 100
+      keepalive: &quot;off&quot;
+
+ # if install_type is &#39;omnibus&#39;, change the url to download
+ omnibus_url: &quot;https://www.opscode.com/chef/install.sh&quot;
+
+# Capture all subprocess output into a logfile
+# Useful for troubleshooting cloud-init issues
+output: {all: &#39;| tee -a /var/log/cloud-init-output.log&#39;}</code></pre>
+<p><a href="https://cloudinit.readthedocs.io/en/latest/">D’autres dans
+la doc de CloudInit</a>.</p>
+<hr />
+<h4 id="licence">Licence</h4>
+<p>Cette œuvre est mise à disposition selon les termes de la Licence <a
+href="https://creativecommons.org/licenses/by/3.0/fr/">Creative Commons
+Attribution 3.0 France</a>.</p>
+<p><a href="https://creativecommons.org/licenses/by/3.0/fr/"><img
+src="https://i.creativecommons.org/l/by/3.0/fr/88x31.png"
+alt="Licence Creative Commons" /></a></p>
 </body>
 </html>

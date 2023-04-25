@@ -1,47 +1,522 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-    <meta charset="utf-8">
-    <title>Atelier Autoscaling</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TP_Autoscaling</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="css/github.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-
-<script src="downstrap.js"></script>
-<script type="text/javascript">
-var doc = new Downstrap({
-    'theme'      : 'spacelab',
-    'syntaxTheme': 'docco'
-});
-doc.attachToBody('cours/TP_Autoscaling.md')
-</script>
-
-<a class="home-link" href="index.html">...</a>
-<style>
-a.home-link {
-    position: fixed;
-    top : 40px;
-    left: 4px;
-    width : 32px;
-    height: 32px;
-    z-index : 1;
-    font-size: 40px;
-}
-</style>
-<!-- GA -->
-<script type="text/javascript">
-
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-32527212-2']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
-</script>
-<!-- End GA -->
+<p><a href="index.html">retour</a></p>
+<p>Nous allons utiliser l’<a
+href="https://aws.amazon.com/fr/autoscaling/">AutoScaling AWS</a> pour
+mettre en place un webservice de manipulation d’images qui puisse
+s’adapter à la charge entrante tout en minimisant les coûts de
+possession. Pour cela, nous allons partir d’une AMI, automatiser
+intégralement son lancement, puis l’injecter dans la configuration de
+notre groupe d’autoscaling afin de pouvoir faire varier le nombre de
+machines derrière un Elastic Load Balancer.</p>
+<figure>
+<img src="img/Architecture.png" alt="Autoscaling" />
+<figcaption aria-hidden="true">Autoscaling</figcaption>
+</figure>
+<p>Pour information, nous allons utiliser une AMI Amazon sur laquelle
+nous allons installer NodeJS, ImageMagick et <a
+href="https://github.com/bobuss/node-imageable-server">node-imageable-server</a>,
+pour fournir un webservice basique (qui tournera en root sur le port
+80). Il est également nécessaire d’installer <a
+href="https://github.com/aws/aws-cli">aws-cli</a>.</p>
+<h2 id="automatisation-du-boot-de-linstance">Automatisation du boot de
+l’instance</h2>
+<p>Afin d’aller à l’essentiel (cette partie du job peut tout à fait être
+effectuée par un outil d’orchestration comme Puppet), nous utiliserons
+les user-data de l’instance pour injecter un script shell exécuté en fin
+de boot. Celui-ci est en charge :</p>
+<ul>
+<li>de l’installation de NodeJS, git et ImageMagick,</li>
+<li>l’optimisation réseau afin de gérer un grand nombre de courtes
+connexions TCP simultanées,</li>
+<li>l’installation et le lancement de node-imageable-server.</li>
+</ul>
+<p>L’ensemble du script de lancement à passer en user-data est fourni en
+pièce-jointe de cette page <a
+href="files/user-data-imageable">user-data-imageable</a>. A noter qu’il
+est primordial de minimiser le temps de boot d’une instance afin que
+notre groupe d’autoscaling soit suffisamment réactif en cas de pic de
+charge. Nous allons maintenant pouvoir déclarer les éléments
+d’infrastructure : ELB et AutoScaling</p>
+<h2 id="déclaration-de-lelb">Déclaration de l’ELB</h2>
+<p>On déclare un ELB nommé upicardie-asdemo sur la zone us-east-1d, qui
+écoute sur le port 80 et qui répartit les requêtes sur le port 80 des
+instances :</p>
+<p>Attention, avec un compte amazon VPC (ce qui est maintenant le cas
+par défaut), on oublie la notion de zone lors de la création de l’ELB.
+Par contre, on se base sur les “subnets” VPC.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> ec2  describe-subnets</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Subnets&quot;</span><span class="ex">:</span> [</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;VpcId&quot;</span><span class="ex">:</span> <span class="st">&quot;vpc-ab8e3dce&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;CidrBlock&quot;</span><span class="ex">:</span> <span class="st">&quot;172.31.16.0/20&quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;MapPublicIpOnLaunch&quot;</span><span class="ex">:</span> true,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;DefaultForAz&quot;</span><span class="ex">:</span> true,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;State&quot;</span><span class="ex">:</span> <span class="st">&quot;available&quot;</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AvailabilityZone&quot;</span><span class="ex">:</span> <span class="st">&quot;us-east-1a&quot;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SubnetId&quot;</span><span class="ex">:</span> <span class="st">&quot;subnet-19c2126e&quot;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AvailableIpAddressCount&quot;</span><span class="ex">:</span> 4089</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">},</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">{</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;VpcId&quot;</span><span class="ex">:</span> <span class="st">&quot;vpc-ab8e3dce&quot;</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;CidrBlock&quot;</span><span class="ex">:</span> <span class="st">&quot;172.31.32.0/20&quot;</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;MapPublicIpOnLaunch&quot;</span><span class="ex">:</span> true,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;DefaultForAz&quot;</span><span class="ex">:</span> true,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;State&quot;</span><span class="ex">:</span> <span class="st">&quot;available&quot;</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AvailabilityZone&quot;</span><span class="ex">:</span> <span class="st">&quot;us-east-1d&quot;</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SubnetId&quot;</span><span class="ex">:</span> <span class="st">&quot;subnet-3f0e1c17&quot;</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AvailableIpAddressCount&quot;</span><span class="ex">:</span> 4087</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="ex">},</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="kw">{</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;VpcId&quot;</span><span class="ex">:</span> <span class="st">&quot;vpc-ab8e3dce&quot;</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;CidrBlock&quot;</span><span class="ex">:</span> <span class="st">&quot;172.31.0.0/20&quot;</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;MapPublicIpOnLaunch&quot;</span><span class="ex">:</span> true,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;DefaultForAz&quot;</span><span class="ex">:</span> true,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;State&quot;</span><span class="ex">:</span> <span class="st">&quot;available&quot;</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AvailabilityZone&quot;</span><span class="ex">:</span> <span class="st">&quot;us-east-1b&quot;</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SubnetId&quot;</span><span class="ex">:</span> <span class="st">&quot;subnet-d9bd4f80&quot;</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AvailableIpAddressCount&quot;</span><span class="ex">:</span> 4091</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="kw">}</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="ex">]</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>On peut reporter les subnets qui nous interessent dans la création du
+load-balancer.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> elb create-load-balancer <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--subnets</span> subnet-d9bd4f80 subnet-3f0e1c17 subnet-19c2126e <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--load-balancer-name</span> upicardie-asdemo <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--listeners</span> <span class="st">&quot;LoadBalancerPort=80,InstancePort=80,Protocol=http&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;DNSName&quot;</span><span class="ex">:</span> <span class="st">&quot;upicardie-asdemo-992010360.us-east-1.elb.amazonaws.com&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>On configure ses tests de viabilité d’une instance :</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> elb configure-health-check <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--load-balancer-name</span> upicardie-asdemo <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--health-check</span> Target=<span class="st">&quot;HTTP:80/&quot;</span>,Interval=10,Timeout=5,UnhealthyThreshold=2,HealthyThreshold=2</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;HealthCheck&quot;</span><span class="ex">:</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;HealthyThreshold&quot;</span><span class="ex">:</span> 2,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Interval&quot;</span><span class="ex">:</span> 10,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Target&quot;</span><span class="ex">:</span> <span class="st">&quot;HTTP:80/&quot;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Timeout&quot;</span><span class="ex">:</span> 5,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;UnhealthyThreshold&quot;</span><span class="ex">:</span> 2</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<p>Ces tests sont vitaux afin de s’assurer que l’instance cible ne
+rentre dans l’ELB que quand elle est pleinement opérationnelle (à
+l’issue de son boot via user-data)</p>
+<h2 id="création-de-la-configuration-de-lancement">Création de la
+configuration de lancement</h2>
+<p>Avant de déclarer le groupe d’autoscaling à proprement parler, nous
+allons définir tout ce qui est relatif à une instance du groupe, à
+savoir :</p>
+<ul>
+<li>son AMI (ami-e7de9b82)</li>
+<li>son type t2.micro</li>
+<li>ses groupes de sécurité (upicardie-asdemo-common et
+upicardie-asdemo-web)</li>
+<li>le fichier user-data qu’on a préparé (user-data-imageable, stocké
+dans le répertoire courant de la machine à partir de laquelle on tape
+les commandes d’autoscaling)</li>
+<li>la clé pour l’accès SSH (MyKeyPair générée normalement plus
+tôt)</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling create-launch-configuration <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--launch-configuration-name</span> upicardie-asdemo-lc <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image-id</span> ami-e7de9b82 <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--instance-type</span> t2.micro <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--user-data</span> file://user-data-imageable <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--key-name</span> MyKeyPair</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">{}</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling describe-launch-configurations</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;LaunchConfigurations&quot;</span><span class="ex">:</span> [</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;UserData&quot;</span><span class="ex">:</span> <span class="st">&quot;...XXXXX...&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;EbsOptimized&quot;</span><span class="ex">:</span> false,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;LaunchConfigurationARN&quot;</span><span class="ex">:</span> <span class="st">&quot;arn:aws:autoscaling:us-east-1:447005562149:launchConfiguration:0141a8f5-1cad-4dfc-a62f-7f012e02f067:launchConfigurationName/upicardie-asdemo-lc&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;InstanceMonitoring&quot;</span><span class="ex">:</span> {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Enabled&quot;</span><span class="ex">:</span> true</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="ex">},</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;ImageId&quot;</span><span class="ex">:</span> <span class="st">&quot;ami-e7de9b82&quot;</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;CreatedTime&quot;</span><span class="ex">:</span> <span class="st">&quot;2014-09-15T18:23:37.312Z&quot;</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;BlockDeviceMappings&quot;</span><span class="ex">:</span> [],</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;KeyName&quot;</span><span class="ex">:</span> <span class="st">&quot;kp_test&quot;</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SecurityGroups&quot;</span><span class="ex">:</span> [</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                <span class="ex">...</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            <span class="ex">],</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;LaunchConfigurationName&quot;</span><span class="ex">:</span> <span class="st">&quot;upicardie-asdemo-lc&quot;</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;KernelId&quot;</span><span class="ex">:</span> null,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;RamdiskId&quot;</span><span class="ex">:</span> null,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;InstanceType&quot;</span><span class="ex">:</span> <span class="st">&quot;t2.micro&quot;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="kw">}</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">]</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<h2 id="création-du-groupe-dautoscaling">Création du groupe
+d’autoscaling</h2>
+<p>Maintenant que nous avons défini la configuration de lancement, nous
+pouvons déclarer le groupe d’autoscaling avec les paramètres suivants
+:</p>
+<ul>
+<li>la configuration de lancement (upicardie-asdemo-lc)</li>
+<li>la ou les zone(s) sur lesquelles l’autoscaling prend effet
+(us-east-1d, en accord avec la déclaration de l’ELB)</li>
+<li>le nombre minimal et maximal d’instances (pour assurer à la fois une
+certaine disponibilité/QoS et maîtriser les coûts de possession)</li>
+<li>le nom de l’ELB dans lequel inscrire/désinscrire les instances</li>
+<li>le type de test de viabilité (soit celui d’EC2, garantissant la
+partie hardware, soit celui de l’ELB assurant la disponibilité
+applicative)</li>
+<li>la période de grâce (= la durée pendant laquelle l’instance n’est
+pas testée après son lancement. Grosso-modo son temps de boot).</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling create-auto-scaling-group <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--auto-scaling-group-name</span> upicardie-asdemo-asg <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--launch-configuration-name</span> upicardie-asdemo-lc <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--availability-zones</span> us-east-1d <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-size</span> 0 <span class="at">--max-size</span> 0 <span class="dt">\</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--load-balancer-names</span> upicardie-asdemo <span class="dt">\</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--health-check-type</span> EC2 <span class="dt">\</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--health-check-grace-period</span> 300</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling describe-auto-scaling-groups</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;AutoScalingGroups&quot;</span><span class="ex">:</span> [</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AutoScalingGroupARN&quot;</span><span class="ex">:</span> <span class="st">&quot;arn:aws:autoscaling:us-east-1:447005562149:autoScalingGroup:467e886b-ede8-40eb-9338-a6bd9f53f3af:autoScalingGroupName/upicardie-asdemo-asg&quot;</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;HealthCheckGracePeriod&quot;</span><span class="ex">:</span> 300,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;SuspendedProcesses&quot;</span><span class="ex">:</span> [],</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;DesiredCapacity&quot;</span><span class="ex">:</span> 0,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Tags&quot;</span><span class="ex">:</span> [],</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;EnabledMetrics&quot;</span><span class="ex">:</span> [],</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;LoadBalancerNames&quot;</span><span class="ex">:</span> [</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;upicardie-asdemo&quot;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            <span class="ex">],</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AutoScalingGroupName&quot;</span><span class="ex">:</span> <span class="st">&quot;upicardie-asdemo-asg&quot;</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;DefaultCooldown&quot;</span><span class="ex">:</span> 300,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;MinSize&quot;</span><span class="ex">:</span> 0,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;Instances&quot;</span><span class="ex">:</span> [],</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;MaxSize&quot;</span><span class="ex">:</span> 0,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;VPCZoneIdentifier&quot;</span><span class="ex">:</span> null,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;TerminationPolicies&quot;</span><span class="ex">:</span> [</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Default&quot;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>            <span class="ex">],</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;LaunchConfigurationName&quot;</span><span class="ex">:</span> <span class="st">&quot;upicardie-asdemo-lc&quot;</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;CreatedTime&quot;</span><span class="ex">:</span> <span class="st">&quot;2014-09-15T18:24:56.744Z&quot;</span>,</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;AvailabilityZones&quot;</span><span class="ex">:</span> [</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;us-east-1d&quot;</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>            <span class="ex">],</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;HealthCheckType&quot;</span><span class="ex">:</span> <span class="st">&quot;EC2&quot;</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        <span class="kw">}</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="ex">]</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<h2 id="triggers-de-mise-à-léchelle">Triggers de mise à l’échelle</h2>
+<p>Il est ensuite nécessaire de définir la politiques de mises à
+l’échelle de l’architecture, à la hausse comme à la baisse. Chaque
+élément AWS (ELB, volume, instance…) dispose de métriques CloudWatch sur
+lesquelles nous allons nous appuyer pour lancer ou éteindre des
+machines. Les instances d’un groupe d’autoscaling disposent notamment
+d’une surveillance CloudWatch détaillée (pas de 1 minute à la place des
+5 minutes par défaut). Commençons par définir notre politique d’ajout de
+machines (upicardie-asdemo-scale-up) : Nous ajoutons 50% de machines en
+plus. Le paramètre <code>--cooldown</code> permet de définir une durée
+(en seconde) pendant laquelle la politique de mise à l’échelle ne sera
+plus appelée. C’est utile pour laisser les instances se lancer et pour
+voir les premiers bénéfices de l’ajout d’instances.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling put-scaling-policy <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--policy-name</span> upicardie-asdemo-scale-up <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--auto-scaling-group-name</span> upicardie-asdemo-asg <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scaling-adjustment</span> 50 <span class="dt">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--adjustment-type</span> PercentChangeInCapacity <span class="dt">\</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--cooldown</span> 300</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;PolicyARN&quot;</span><span class="ex">:</span> <span class="st">&quot;arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:c7d0ed93-f391-43e4-91a3-e9e977dbb6f3:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up&quot;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>Même chose pour le retrait de machine : on enlève les machines une à
+une du groupe d’autoscaling. L’idée est ici de croitre beaucoup plus
+vite qu’on ne décroit pour pouvoir encaisser facilement des pics de
+charge successifs.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling put-scaling-policy <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--policy-name</span> upicardie-asdemo-scale-down <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--auto-scaling-group-name</span> upicardie-asdemo-asg <span class="dt">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scaling-adjustment</span> <span class="at">-1</span> <span class="dt">\</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--adjustment-type</span> ChangeInCapacity <span class="dt">\</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--cooldown</span> 300</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;PolicyARN&quot;</span><span class="ex">:</span> <span class="st">&quot;arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:84ece9a9-759f-4230-996d-83c132935b1e:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-down&quot;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>L’invocation des commandes ci-dessus renvoie à chaque fois une
+référence que nous allons pouvoir injecter dans nos déclencheurs… A
+commencer par la mise à l’échelle à la hausse lorsque :</p>
+<ul>
+<li>l’utilisation CPU moyenne
+(<code>--statistic Average --metric-name CPUUtilization</code>)</li>
+<li>du groupe d’autoscaling upicardie-asdemo-asg
+(<code>--namespace "AWS/EC2" --dimensions "Name=AutoScalingGroupName,Value=upicardie-asdemo-asg"</code>)</li>
+<li>est supérieure
+(<code>--comparison-operator GreaterThanThreshold</code>)</li>
+<li>à 70% (<code>--threshold 70</code>)</li>
+<li>pendant plus de 2 relevés distants de 60 secondes (`–period 60
+–evaluation-periods 2)</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> cloudwatch put-metric-alarm <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alarm-name</span> upicardie-asdemo-highcpualarm <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--comparison-operator</span> GreaterThanThreshold <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--statistic</span> Average <span class="dt">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--metric-name</span> CPUUtilization <span class="dt">\</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> <span class="st">&quot;AWS/EC2&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--dimensions</span> <span class="st">&quot;Name=AutoScalingGroupName,Value=upicardie-asdemo-asg&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--period</span> 60 <span class="dt">\</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threshold</span> 70 <span class="dt">\</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--evaluation-periods</span> 2 <span class="dt">\</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alarm-actions</span> arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:c7d0ed93-f391-43e4-91a3-e9e977dbb6f3:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="ex">{}</span></span></code></pre></div>
+<p>Pareil avec la mise à l’échelle à la baisse lorsque :</p>
+<ul>
+<li>l’utilisation CPU moyenne
+(<code>--statistic Average --metric-name CPUUtilization</code>)</li>
+<li>du groupe d’autoscaling upicardie-asdemo-asg
+(<code>--namespace "AWS/EC2" --dimensions "Name=AutoScalingGroupName,Value=upicardie-asdemo-asg"</code>)</li>
+<li>est supérieure
+(<code>--comparison-operator LessThanThreshold</code>)</li>
+<li>à 36% (<code>--threshold 36</code>)</li>
+<li>pendant plus de 2 relevés distants de 60 secondes
+(<code>--period 60 --evaluation-periods 2</code>)</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> cloudwatch put-metric-alarm <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alarm-name</span> upicardie-asdemo-lowcpualarm <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--comparison-operator</span> LessThanThreshold <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--statistic</span> Average <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--metric-name</span> CPUUtilization <span class="dt">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> <span class="st">&quot;AWS/EC2&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--dimensions</span> <span class="st">&quot;Name=AutoScalingGroupName,Value=upicardie-asdemo-asg&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--period</span> 60 <span class="dt">\</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threshold</span> 36 <span class="dt">\</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--evaluation-periods</span> 2 <span class="dt">\</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alarm-actions</span> arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:84ece9a9-759f-4230-996d-83c132935b1e:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-down</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="ex">{}</span></span></code></pre></div>
+<p>Nous allons ensuite prendre soin de la QoS de notre service en
+définissant une mise à l’échelle à la hausse lorsque :</p>
+<ul>
+<li>la latence moyenne
+(<code>--statistic Average --metric-name Latency</code>)</li>
+<li>du load-balancer upicardie-asdemo
+(<code>--namespace "AWS/ELB" --dimensions "Name=LoadBalancerName,Value=upicardie-asdemo"</code>)</li>
+<li>est supérieure
+(<code>--comparison-operator LessThanThreshold</code>)</li>
+<li>à 3 secondes (<code>--threshold 3</code>)</li>
+<li>dès le premier relevé
+(<code>--period 60 --evaluation-periods 1</code>)</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> cloudwatch put-metric-alarm <span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alarm-name</span> upicardie-asdemo-highlatencyalarm <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--comparison-operator</span> GreaterThanThreshold <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--statistic</span> Average <span class="dt">\</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--metric-name</span> Latency <span class="dt">\</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--namespace</span> <span class="st">&quot;AWS/ELB&quot;</span> <span class="dt">\</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--dimensions</span> <span class="st">&quot;Name=LoadBalancerName,Value=upicardie-asdemo&quot;</span> <span class="dt">\</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--period</span> 60 <span class="dt">\</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threshold</span> 3 <span class="dt">\</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--evaluation-periods</span> 1 <span class="dt">\</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alarm-actions</span> arn:aws:autoscaling:us-east-1:447005562149:scalingPolicy:c7d0ed93-f391-43e4-91a3-e9e977dbb6f3:autoScalingGroupName/upicardie-asdemo-asg:policyName/upicardie-asdemo-scale-up</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="ex">{}</span></span></code></pre></div>
+<p>Notre autoscaling est dorénavant fonctionnel. Pour lancer le service,
+il suffit de passer le min/max du nombre d’instances du groupe
+d’autoscaling de 0/0 à 2/12 par exemple :</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling update-auto-scaling-group <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--auto-scaling-group-name</span> upicardie-asdemo-asg <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-size</span> 2 <span class="dt">\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--max-size</span> 12</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">{}</span></span></code></pre></div>
+<h2 id="mise-à-léchelle-programmée">Mise à l’échelle programmée</h2>
+<p>Dans certains cas, il est possible de prévoir la charge sur la
+plate-forme et de programmer, à une certaine heure et une certaine
+récurrence la mise à l’échelle de l’autoscaling en jouant sur le min/max
+par exemple. Les deux régles suivantes vont définir un passage à 3
+instances minimum à 22h15 UTC chaque jour (syntaxe cron) :</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> aws autoscaling put-scheduled-update-group-action <span class="dt">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--auto-scaling-group-name</span> upicardie-asdemo-asg <span class="dt">\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scheduled-action-name</span> upicardie-asdemo-preemptive-upscale <span class="dt">\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-size</span> 4 <span class="dt">\</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--max-size</span> 12 <span class="dt">\</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--recurrence</span> <span class="st">&quot;15 22 * * *&quot;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">{}</span></span></code></pre></div>
+<p>suivi d’un retour à 2 instances minimum à 4h00 UTC chaque jour :</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> aws autoscaling put-scheduled-update-group-action <span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--auto-scaling-group-name</span> upicardie-asdemo-asg <span class="dt">\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scheduled-action-name</span> upicardie-asdemo-preemptive-downscale <span class="dt">\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-size</span> 2 <span class="dt">\</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--max-size</span> 12 <span class="dt">\</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--recurrence</span> <span class="st">&quot;0 4 * * *&quot;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ex">{}</span></span></code></pre></div>
+<h2 id="mise-à-jour-de-lautoscaling">Mise à jour de l’autoscaling</h2>
+<p>Les commandes d’autoscaling prévoient la mise à jour du groupe
+d’autoscaling, mais pas de la configuration de lancement de ce même
+groupe. Qu’importe, nous pouvons contourner cette limitation en passant
+une configuration de lancement temporaire. Si nous voulons par exemple
+retirer les security groupes de notre groupe de lancement.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling create-launch-configuration <span class="dt">\</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--launch-configuration-name</span> upicardie-asdemo-lc2 <span class="dt">\</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image-id</span> ami-e7de9b82 <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--instance-type</span> t2.micro <span class="dt">\</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--user-data</span> file://user-data-imageable <span class="dt">\</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--key</span> MyKeyPair</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling update-auto-scaling-group <span class="dt">\</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--auto-scaling-group-name</span> upicardie-asdemo-asg <span class="dt">\</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--launch-configuration-name</span> upicardie-asdemo-lc-2</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="ex">aws</span> autoscaling delete-launch-configuration <span class="dt">\</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--launch-configuration-name</span> upicardie-asdemo-lc</span></code></pre></div>
+<p>Note : cette double déclaration de configurations de lancement peut
+être évitée si on horodate le nom de la configuration plutôt que de le
+garder fixe.</p>
+<h2 id="tester">Tester</h2>
+<h3 id="siege">Siege</h3>
+<p>Siege permet de simuler de la charge sur service web, en maintenant
+ouvert des dizaines voir centaines de connexions pendant une temps
+défini.</p>
+<pre><code>sudo apt-get install siege</code></pre>
+<p>Il suffit de donner à siege le nombre de connexions concurrentes
+(<code>-c</code>), et le temps du test (<code>-t</code>).</p>
+<pre><code>siege -c25 -t10M  upicardie-asdemo-992010360.us-east-1.elb.amazonaws.com</code></pre>
+<h3 id="autre-possibilité-boom">Autre possibilité : boom</h3>
+<p>Un équivalent à Apache Benchmark.</p>
+<pre><code>pip install boom</code></pre>
+<p>Puis</p>
+<pre><code>boom -c 5 -n 100 &quot;http://upicardie-asdemo-992010360.us-east-1.elb.amazonaws.com/resize/magic?url=http://www.google.com/intl/en_ALL/images/logo.gif&amp;size=400x300&quot;</code></pre>
+<p>Une chose à noter est que le monitoring basique de CloudWatch est
+rafraichi toutes les 5 minutes. Nos politiques d’auto-scaling doivent se
+réaliser pendant 3 minutes consécutives. Donc, pour que siege puisse
+déclencher l’auto-scaling, il faut le laisser tourner 6 à 10 minutes.
+Enfin, il faut rafraichir l’onglet CloudWatch dans la console AWS afin
+de vérifier que des serveurs se lancent.</p>
+<figure>
+<img src="img/AutoScaleAnimation.gif" alt="AutoScaling" />
+<figcaption aria-hidden="true">AutoScaling</figcaption>
+</figure>
+<p>Post-scriptum : Pour quasiment la même chose en 1 clic, passez voir
+Elastic Beanstalk :)</p>
+<h2 id="crédits">Crédits</h2>
+<ul>
+<li>Basé sur un atelier Autoscaling de <a
+href="https://twitter.com/@gui">Guillaume Plessis</a>.</li>
+<li>Gif animé autoscaling : <a
+href="https://www.cardinalpath.com/blog/autoscaling-your-website-with-amazon-web-services-part-2"
+class="uri">https://www.cardinalpath.com/blog/autoscaling-your-website-with-amazon-web-services-part-2</a></li>
+</ul>
+<hr />
+<h4 id="licence">Licence</h4>
+<p>Cette œuvre est mise à disposition selon les termes de la Licence <a
+href="https://creativecommons.org/licenses/by/3.0/fr/">Creative Commons
+Attribution 3.0 France</a>.</p>
+<p><a href="https://creativecommons.org/licenses/by/3.0/fr/"><img
+src="https://i.creativecommons.org/l/by/3.0/fr/88x31.png"
+alt="Licence Creative Commons" /></a></p>
 </body>
 </html>

@@ -1,47 +1,79 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-    <meta charset="utf-8">
-    <title>Atelier DevOps</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TP_DevOps</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="css/github.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-
-<script src="downstrap.js"></script>
-<script type="text/javascript">
-var doc = new Downstrap({
-    'theme'      : 'spacelab',
-    'syntaxTheme': 'agate'
-});
-doc.attachToBody('cours/TP_DevOps.md')
-</script>
-
-<a class="home-link" href="index.html">...</a>
-<style>
-a.home-link {
-    position: fixed;
-    top : 40px;
-    left: 4px;
-    width : 32px;
-    height: 32px;
-    z-index : 1;
-    font-size: 40px;
-}
-</style>
-<!-- GA -->
-<script type="text/javascript">
-
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-32527212-2']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
-</script>
-<!-- End GA -->
+<p><a href="index.html">retour</a></p>
+<h1 id="un-projet">Un projet</h1>
+<p>Essayons de mettre en oeuvre les bonnes pratiques tant côté DEV, que
+côté OPS.</p>
+<ol type="1">
+<li>Le DEV</li>
+</ol>
+<ul>
+<li>Environnement de dev</li>
+<li>Versionning</li>
+<li>Tests</li>
+<li>Intégration continue</li>
+<li>…</li>
+</ul>
+<ol start="2" type="1">
+<li>L’OPS</li>
+</ol>
+<ul>
+<li>Comment déployer sur plusieurs machines</li>
+<li>Mises à jour simple du code</li>
+<li>Mises à jour simple de l’infra</li>
+<li>Monitoring, notifications, dashboards</li>
+<li>…</li>
+</ul>
+<h1 id="resources">Resources</h1>
+<h3 id="programmable-infrastructure">Programmable Infrastructure</h3>
+<p><a
+href="https://research.aimultiple.com/programmable-infrastructure/"
+class="uri">https://research.aimultiple.com/programmable-infrastructure/</a></p>
+<p>Une bonne vision d’ensembre</p>
+<h3 id="fabric">Fabric</h3>
+<ul>
+<li><a href="Fabric.html">Introduction à Fabric</a></li>
+<li><a
+href="https://fr.slideshare.net/ffunction/fabric-cuisine-and-watchdog-for-server-administration-in-python">fabric,
+cuisine and watchdog for server administration in python</a></li>
+</ul>
+<h3 id="hubot">Hubot</h3>
+<ul>
+<li><a
+href="https://hubot.github.com/">https://hubot.github.com/</a></li>
+</ul>
+<hr />
+<h4 id="licence">Licence</h4>
+<p>Cette œuvre est mise à disposition selon les termes de la Licence <a
+href="https://creativecommons.org/licenses/by/3.0/fr/">Creative Commons
+Attribution 3.0 France</a>.</p>
+<p><a href="https://creativecommons.org/licenses/by/3.0/fr/"><img
+src="https://i.creativecommons.org/l/by/3.0/fr/88x31.png"
+alt="Licence Creative Commons" /></a></p>
 </body>
 </html>

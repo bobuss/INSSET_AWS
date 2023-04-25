@@ -1,3 +1,5 @@
+[retour](index.html)
+
 # Introduction à Fabric
 
 Fabric est une librairie python ainsi qu'un outil en ligne de commande visant à simplifier l'utilisation de SSH lors du déploiement d'applications ou lors de tâches d'administration système.
@@ -380,9 +382,9 @@ def setup():
 
 ## Resources
 
-- Fabric [http://docs.fabfile.org/en/1.9/](http://docs.fabfile.org/en/1.9/)
-- Pour les rubyistes... [http://capistranorb.com/](http://capistranorb.com/)
-- Fabtools [http://fabtools.readthedocs.org/en/0.17.0/](http://fabtools.readthedocs.org/en/0.17.0/)
+- Fabric [https://docs.fabfile.org/en/1.9/](https://docs.fabfile.org/en/1.9/)
+- Pour les rubyistes... [https://capistranorb.com/](https://capistranorb.com/)
+- Fabtools [https://fabtools.readthedocs.io/en/0.17.0/](https://fabtools.readthedocs.io/en/0.17.0/)
 
 
 
@@ -390,6 +392,6 @@ def setup():
 
 #### Licence
 
-Ce(tte) œuvre est mise à disposition selon les termes de la Licence .[Creative Commons Attribution 3.0 France](http://creativecommons.org/licenses/by/3.0/fr/)
+Cette œuvre est mise à disposition selon les termes de la Licence [Creative Commons Attribution 3.0 France](https://creativecommons.org/licenses/by/3.0/fr/).
 
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](http://creativecommons.org/licenses/by/3.0/fr/)
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](https://creativecommons.org/licenses/by/3.0/fr/)

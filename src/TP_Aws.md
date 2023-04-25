@@ -1,14 +1,16 @@
+[retour](index.html)
+
 La doc en ligne
 ---------------
 
-http://docs.aws.amazon.com/cli/latest/reference/
+<http://docs.aws.amazon.com/cli/latest/reference/>
 
 
 
 Installer AWS CLI
 -----------------
 
-Pour info : https://github.com/aws/aws-cli
+Pour info : <https://github.com/aws/aws-cli>
 
 ```bash
 
@@ -76,7 +78,7 @@ complete -C aws_completer aws
 
 ### Alternative : SAWS (AWS cli on Steroids)
 
-https://github.com/donnemartin/saws
+<https://github.com/donnemartin/saws>
 
 
 On commence par se créer une paire de clés
@@ -128,7 +130,7 @@ Hvc01+KCAJPx8txqvHvqKfNm2aMeok7FVPSB1vbdgnBRnGJiqYQ5GgrxH0Gc3DXTG7A=
 -----END RSA PRIVATE KEY-----
 ```
 
-Pour l'astuce, et éviter les soucis de copier/coller, autant parser le json directement. Avec une commande comme `jq` (https://stedolan.github.io/jq/), cela donne:
+Pour l'astuce, et éviter les soucis de copier/coller, autant parser le json directement. Avec une commande comme `jq` (<https://stedolan.github.io/jq/>), cela donne:
 
 ```bash
 $ aws ec2 create-key-pair --key-name MyKeyPair | jq -r ".KeyMaterial" > my-key-pair.pem
@@ -213,7 +215,7 @@ Comme son nom l'indique, c'est l'image que l'on utilise lors du lancement de l'i
 - et au type de stockage du _root device_.
 
 
-Pour faire son choix en Ubuntu : http://cloud-images.ubuntu.com/locator/ec2/
+Pour faire son choix en Ubuntu : <https://cloud-images.ubuntu.com/locator/ec2/>
 
 Donc, pour une instance t2.micro, le _root device_ est EBS en Hardware Virtual Machine (HVM), on choisit l'image pour la région us-west-1 d'une ubuntu 16.04 (yakkety) : _ami-a4175cc4_.
 
@@ -528,7 +530,7 @@ PORT=80 NODE_ENV=production pm2 start app.js
 
 ```
 
-D'autres examples dans la doc : http://docs.aws.amazon.com/fr_fr/AWSEC2/latest/UserGuide/user-data.html
+D'autres examples dans la doc : <https://docs.aws.amazon.com/fr_fr/AWSEC2/latest/UserGuide/user-data.html>
 
 
 ## Stopper une instance
@@ -693,7 +695,7 @@ La même chose en console WEB (ouf!)
 
 Amazon est un des pioniers du Web. Il aurait été étonnant de ne pas avoir une façon plus visuelle d'utiliser les services d'AWS.
 
-C'est possible à l'addresse : https://aws.amazon.com/console/
+C'est possible à l'addresse : <https://aws.amazon.com/console/>
 
 Mais vous allez devoir vous créer votre login
 
@@ -712,6 +714,6 @@ $ aws iam get-account-password-policy
 
 #### Licence
 
-Ce(tte) œuvre est mise à disposition selon les termes de la Licence .[Creative Commons Attribution 3.0 France](http://creativecommons.org/licenses/by/3.0/fr/)
+Cette œuvre est mise à disposition selon les termes de la Licence [Creative Commons Attribution 3.0 France](https://creativecommons.org/licenses/by/3.0/fr/).
 
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](http://creativecommons.org/licenses/by/3.0/fr/)
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](https://creativecommons.org/licenses/by/3.0/fr/)

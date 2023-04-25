@@ -1,48 +1,768 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-    <meta charset="utf-8">
-    <title>TP Docker</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TP_Docker</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="css/github.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-
-<script src="downstrap.js"></script>
-<script type="text/javascript">
-var doc = new Downstrap({
-    'theme'      : 'spacelab',
-    'syntaxTheme': 'agate'
-});
-doc.attachToBody('cours/TP_Docker.md')
-</script>
-
-<a class="home-link" href="index.html">...</a>
-<style>
-a.home-link {
-    position: fixed;
-    top : 40px;
-    left: 4px;
-    width : 32px;
-    height: 32px;
-    z-index : 1;
-    font-size: 40px;
-}
-
-</style>
-<!-- GA -->
-<script type="text/javascript">
-
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-32527212-2']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
-</script>
-<!-- End GA -->
+<p><a href="index.html">retour</a></p>
+<h1 id="docker">Docker</h1>
+<h2 id="un-survol-de-la-chose">Un survol de la chose</h2>
+<p>L’intéret des containers (et en particulier de Docker) en une
+illustration :</p>
+<figure>
+<img src="img/Docker-technology.png" alt="Docker vs VM" />
+<figcaption aria-hidden="true">Docker vs VM</figcaption>
+</figure>
+<p>De plus Docker a construit tout un écosystème cohérent :</p>
+<ul>
+<li>DockerHub : c’est le github des images Docker. D’ailleurs les
+commandes reprennent un peu la même syntaxe : pull, commit, push en
+particulier.</li>
+<li>Docker-compose (anciennement fig) : pour déclarer facilement
+l’agencement de plusieurs Dockers entre eux</li>
+<li>Docker-machine : provisionning dans le cloud de containers.
+Fonctionne avec AWS, Microsoft Azure, Digital Ocean… ou même VirtualBox
+en local.</li>
+<li>Docker-swarm : solution de clustering pour Docker.</li>
+</ul>
+<p>On peut définir Docker en définissant ses 3 composants essentiels
+:</p>
+<ul>
+<li>les images</li>
+<li>les registries</li>
+<li>les containers</li>
+</ul>
+<h3 id="les-images-docker">Les images Docker</h3>
+<p>Une image Docker est un template de logiciel en lecture seule. Par
+exemple, une image peut contenir une système d’exploitation ubuntu, avec
+Nginx et votre application web installés. Les images servent à créer des
+containers Docker.</p>
+<p>Docker permet de créer de nouvelles images, ou d’en amender des
+images existantes ; ou bien, il est possible de télécharger des images
+que d’autres ont créées depuis les registries.</p>
+<h3 id="les-registries-docker">Les registries Docker</h3>
+<p>Les registries Docker. Il y a des espaces privés ou public sur
+lequels vous pouvez pousser ou récupérer des images. Le registry public
+de Docker est http://hub.docker.com. On y trouve une large collection
+d’images prêtes à l’emploi.</p>
+<h3 id="les-containers-docker">Les containers Docker</h3>
+<p>Les containers Docker “hébergent” une ou plusieurs images Docker. Les
+containers Docker peuvent être démarrés, arrêtés, déplacés, … Chaque
+container est une plateforme isolée et sécurisé.</p>
+<h2 id="installation">Installation</h2>
+<ul>
+<li>Sur un linux, kernel &gt; 3.8 : normalement disponible dans toutes
+les bonnes ditributions récentes du marché</li>
+<li>Sous mac ou Windows, depuis cette année, il y a aussi une version
+native : https://www.docker.com/</li>
+</ul>
+<h2 id="alors-ces-images">Alors, ces images</h2>
+<p>On peut commencer par chercher dans le registry :</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker search ubuntu</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>                           DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ubuntu</span>                         Ubuntu is a Debian-based Linux operating s...   2362      <span class="pp">[</span><span class="ss">OK</span><span class="pp">]</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ubuntu-upstart</span>                 Upstart is an event-based replacement for ...   35        <span class="pp">[</span><span class="ss">OK</span><span class="pp">]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">torusware/speedus-ubuntu</span>       Always updated official Ubuntu docker imag...   25                   <span class="pp">[</span><span class="ss">OK</span><span class="pp">]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">tleyden5iwx/ubuntu-cuda</span>        Ubuntu 14.04 with CUDA drivers pre-installed    18                   <span class="pp">[</span><span class="ss">OK</span><span class="pp">]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
+<p>À noter le statut officiel de certaines images. Les noms avec un /
+viennent d’un utilisateur de dockerHub (nommenclature login/repository
+comme sur github).</p>
+<p>On récupère l’image, via un <code>pull</code>.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker pull ubuntu</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> default tag: latest</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">latest:</span> Pulling from library/ubuntu</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">d3a1f33e8a5a:</span>  Downloading [========================================<span class="op">&gt;</span>          ] 53.51 MB/65.79 MB</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">c22013c84729:</span> Download complete</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">d74508fb6632:</span> Download complete</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">91e54dfb1179:</span> Download complete</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
+<p>On peut à présent lister les images que l’on a localement :</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker images</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">REPOSITORY</span>                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ubuntu</span>                     latest              91e54dfb1179        6 weeks ago         188.4 MB</span></code></pre></div>
+<p>Première commande indispensable :</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run ubuntu:latest /bin/echo <span class="st">&#39;Hello World!&#39;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span> World!</span></code></pre></div>
+<p>Wow ! Une fois le conteneur instancié, Docker a exécuté la commande
+<code>/bin/echo 'Hello World!'</code> à l’intérieur de celui-ci et nous
+a retourné le résultat : Hello World! Ensuite, le container s’est
+terminé.</p>
+<p>D’ailleurs, on peut le retrouvé via la commande <code>ps</code>:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker ps <span class="at">-a</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">CONTAINER</span> ID        IMAGE                      COMMAND                  CREATED              STATUS                          PORTS                      NAMES</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">b104d0657323</span>        ubuntu:latest              <span class="st">&quot;/bin/echo &#39;Hello Wor&quot;</span>   41 seconds ago       Exited <span class="er">(</span><span class="ex">0</span><span class="kw">)</span> <span class="ex">40</span> seconds ago                                  compassionate_yalow</span></code></pre></div>
+<p>Il est possible de se connecter en lancant une session interactive
+<code>-i</code> dans un terminal <code>-t</code> et en y executant bash
+:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-t</span> <span class="at">-i</span> ubuntu:latest /bin/bash</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">root@5aff723e8730:/#</span></span></code></pre></div>
+<p>Il est également possible de lancer un container en mode daemon
+<code>-d</code> :</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-d</span> ubuntu:latest /bin/bash <span class="at">-c</span> <span class="st">&quot;while true; do echo Hello; sleep 1; done&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">8787bcb7fde348d039dc487c1bdda294d1c636de2df645362267dba7d7e6af3e</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker ps</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">CONTAINER</span> ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">8787bcb7fde3</span>        ubuntu:latest       <span class="st">&quot;/bin/bash -c &#39;while &quot;</span>   4 seconds ago       Up 3 seconds                            cranky_swartz</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker logs cranky_swartz</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker stop cranky_swartz</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="ex">cranky_swartz</span></span></code></pre></div>
+<h2
+id="quelques-commandes-supplémentaires-pour-manipuler-les-containers">Quelques
+commandes supplémentaires pour manipuler les containers</h2>
+<p>On peut relancer un container précédemment arrêté :</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker start cranky_swartz</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cranky_swartz</span></span></code></pre></div>
+<p>La fonction <code>pause</code> / <code>unpause</code>:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker pause cranky_swartz</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cranky_swartz</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker unpause cranky_swartz</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">cranky_swartz</span></span></code></pre></div>
+<p>Enfin, on peut se connecter à un container actuellement lancé via
+:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker attach cranky_swartz</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[CTRL-C]</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">root@82a7a75b7d25:/#</span></span></code></pre></div>
+<p>Pourquoi le <code>CTRL-C</code> ? en fait, le attach ne peut utiliser
+qu’une seule instance de shell, donc on doit killer le shell existant
+pour y accéder.</p>
+<p>À noter que si on quitte en faisant <code>exit</code>, on stop le
+container. Pas très pratique.</p>
+<p>Au final comment se connecte-t-on à notre container sans le stopper à
+la sortie ?</p>
+<ul>
+<li>soit on lance le <em>attach</em> avec l’option –no-sig=true</li>
+<li>soit on sort avec <code>CTRL-P CTRL-Q</code></li>
+<li>soit on lance un deuxième bash via</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker exec <span class="at">-it</span> cranky_swartz /bin/bash</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">root@82a7a75b7d25:/#</span></span></code></pre></div>
+<p>Méthode winner / (depuis docker &gt;= 1.3). cf
+https://askubuntu.com/questions/505506/how-to-get-bash-or-ssh-into-a-running-container-in-background-mode</p>
+<p>voilà, fin de la première partie.</p>
+<h2 id="publication-sur-dockerhub">Publication sur DockerHub</h2>
+<p>Lorsque l’on fait des modification dans un container, on peut
+comparer à l’image d’origine</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker diff cranky_swartz</span></code></pre></div>
+<p>On peut alors commiter, et tagger :</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker commit ....</span></code></pre></div>
+<p>Enfin, pour publier sur DockerHub, on se connecte (avec un compte
+préalablement créé bien sûr)</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker login</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Username:</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Passwords:</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Email:</span></span></code></pre></div>
+<p>On peut alors pousser sur le Hub :</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker push bobuss/mySublimeImage</span></code></pre></div>
+<h2 id="le-dockerfile">Le Dockerfile</h2>
+<p>La vrai façon de spécifier une image docker consiste à la décrire
+dans un fichier Dockerfile. Il y a toute une syntaxe pour cela.</p>
+<p>On va commencer par une image toute simple, qui embarque un programme
+node.js qui répond un hello world basique.</p>
+<h3 id="le-fichier-index.js">Le fichier index.js</h3>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> express <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;express&#39;</span>)<span class="op">;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/&#39;</span><span class="op">,</span> <span class="kw">function</span> (req<span class="op">,</span> res) {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">send</span>(<span class="st">&#39;Hello from Docker !!&#39;</span>)<span class="op">;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> server <span class="op">=</span> app<span class="op">.</span><span class="fu">listen</span>(<span class="dv">8080</span><span class="op">,</span> <span class="kw">function</span> () {</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> host <span class="op">=</span> server<span class="op">.</span><span class="fu">address</span>()<span class="op">.</span><span class="at">address</span><span class="op">;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> port <span class="op">=</span> server<span class="op">.</span><span class="fu">address</span>()<span class="op">.</span><span class="at">port</span><span class="op">;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Example app listening at http://%s:%s&#39;</span><span class="op">,</span> host<span class="op">,</span> port)<span class="op">;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<h3 id="les-dépendances-javascript-dans-un-package.json">Les dépendances
+javascript dans un package.json</h3>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;dockerapp&quot;</span><span class="fu">,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;dependencies&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;express&quot;</span><span class="fu">:</span> <span class="st">&quot;^4.13.3&quot;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="le-dockerfile-1">Le Dockerfile</h3>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># depuis l&#39;image officielle ubuntu</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ubuntu</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ca c&#39;est moi</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="kw">MAINTAINER</span> bobuss</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># on execute des commandes dans le container</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">apt-get</span> <span class="at">-y</span> install curl <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">apt-get</span> <span class="at">-y</span> install sudo <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">curl</span> <span class="at">-sL</span> https://deb.nodesource.com/setup_6.x <span class="kw">|</span> <span class="fu">sudo</span> bash <span class="at">-</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">apt-get</span> <span class="at">-y</span> install python build-essential nodejs</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># on ajoute le contenu du répertoire courant dans le container</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># dans /src</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ADD</span> . /src</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># on s&#39;y deplace, et on lance le npm install</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="bu">cd</span> /src <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> install</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="co"># on ouvre le port 8080</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span>  8080</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co"># et on lance la commande node /src/index.js</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;node&quot;</span>, <span class="st">&quot;/src/index.js&quot;</span>]</span></code></pre></div>
+<p>On construit l’image. On donne un tag avec l’option <code>-t</code>.
+À Noter la nommenclature <code>username/projet</code> à la github, qui
+est repris par DockerHub.</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker build <span class="at">-t</span> bobuss/node .</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Sending</span> build context to Docker daemon 3.584 kB</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 0 : FROM ubuntu</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> 91e54dfb1179</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 1 : MAINTAINER bobuss</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Successfully</span> built 04efea301f68</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker images</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="ex">REPOSITORY</span>                 TAG                 IMAGE ID            CREATED             VIRTUAL SIZE</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="ex">bobuss/node</span>                   latest              04efea301f68        25 seconds ago      387.6 MB</span></code></pre></div>
+<p>Et on lance maintenant notre container node.</p>
+<p>Attention au port ! Le programme node expose le port 8080 dans le
+container. Il faut binder ce port sur un port de la machine locale via
+l’option <code>-p</code>.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-d</span> <span class="at">-p</span> 8080:8080 bobuss/node</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">081552fa8c0439860aacc658b5c6c05ba6d5c9d92f50e9b6b4d5316eb549da2e</span></span></code></pre></div>
+<p>On devrait voir un joli “Hello from Docker” en pointant sur
+http://localhost:8080</p>
+<h2 id="lier-plusieurs-containers">Lier plusieurs containers</h2>
+<p>On va reprendre notre exemple précédent, en ajoutant un container
+redis ce qui nous permettra de compter les visites, par exemple.</p>
+<p>Nous allons également un peu organiser notre répertoire de travail
+comme suit :</p>
+<pre><code>monAppDocker
+├── .dockerignore
+├── Dockerfile
+└── src
+    ├── index.js
+    └── package.json</code></pre>
+<h3 id="dockerignore">.dockerignore</h3>
+<pre><code>src/node_modules</code></pre>
+<h3 id="srcindex.js">src/index.js</h3>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> express <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;express&#39;</span>)<span class="op">;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> app <span class="op">=</span> <span class="fu">express</span>()<span class="op">;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> redis <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;redis&#39;</span>)<span class="op">;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> client <span class="op">=</span> redis<span class="op">.</span><span class="fu">createClient</span>(<span class="st">&#39;6379&#39;</span><span class="op">,</span> <span class="st">&#39;redis&#39;</span>)<span class="op">;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/&#39;</span><span class="op">,</span> <span class="kw">function</span> (req<span class="op">,</span> res) {</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  client<span class="op">.</span><span class="fu">incr</span>(<span class="st">&#39;counter&#39;</span><span class="op">,</span> <span class="kw">function</span>(err<span class="op">,</span> counter) {</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(err) <span class="cf">return</span> <span class="fu">next</span>(err)<span class="op">;</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">send</span>(<span class="st">&#39;This page has been viewed &#39;</span> <span class="op">+</span> counter <span class="op">+</span> <span class="st">&#39; times!&#39;</span>)<span class="op">;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> server <span class="op">=</span> app<span class="op">.</span><span class="fu">listen</span>(<span class="dv">8080</span><span class="op">,</span> <span class="kw">function</span> () {</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> host <span class="op">=</span> server<span class="op">.</span><span class="fu">address</span>()<span class="op">.</span><span class="at">address</span><span class="op">;</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> port <span class="op">=</span> server<span class="op">.</span><span class="fu">address</span>()<span class="op">.</span><span class="at">port</span><span class="op">;</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Example app listening at http://%s:%s&#39;</span><span class="op">,</span> host<span class="op">,</span> port)<span class="op">;</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<h3 id="srcpackage.json">src/package.json</h3>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;dockerapp&quot;</span><span class="fu">,</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;dependencies&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;express&quot;</span><span class="fu">:</span> <span class="st">&quot;^4.13.3&quot;</span><span class="fu">,</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;redis&quot;</span><span class="fu">:</span> <span class="st">&quot;^2.1.0&quot;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="dockerfile">Dockerfile</h3>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ubuntu</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">MAINTAINER</span> bobuss</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">apt-get</span> <span class="at">-y</span> install curl <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">apt-get</span> <span class="at">-y</span> install sudo <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">curl</span> <span class="at">-sL</span> https://deb.nodesource.com/setup_6.x <span class="kw">|</span> <span class="fu">sudo</span> bash <span class="at">-</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">apt-get</span> <span class="at">-y</span> install python build-essential nodejs</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ADD</span> src /src</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="bu">cd</span> /src <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> install</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span>  8080</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;node&quot;</span>, <span class="st">&quot;/src/index.js&quot;</span>]</span></code></pre></div>
+<p>On re-build</p>
+<pre><code>$ docker build -t bobuss/node .
+...</code></pre>
+<p>Pour lancer notre programme, dans un autre terminal, on lance un
+container redis :</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run redis</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">1:C</span> 06 Oct 21:39:56.778 <span class="co"># Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                <span class="ex">_._</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>           <span class="ex">_.-</span><span class="kw">``</span>__ <span class="st">&#39;&#39;</span>-._</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>      <span class="ex">_.-</span><span class="kw">``</span>    <span class="kw">`</span><span class="bu">.</span>  <span class="kw">`</span>_.  <span class="st">&#39;&#39;</span>-._           Redis 3.0.3 <span class="er">(</span><span class="ex">00000000/0</span><span class="kw">)</span> <span class="ex">64</span> bit</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">.-</span><span class="kw">``</span> .-<span class="kw">```</span><span class="bu">.</span>  <span class="kw">```</span><span class="dt">\/</span>    _.,_ <span class="st">&#39;&#39;</span>-._</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">(</span>    <span class="st">&#39;      ,       .-`  | `,    )     Running in standalone mode</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="st"> |`-._`-...-` __...-.``-._|&#39;</span><span class="kw">`</span> <span class="ex">_.-</span><span class="st">&#39;|     Port: 6379</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="st"> |    `-._   `._    /     _.-&#39;</span>    <span class="kw">|</span>     <span class="ex">PID:</span> 1</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">`</span><span class="at">-._</span>    <span class="kw">`</span><span class="ex">-._</span>  <span class="kw">`</span><span class="at">-.</span>/  _.-<span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a> <span class="kw">|`</span><span class="ex">-._</span><span class="kw">`</span><span class="at">-._</span>    <span class="kw">`</span><span class="ex">-.__.-</span><span class="st">&#39;    _.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;|</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="st"> |    `-._`-._        _.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;    |           http://redis.io</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="st">  `-._    `-._`-.__.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a> <span class="kw">|`</span><span class="at">-._</span><span class="kw">`</span><span class="ex">-._</span>    <span class="kw">`</span><span class="at">-.__.-</span><span class="st">&#39;    _.-&#39;</span><span class="at">_.-</span><span class="st">&#39;|</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="st"> |    `-._`-._        _.-&#39;</span><span class="at">_.-</span><span class="st">&#39;    |</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="st">  `-._    `-._`-.__.-&#39;</span><span class="at">_.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>      <span class="kw">`</span><span class="ex">-._</span>    <span class="kw">`</span><span class="at">-.__.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>          <span class="kw">`</span><span class="ex">-._</span>        _.-<span class="st">&#39;</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="st">              `-.__.-&#39;</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="ex">1:M</span> 06 Oct 21:39:56.779 <span class="co"># Server started, Redis version 3.0.3</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="ex">1:M</span> 06 Oct 21:39:56.779 <span class="co"># </span><span class="al">WARNING</span><span class="co"> overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf and then reboot or run the command &#39;sysctl vm.overcommit_memory=1&#39; for this to take effect.</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="ex">1:M</span> 06 Oct 21:39:56.779 <span class="co"># </span><span class="al">WARNING</span><span class="co"> you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="ex">1:M</span> 06 Oct 21:39:56.779 <span class="co"># </span><span class="al">WARNING</span><span class="co">: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="ex">1:M</span> 06 Oct 21:39:56.779 <span class="pp">*</span> The server is now ready to accept connections on port 6379</span></code></pre></div>
+<p>Puis on lance notre container avec l’image bobuss/node, en liant le
+container redis. C’est l’option <em>link</em> de la commande run. Cette
+option donne au container qui se lance les information sur un autre
+container. Dans notre exemple, le /etc/hosts du container contiendra une
+entrée <em>redis</em> qui pointera sur le host du container redis.</p>
+<p>Pour info, l’information est également disponible via variables
+d’environnement, pour ceux qui préfèrent.</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker ps</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">CONTAINER</span> ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="ex">180b25098d1d</span>        redis               <span class="st">&quot;/entrypoint.sh redis&quot;</span>   3 seconds ago       Up 3 seconds        6379/tcp            determined_raman</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-d</span> <span class="at">-p</span> 8080:8080 <span class="at">--link</span> determined_raman:redis bobuss/node</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="ex">8cc016d648625e402fef571fc28091a9b12ce15e3aba60528499e5d00e809a60</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker ps</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="ex">CONTAINER</span> ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="ex">8cc016d64862</span>        bobuss/node         <span class="st">&quot;node /src/index.js&quot;</span>     4 seconds ago       Up 3 seconds        0.0.0.0:8080-<span class="op">&gt;</span>8080/tcp   elated_yonath</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="ex">180b25098d1d</span>        redis               <span class="st">&quot;/entrypoint.sh redis&quot;</span>   56 seconds ago      Up 56 seconds       6379/tcp                 determined_raman</span></code></pre></div>
+<p>On peut aller voir notre oeuvre sur http://localhost:8080</p>
+<h2 id="docker-compose">docker-compose</h2>
+<p>Docker-Compose (anciennement fig) permet de spécifier comment lancer
+plusieurs containers en même temps, et de gérer les <code>link</code>
+entre eux.</p>
+<p>Une fois installé, on écrit un fichier
+<code>docker-compose.yml</code> à la racine de notre projet.</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">web</span><span class="kw">:</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">build</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;8080:8080&quot;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> ./src:/src</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> /src/node_modules</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">links</span><span class="kw">:</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="kw">-</span><span class="at"> redis</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">redis</span><span class="kw">:</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> redis</span></span></code></pre></div>
+<p>Puis</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker-compose up</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Warning:</span> the mapping <span class="st">&quot;src:/src&quot;</span> in the volumes config for service <span class="st">&quot;web&quot;</span> is ambiguous. In a future version of Docker, it will designate a <span class="st">&quot;named&quot;</span> volume <span class="er">(</span><span class="ex">see</span> https://github.com/docker/docker/pull/14242<span class="kw">)</span><span class="bu">.</span> To prevent unexpected behaviour, change it to <span class="st">&quot;./src:/src&quot;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Creating</span> dockerapp_redis_1...</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Building</span> web...</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 0 : FROM ubuntu</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> 91e54dfb1179</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 1 : MAINTAINER bobuss</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> Using cache</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> 9820e5132a05</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 2 : RUN apt-get update <span class="kw">&amp;&amp;</span>     <span class="ex">apt-get</span> <span class="at">-y</span> install curl <span class="kw">&amp;&amp;</span>     <span class="ex">curl</span> <span class="at">-sL</span> https://deb.nodesource.com/setup <span class="kw">|</span> <span class="fu">sudo</span> bash <span class="at">-</span> <span class="kw">&amp;&amp;</span>     <span class="ex">apt-get</span> <span class="at">-y</span> install python build-essential nodejs</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> Using cache</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> 3a9d1b18bd97</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 3 : ADD src /src</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> 981a2824eda0</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Removing</span> intermediate container 2eb8518b0f9a</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 4 : RUN cd /src <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> install</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> Running in 1683e1689dc4</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> WARN package.json dockerapp@ No description</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> WARN package.json dockerapp@ No repository field.</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> WARN package.json dockerapp@ No README data</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a><span class="ex">redis@2.1.0</span> node_modules/redis</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a><span class="ex">express@4.13.3</span> node_modules/express</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> escape-html@1.0.2</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> merge-descriptors@1.0.0</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> array-flatten@1.1.1</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> cookie@0.1.3</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> utils-merge@1.0.0</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> cookie-signature@1.0.6</span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> methods@1.1.1</span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> fresh@0.3.0</span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> range-parser@1.0.2</span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> vary@1.0.1</span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> path-to-regexp@0.1.7</span>
+<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> etag@1.7.0</span>
+<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> content-type@1.0.1</span>
+<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> parseurl@1.3.0</span>
+<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> content-disposition@0.5.0</span>
+<span id="cb30-39"><a href="#cb30-39" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> serve-static@1.10.0</span>
+<span id="cb30-40"><a href="#cb30-40" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> depd@1.0.1</span>
+<span id="cb30-41"><a href="#cb30-41" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> qs@4.0.0</span>
+<span id="cb30-42"><a href="#cb30-42" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> finalhandler@0.4.0 <span class="er">(</span><span class="ex">unpipe@1.0.0</span><span class="kw">)</span></span>
+<span id="cb30-43"><a href="#cb30-43" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> proxy-addr@1.0.8 <span class="er">(</span><span class="ex">forwarded@0.1.0,</span> ipaddr.js@1.0.1<span class="kw">)</span></span>
+<span id="cb30-44"><a href="#cb30-44" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> on-finished@2.3.0 <span class="er">(</span><span class="ex">ee-first@1.1.1</span><span class="kw">)</span></span>
+<span id="cb30-45"><a href="#cb30-45" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> debug@2.2.0 <span class="er">(</span><span class="ex">ms@0.7.1</span><span class="kw">)</span></span>
+<span id="cb30-46"><a href="#cb30-46" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> send@0.13.0 <span class="er">(</span><span class="ex">destroy@1.0.3,</span> statuses@1.2.1, ms@0.7.1, mime@1.3.4, http-errors@1.3.1<span class="kw">)</span></span>
+<span id="cb30-47"><a href="#cb30-47" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> accepts@1.2.13 <span class="er">(</span><span class="ex">negotiator@0.5.3,</span> mime-types@2.1.7<span class="kw">)</span></span>
+<span id="cb30-48"><a href="#cb30-48" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> type-is@1.6.9 <span class="er">(</span><span class="ex">media-typer@0.3.0,</span> mime-types@2.1.7<span class="kw">)</span></span>
+<span id="cb30-49"><a href="#cb30-49" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> 6cb839ba2a27</span>
+<span id="cb30-50"><a href="#cb30-50" aria-hidden="true" tabindex="-1"></a><span class="ex">Removing</span> intermediate container 1683e1689dc4</span>
+<span id="cb30-51"><a href="#cb30-51" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 5 : EXPOSE 8080</span>
+<span id="cb30-52"><a href="#cb30-52" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> Running in 6697ae23540a</span>
+<span id="cb30-53"><a href="#cb30-53" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> eb3e96f0a207</span>
+<span id="cb30-54"><a href="#cb30-54" aria-hidden="true" tabindex="-1"></a><span class="ex">Removing</span> intermediate container 6697ae23540a</span>
+<span id="cb30-55"><a href="#cb30-55" aria-hidden="true" tabindex="-1"></a><span class="ex">Step</span> 6 : CMD node /src/index.js</span>
+<span id="cb30-56"><a href="#cb30-56" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> Running in a7d71607421f</span>
+<span id="cb30-57"><a href="#cb30-57" aria-hidden="true" tabindex="-1"></a> <span class="ex">---</span><span class="op">&gt;</span> f2679c36d047</span>
+<span id="cb30-58"><a href="#cb30-58" aria-hidden="true" tabindex="-1"></a><span class="ex">Removing</span> intermediate container a7d71607421f</span>
+<span id="cb30-59"><a href="#cb30-59" aria-hidden="true" tabindex="-1"></a><span class="ex">Successfully</span> built f2679c36d047</span>
+<span id="cb30-60"><a href="#cb30-60" aria-hidden="true" tabindex="-1"></a><span class="ex">Creating</span> dockerapp_web_1...</span>
+<span id="cb30-61"><a href="#cb30-61" aria-hidden="true" tabindex="-1"></a><span class="ex">Attaching</span> to dockerapp_redis_1, dockerapp_web_1</span>
+<span id="cb30-62"><a href="#cb30-62" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span> <span class="ex">1:C</span> 06 Oct 21:18:31.659 <span class="co"># Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf</span></span>
+<span id="cb30-63"><a href="#cb30-63" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>                 <span class="ex">_._</span></span>
+<span id="cb30-64"><a href="#cb30-64" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>            <span class="ex">_.-</span><span class="kw">``</span>__ <span class="st">&#39;&#39;</span>-._</span>
+<span id="cb30-65"><a href="#cb30-65" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>       <span class="ex">_.-</span><span class="kw">``</span>    <span class="kw">`</span><span class="bu">.</span>  <span class="kw">`</span>_.  <span class="st">&#39;&#39;</span>-._           Redis 3.0.3 <span class="er">(</span><span class="ex">00000000/0</span><span class="kw">)</span> <span class="ex">64</span> bit</span>
+<span id="cb30-66"><a href="#cb30-66" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>   <span class="ex">.-</span><span class="kw">``</span> .-<span class="kw">```</span><span class="bu">.</span>  <span class="kw">```</span><span class="dt">\/</span>    _.,_ <span class="st">&#39;&#39;</span>-._</span>
+<span id="cb30-67"><a href="#cb30-67" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>  <span class="kw">(</span>    <span class="st">&#39;      ,       .-`  | `,    )     Running in standalone mode</span></span>
+<span id="cb30-68"><a href="#cb30-68" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1 |  |`-._`-...-` __...-.``-._|&#39;</span><span class="kw">`</span> <span class="ex">_.-</span><span class="st">&#39;|     Port: 6379</span></span>
+<span id="cb30-69"><a href="#cb30-69" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1 |  |    `-._   `._    /     _.-&#39;</span>    <span class="kw">|</span>     <span class="ex">PID:</span> 1</span>
+<span id="cb30-70"><a href="#cb30-70" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>   <span class="kw">`</span><span class="at">-._</span>    <span class="kw">`</span><span class="ex">-._</span>  <span class="kw">`</span><span class="at">-.</span>/  _.-<span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb30-71"><a href="#cb30-71" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>  <span class="kw">|`</span><span class="ex">-._</span><span class="kw">`</span><span class="at">-._</span>    <span class="kw">`</span><span class="ex">-.__.-</span><span class="st">&#39;    _.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;|</span></span>
+<span id="cb30-72"><a href="#cb30-72" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1 |  |    `-._`-._        _.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;    |           http://redis.io</span></span>
+<span id="cb30-73"><a href="#cb30-73" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1 |   `-._    `-._`-.__.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb30-74"><a href="#cb30-74" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>  <span class="kw">|`</span><span class="at">-._</span><span class="kw">`</span><span class="ex">-._</span>    <span class="kw">`</span><span class="at">-.__.-</span><span class="st">&#39;    _.-&#39;</span><span class="at">_.-</span><span class="st">&#39;|</span></span>
+<span id="cb30-75"><a href="#cb30-75" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1 |  |    `-._`-._        _.-&#39;</span><span class="at">_.-</span><span class="st">&#39;    |</span></span>
+<span id="cb30-76"><a href="#cb30-76" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1 |   `-._    `-._`-.__.-&#39;</span><span class="at">_.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb30-77"><a href="#cb30-77" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>       <span class="kw">`</span><span class="ex">-._</span>    <span class="kw">`</span><span class="at">-.__.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb30-78"><a href="#cb30-78" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span>           <span class="kw">`</span><span class="ex">-._</span>        _.-<span class="st">&#39;</span></span>
+<span id="cb30-79"><a href="#cb30-79" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1 |               `-.__.-&#39;</span></span>
+<span id="cb30-80"><a href="#cb30-80" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span></span>
+<span id="cb30-81"><a href="#cb30-81" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span> <span class="ex">1:M</span> 06 Oct 21:18:31.661 <span class="co"># Server started, Redis version 3.0.3</span></span>
+<span id="cb30-82"><a href="#cb30-82" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span> <span class="ex">1:M</span> 06 Oct 21:18:31.661 <span class="co"># </span><span class="al">WARNING</span><span class="co"> overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf and then reboot or run the command &#39;sysctl vm.overcommit_memory=1&#39; for this to take effect.</span></span>
+<span id="cb30-83"><a href="#cb30-83" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span> <span class="ex">1:M</span> 06 Oct 21:18:31.661 <span class="co"># </span><span class="al">WARNING</span><span class="co"> you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span></span>
+<span id="cb30-84"><a href="#cb30-84" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span> <span class="ex">1:M</span> 06 Oct 21:18:31.661 <span class="co"># </span><span class="al">WARNING</span><span class="co">: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span></span>
+<span id="cb30-85"><a href="#cb30-85" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span> <span class="kw">|</span> <span class="ex">1:M</span> 06 Oct 21:18:31.661 <span class="pp">*</span> The server is now ready to accept connections on port 6379</span>
+<span id="cb30-86"><a href="#cb30-86" aria-hidden="true" tabindex="-1"></a><span class="ex">web_1</span>   <span class="kw">|</span> <span class="ex">Example</span> app listening at http://0.0.0.0:8080</span>
+<span id="cb30-87"><a href="#cb30-87" aria-hidden="true" tabindex="-1"></a><span class="ex">^CGracefully</span> stopping... <span class="er">(</span><span class="ex">press</span> Ctrl+C again to force<span class="kw">)</span></span>
+<span id="cb30-88"><a href="#cb30-88" aria-hidden="true" tabindex="-1"></a><span class="ex">Stopping</span> dockerapp_web_1... done</span>
+<span id="cb30-89"><a href="#cb30-89" aria-hidden="true" tabindex="-1"></a><span class="ex">Stopping</span> dockerapp_redis_1... done</span></code></pre></div>
+<h2 id="les-données-dans-docker">Les données dans docker</h2>
+<p>Pour l’instant, à chaque fois que l’on lance
+<code>docker-compose up</code>, notre stack repart de 0. Ce qui n’est
+pas très pratique. Une facon de traiter de données persistentes avec
+docker, consiste à utiliser les volumes.</p>
+<p>Concernant redis, il faut tout d’abord activer la persistence. Le
+service doit être lancé avec l’option <code>--appendonly yes</code>.</p>
+<p>En ligne de commande cela donnerait</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run redis redis-server <span class="at">--appendonly</span> yes</span></code></pre></div>
+<p>De plus, on peut spécifier vers quel stockage on lie un volume du
+container. Pour le service redis, quand la persistence est activée, les
+données sont écrites dans le répertoire <code>/data</code>. On se crée
+donc un repertoire <code>data</code>dans notre projet.</p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> data</span></code></pre></div>
+<p>Ce qui donne comme structure :</p>
+<pre><code>monAppDocker
+├── .dockerignore
+├── Dockerfile
+├── data
+└── src
+    ├── index.js
+    └── package.json</code></pre>
+<p>On peut maintenant lancer un service redis qui gardera les
+modifications.</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-v</span> data:/data redis redis-server <span class="at">--appendonly</span> yes</span></code></pre></div>
+<p>Je vous laisse vous convaincre que cela fonctionne en relançant
+l’application dans un autre terminal…</p>
+<p>Et si on applique toutes ces modifications dans le
+<code>docker-compose.yml</code>, cela nous donne :</p>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">web</span><span class="kw">:</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">build</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;8080:8080&quot;</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ./src:/src</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> /src/node_modules</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">links</span><span class="kw">:</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> redis</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fu">redis</span><span class="kw">:</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> redis</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">command</span><span class="kw">:</span><span class="at"> redis-server --appendonly yes</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ./data:/data</span></span></code></pre></div>
+<p>On relance le tout …</p>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting</span> project_redis_1</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting</span> project_web_1</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Attaching</span> to project_redis_1, project_web_1</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>                 <span class="ex">_._</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>            <span class="ex">_.-</span><span class="kw">``</span>__ <span class="st">&#39;&#39;</span>-._</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>       <span class="ex">_.-</span><span class="kw">``</span>    <span class="kw">`</span><span class="bu">.</span>  <span class="kw">`</span>_.  <span class="st">&#39;&#39;</span>-._           Redis 3.2.1 <span class="er">(</span><span class="ex">00000000/0</span><span class="kw">)</span> <span class="ex">64</span> bit</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>   <span class="ex">.-</span><span class="kw">``</span> .-<span class="kw">```</span><span class="bu">.</span>  <span class="kw">```</span><span class="dt">\/</span>    _.,_ <span class="st">&#39;&#39;</span>-._</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>  <span class="kw">(</span>    <span class="st">&#39;      ,       .-`  | `,    )     Running in standalone mode</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1  |  |`-._`-...-` __...-.``-._|&#39;</span><span class="kw">`</span> <span class="ex">_.-</span><span class="st">&#39;|     Port: 6379</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1  |  |    `-._   `._    /     _.-&#39;</span>    <span class="kw">|</span>     <span class="ex">PID:</span> 1</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>   <span class="kw">`</span><span class="at">-._</span>    <span class="kw">`</span><span class="ex">-._</span>  <span class="kw">`</span><span class="at">-.</span>/  _.-<span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>  <span class="kw">|`</span><span class="ex">-._</span><span class="kw">`</span><span class="at">-._</span>    <span class="kw">`</span><span class="ex">-.__.-</span><span class="st">&#39;    _.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;|</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1  |  |    `-._`-._        _.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;    |           http://redis.io</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1  |   `-._    `-._`-.__.-&#39;</span><span class="ex">_.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>  <span class="kw">|`</span><span class="at">-._</span><span class="kw">`</span><span class="ex">-._</span>    <span class="kw">`</span><span class="at">-.__.-</span><span class="st">&#39;    _.-&#39;</span><span class="at">_.-</span><span class="st">&#39;|</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1  |  |    `-._`-._        _.-&#39;</span><span class="at">_.-</span><span class="st">&#39;    |</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1  |   `-._    `-._`-.__.-&#39;</span><span class="at">_.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>       <span class="kw">`</span><span class="ex">-._</span>    <span class="kw">`</span><span class="at">-.__.-</span><span class="st">&#39;    _.-&#39;</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span>           <span class="kw">`</span><span class="ex">-._</span>        _.-<span class="st">&#39;</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="st">redis_1  |               `-.__.-&#39;</span></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span> <span class="ex">1:M</span> 14 Nov 18:31:57.351 <span class="co"># </span><span class="al">WARNING</span><span class="co">: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span> <span class="ex">1:M</span> 14 Nov 18:31:57.352 <span class="co"># Server started, Redis version 3.2.1</span></span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span> <span class="ex">1:M</span> 14 Nov 18:31:57.352 <span class="co"># </span><span class="al">WARNING</span><span class="co"> overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf and then reboot or run the command &#39;sysctl vm.overcommit_memory=1&#39; for this to take effect.</span></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span> <span class="ex">1:M</span> 14 Nov 18:31:57.353 <span class="co"># </span><span class="al">WARNING</span><span class="co"> you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span></span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span> <span class="ex">1:M</span> 14 Nov 18:31:57.358 <span class="pp">*</span> DB loaded from append only file: 0.005 seconds</span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="ex">redis_1</span>  <span class="kw">|</span> <span class="ex">1:M</span> 14 Nov 18:31:57.358 <span class="pp">*</span> The server is now ready to accept connections on port 6379</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a><span class="ex">web_1</span>    <span class="kw">|</span> <span class="ex">Example</span> app listening at http://:::8080</span></code></pre></div>
+<p>On va sur http://localhost:8080 pour faire monter le compteur. Et que
+voit-on dans le répertoire <code>data</code> ?</p>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-f</span> data/appendonly.aof</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">2</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="va">$6</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="ex">SELECT</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="va">$1</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="ex">*3</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="va">$3</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="va">$2</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="ex">un</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="va">$4</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="ex">duex</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="ex">*2</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="va">$6</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="ex">SELECT</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="va">$1</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="ex">*2</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="va">$4</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="ex">incr</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="va">$7</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="ex">counter</span></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="ex">*2</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="va">$4</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="ex">incr</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="va">$7</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="ex">counter</span></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="ex">*2</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="va">$4</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="ex">incr</span></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a><span class="va">$7</span></span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a><span class="ex">counter</span></span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a><span class="ex">*2</span></span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a><span class="va">$6</span></span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a><span class="ex">SELECT</span></span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a><span class="va">$1</span></span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a><span class="ex">*2</span></span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a><span class="va">$4</span></span>
+<span id="cb37-41"><a href="#cb37-41" aria-hidden="true" tabindex="-1"></a><span class="ex">incr</span></span>
+<span id="cb37-42"><a href="#cb37-42" aria-hidden="true" tabindex="-1"></a><span class="va">$7</span></span>
+<span id="cb37-43"><a href="#cb37-43" aria-hidden="true" tabindex="-1"></a><span class="ex">counter</span></span>
+<span id="cb37-44"><a href="#cb37-44" aria-hidden="true" tabindex="-1"></a><span class="ex">*2</span></span>
+<span id="cb37-45"><a href="#cb37-45" aria-hidden="true" tabindex="-1"></a><span class="va">$4</span></span>
+<span id="cb37-46"><a href="#cb37-46" aria-hidden="true" tabindex="-1"></a><span class="ex">incr</span></span>
+<span id="cb37-47"><a href="#cb37-47" aria-hidden="true" tabindex="-1"></a><span class="va">$7</span></span>
+<span id="cb37-48"><a href="#cb37-48" aria-hidden="true" tabindex="-1"></a><span class="ex">counter</span></span></code></pre></div>
+<p>Et voilà / (Salut tintin). On peut passer à l’étape suivante, et se
+diriger vers l’informatique dans les nuages.</p>
+<h2 id="docker-machine">Docker Machine</h2>
+<p>aka déploiement sur EC2 via la machinerie docker.</p>
+<p>Inconvénient, docker-machine provisionne une instance, et permet de
+configurer le client local pour adresser un docker sur cette instance.
+Pour adresser plusieurs instances, il faut se tourner vers
+<code>docker-swarm</code>.</p>
+<p>Pour tester, une fois installé, pour provisionner une instance
+VirutalBox en local, et une isntance sur EC2, chacune avec docker de
+préinstallé, on fait (Attention au nommage de l’instance dans EC2)</p>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker-machine create <span class="at">--driver</span> virtualbox <span class="dt">\</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>--virtualbox-memory 1024 dev<span class="kw">;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">No</span> default boot2docker iso found locally, downloading the latest release...</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> https://github.com/boot2docker/boot2docker/releases/download/v1.8.2/boot2docker.iso to /home/bobuss/.docker/machine/cache/boot2docker.iso...</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Creating</span> VirtualBox VM...</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Creating</span> SSH key...</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting</span> VirtualBox VM...</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting</span> VM...</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> see how to connect Docker to this machine, run: docker-machine env dev</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker-machine create <span class="dt">\</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>--driver amazonec2 <span class="dt">\</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>--amazonec2-access-key your-aws-access-key <span class="dt">\</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>--amazonec2-secret-key your-aws-secret-key <span class="dt">\</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>--amazonec2-vpc-id your-aws-vpc-id <span class="dt">\</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>--amazonec2-subnet-id your-aws-subnet-id <span class="dt">\</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>--amazonec2-region us-east-1 <span class="dt">\</span></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>--amazonec2-zone a <span class="dt">\</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>ec2box_bobuss</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="ex">Launching</span> instance...</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> see how to connect Docker to this machine, run: docker-machine env ec2box_bobuss</span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker-machine ls</span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>            ACTIVE   DRIVER       STATE     URL                         SWARM</span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a><span class="ex">dev</span>                      virtualbox   Running   tcp://192.168.99.100:2376</span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a><span class="ex">ec2box_bobuss</span>            amazonec2    Running   tcp://54.85.61.184:2376</span></code></pre></div>
+<p>La commande <code>docker-machine env XXXX</code> exporte dans les
+variable d’environnement de docker la configuration de l’instance
+demandée.</p>
+<p>Par exemple, pour configurer son client docker pour utiliser l’hôte
+virtualbox, on execute</p>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> eval <span class="st">&quot;</span><span class="va">$(</span><span class="ex">docker-machine</span> env dev<span class="va">)</span><span class="st">&quot;</span></span></code></pre></div>
+<p>Maintenant, toute commande docker adressera le docker hébergé sur le
+VirtualBox en local.</p>
+<p>De manière symétrique, pour adresser le docker hebergé sur EC2 :</p>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> eval <span class="st">&quot;</span><span class="va">$(</span><span class="ex">docker-machine</span> env ec2box_bobuss<span class="va">)</span><span class="st">&quot;</span></span></code></pre></div>
+<p>Et ainsi, toute commande docker s’adressera au docker hébergé sur
+l’instance EC2.</p>
+<p>Enfin, pour retrouver le paramétrage de notre docker local,</p>
+<pre><code>$ eval &quot;$(docker-machine env -u)&quot;</code></pre>
+<hr />
+<h4 id="licence">Licence</h4>
+<p>Cette œuvre est mise à disposition selon les termes de la Licence <a
+href="https://creativecommons.org/licenses/by/3.0/fr/">Creative Commons
+Attribution 3.0 France</a>.</p>
+<p><a href="https://creativecommons.org/licenses/by/3.0/fr/"><img
+src="https://i.creativecommons.org/l/by/3.0/fr/88x31.png"
+alt="Licence Creative Commons" /></a></p>
 </body>
 </html>

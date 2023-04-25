@@ -1,8 +1,10 @@
+[retour](index.html)
+
 # Utilisation de ecs-cli
 
 ## Installation
 
-voir https://github.com/aws/amazon-ecs-cli
+voir <https://github.com/aws/amazon-ecs-cli>
 
 
 ## Setup
@@ -403,6 +405,6 @@ INFO[0182] Deleted cluster                               cluster=clusterbertrand
 
 #### Licence
 
-Ce(tte) œuvre est mise à disposition selon les termes de la Licence .[Creative Commons Attribution 3.0 France](http://creativecommons.org/licenses/by/3.0/fr/)
+Cette œuvre est mise à disposition selon les termes de la Licence [Creative Commons Attribution 3.0 France](https://creativecommons.org/licenses/by/3.0/fr/).
 
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](http://creativecommons.org/licenses/by/3.0/fr/)
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](https://creativecommons.org/licenses/by/3.0/fr/)

@@ -1,6 +1,8 @@
+[retour](index.html)
+
 # CloudInit
 
-[CloudInit](http://cloudinit.readthedocs.org/en/latest/) est un framework permettant d’exécuter un script fourni lors de l’instanciation d'une VM.
+[CloudInit](https://cloudinit.readthedocs.io/en/latest/) est un framework permettant d’exécuter un script fourni lors de l’instanciation d'une VM.
 
 Ainsi, lorsque vous utiliser un fichier user-data lors du lancement d'un instance :
 
@@ -135,7 +137,7 @@ output: {all: '| tee -a /var/log/cloud-init-output.log'}
 ```
 
 
-[D'autres dans le repository de CloudInit](http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/files/head:/doc/examples/).
+[D'autres dans la doc de CloudInit](https://cloudinit.readthedocs.io/en/latest/).
 
 
 
@@ -143,6 +145,6 @@ output: {all: '| tee -a /var/log/cloud-init-output.log'}
 
 #### Licence
 
-Ce(tte) œuvre est mise à disposition selon les termes de la Licence .[Creative Commons Attribution 3.0 France](http://creativecommons.org/licenses/by/3.0/fr/)
+Cette œuvre est mise à disposition selon les termes de la Licence [Creative Commons Attribution 3.0 France](https://creativecommons.org/licenses/by/3.0/fr/).
 
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](http://creativecommons.org/licenses/by/3.0/fr/)
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](https://creativecommons.org/licenses/by/3.0/fr/)

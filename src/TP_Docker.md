@@ -1,5 +1,6 @@
-# Docker
+[retour](index.html)
 
+# Docker
 
 ## Un survol de la chose
 
@@ -177,7 +178,7 @@ $ docker exec -it cranky_swartz /bin/bash
 root@82a7a75b7d25:/#
 ```
 
-Méthode winner \o/ (depuis docker >= 1.3). cf http://askubuntu.com/questions/505506/how-to-get-bash-or-ssh-into-a-running-container-in-background-mode
+Méthode winner \o/ (depuis docker >= 1.3). cf https://askubuntu.com/questions/505506/how-to-get-bash-or-ssh-into-a-running-container-in-background-mode
 
 voilà, fin de la première partie.
 
@@ -795,6 +796,6 @@ $ eval "$(docker-machine env -u)"
 
 #### Licence
 
-Ce(tte) œuvre est mise à disposition selon les termes de la Licence .[Creative Commons Attribution 3.0 France](http://creativecommons.org/licenses/by/3.0/fr/)
+Cette œuvre est mise à disposition selon les termes de la Licence [Creative Commons Attribution 3.0 France](https://creativecommons.org/licenses/by/3.0/fr/).
 
-[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](http://creativecommons.org/licenses/by/3.0/fr/)
+[![Licence Creative Commons](https://i.creativecommons.org/l/by/3.0/fr/88x31.png)](https://creativecommons.org/licenses/by/3.0/fr/)
