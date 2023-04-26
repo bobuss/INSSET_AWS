@@ -4,7 +4,7 @@ EXPORTED_DOCS = $(patsubst src/%.md, %.html, $(SOURCE_DOCS))
 PANDOC=/usr/local/bin/pandoc
 
 PANDOC_OPTIONS=--standalone
-PANDOC_HTML_OPTIONS=-c css/github.css -f markdown -t html5
+PANDOC_HTML_OPTIONS=-c css/github.css -f markdown -H src/ga.txt -t html5
 
 .PHONY: all clean publish
 
