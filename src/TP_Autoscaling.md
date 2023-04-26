@@ -1,3 +1,8 @@
+---
+lang: fr
+pagetitle: INSSET - Master 2 Cloud Computing - TP Autoscaling
+---
+
 [retour](index.html)
 
 Nous allons utiliser l'[AutoScaling AWS](https://aws.amazon.com/fr/autoscaling/) pour mettre en place un webservice de manipulation d'images qui puisse s'adapter à la charge entrante tout en minimisant les coûts de possession. Pour cela, nous allons partir d'une AMI, automatiser intégralement son lancement, puis l'injecter dans la configuration de notre groupe d'autoscaling afin de pouvoir faire varier le nombre de machines derrière un Elastic Load Balancer.

@@ -1,3 +1,8 @@
+---
+lang: fr
+pagetitle: INSSET - Master 2 Cloud Computing - TP ECS
+---
+
 [retour](index.html)
 
 # Utilisation de ecs-cli

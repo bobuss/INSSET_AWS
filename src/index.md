@@ -1,3 +1,8 @@
+---
+lang: fr
+pagetitle: INSSET - Master 2 Cloud Computing - Cloud et Scalabilité
+---
+
 # Présentations
 
 ### [AWS](01_aws.html)

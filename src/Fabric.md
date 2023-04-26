@@ -1,3 +1,8 @@
+---
+lang: fr
+pagetitle: INSSET - Master 2 Cloud Computing - Fabric
+---
+
 [retour](index.html)
 
 # Introduction à Fabric

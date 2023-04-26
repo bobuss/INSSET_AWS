@@ -1,3 +1,8 @@
+---
+lang: fr
+pagetitle: INSSET - Master 2 Cloud Computing - TP AWS
+---
+
 [retour](index.html)
 
 La doc en ligne
